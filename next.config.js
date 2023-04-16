@@ -4,7 +4,7 @@ const nextConfig = {
 
   experimental: {
     appDir: true,
-    serverComponentsExternalPackages: ['shiki', 'vscode-oniguruma', 'pg'],
+    serverComponentsExternalPackages: ['shiki', 'vscode-oniguruma', 'pg', 'pg-native'],
   },
 
   async rewrites() {
