@@ -33,7 +33,7 @@ export const DocumentSchema: React.FC<{
           <div className="min-w-sm flex min-w-[100px] items-center">
             <dt className="sr-only">Name</dt>
             <dd>
-              <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
+              <code className="rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-900 ring-1 ring-slate-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
                 {schema.name}
               </code>
             </dd>
@@ -43,7 +43,7 @@ export const DocumentSchema: React.FC<{
         {schema.type && (
           <>
             <dt className="sr-only">Type</dt>
-            <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
+            <dd className="font-mono text-xs text-slate-400 dark:text-slate-500">
               {schema.type}
             </dd>
           </>

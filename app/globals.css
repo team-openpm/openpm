@@ -95,3 +95,12 @@ hanko-auth::part(headline1),
 hanko-profile::part(headline1) {
   margin-top: 30px;
 }
+
+.dark hanko-auth,
+.dark hanko-profile {
+  /* Color Scheme */
+  --color: rgb(255 255 255 / 90%);
+
+  --brand-color-shade-1: rgb(255 255 255 / 5%);
+  --brand-contrast-color: white;
+}

@@ -47,26 +47,26 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
 
         {endpoint.pathParameters.length > 0 && (
           <section>
-            <h4 className="text-sm font-semibold text-zinc-900 dark:text-white">
+            <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
               Path parameters
             </h4>
 
             <div className="mt-5 w-1/2">
               <ul
                 role="list"
-                className="m-0 list-none divide-y divide-zinc-900/5 p-0 dark:divide-white/5"
+                className="m-0 list-none divide-y divide-slate-900/5 p-0 dark:divide-white/5"
               >
                 {endpoint.pathParameters.map((parameter, index) => (
                   <li key={index} className="m-0 px-0 py-4 first:pt-0 last:pb-0">
                     <dl className="m-0 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
                       <dt className="sr-only">Name</dt>
                       <dd>
-                        <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
+                        <code className="rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-900 ring-1 ring-slate-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
                           {parameter.name}
                         </code>
                       </dd>
                       <dt className="sr-only">Type</dt>
-                      <dd className="font-mono text-xs text-zinc-400 dark:text-zinc-500">
+                      <dd className="font-mono text-xs text-slate-400 dark:text-slate-500">
                         {parameter.schema?.type}
                       </dd>
                       {parameter.required && (
@@ -84,7 +84,7 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
 
         {endpoint.bodySchema && (
           <section className="space-y-5">
-            <h4 className="text-sm font-semibold text-zinc-900 dark:text-white">
+            <h4 className="text-sm font-semibold text-slate-900 dark:text-white">
               Body params
             </h4>
 

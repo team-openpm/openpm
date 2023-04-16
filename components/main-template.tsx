@@ -12,7 +12,7 @@ type Props = {
 
 export const MainTemplate: React.FC<Props> = ({children}) => {
   return (
-    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 text-slate-900 antialiased dark:bg-slate-900">
+    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 dark:bg-slate-900">
       <img
         src="/background-gradient.jpg"
         className="pointer-events-none absolute left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
@@ -21,7 +21,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
         alt=""
       />
 
-      <div className="fixed inset-x-0 z-20 flex items-center justify-center border-b border-slate-900/5 bg-white/10 px-5 py-2 backdrop-blur-sm">
+      <div className="fixed inset-x-0 z-20 flex items-center justify-center border-b border-slate-900/5 bg-white/10 px-5 py-2 text-slate-900 backdrop-blur-sm dark:text-white/80">
         <div className="grid w-full max-w-5xl grid-cols-1 sm:grid-cols-2">
           <div className="flex items-center space-x-10">
             <Link prefetch={false} className=" font-mono  text-pink-500" href="/">
@@ -46,7 +46,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           </div>
 
           <div className="flex items-center justify-end gap-10">
-            <Link href="/new" className="text-sm font-medium text-slate-900">
+            <Link href="/new" className="text-sm font-medium">
               submit api...
             </Link>
 
@@ -67,7 +67,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/about"
-            className="text-sm text-slate-600 hover:text-slate-900"
+            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             about
           </Link>
@@ -75,7 +75,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/terms"
-            className="text-sm text-slate-600 hover:text-slate-900"
+            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             terms
           </Link>
@@ -83,7 +83,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/privacy"
-            className="text-sm text-slate-600 hover:text-slate-900"
+            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             privacy
           </Link>
@@ -91,7 +91,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="https://github.com/team-openpm/openpm"
-            className="text-sm text-slate-600 hover:text-slate-900"
+            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             github
           </Link>

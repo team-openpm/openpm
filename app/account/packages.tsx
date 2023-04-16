@@ -25,7 +25,7 @@ export async function Packages({userId}: {userId: string}) {
                 </Link>
               </dd>
               <dt className="sr-only">Version</dt>
-              <dd className="text-sm text-slate-700">{pkg.version}</dd>
+              <dd className="text-sm text-slate-700 dark:text-white/70">{pkg.version}</dd>
               <dt className="sr-only">Actions</dt>
               <dd>
                 <Link

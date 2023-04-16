@@ -13,7 +13,7 @@ import {Pagination} from './pagination'
 export default async function Packages({
   searchParams: {q: query = '', p = 1},
 }: {
-  searchParams: {q: string, p: number}
+  searchParams: {q: string; p: number}
 }) {
   const limit = 50
   const page = Number(p)
@@ -27,7 +27,7 @@ export default async function Packages({
   return (
     <MainTemplate>
       <div className="relative mt-10 flex place-items-center">
-        <SearchInput className="h-11 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/30 bg-white px-12 text-center text-sm text-zinc-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-zinc-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-zinc-400 dark:ring-white/10 dark:hover:ring-white/20 " />
+        <SearchInput className="h-11 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/30 bg-white px-12 text-center text-sm text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 " />
 
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
           <svg
@@ -45,7 +45,7 @@ export default async function Packages({
         </div>
 
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-5">
-          <kbd className="ml-auto text-sm text-pink-400 dark:text-zinc-500">
+          <kbd className="ml-auto text-sm text-pink-400 dark:text-slate-500">
             <kbd className="font-sans">⌘</kbd>
             <kbd className="font-sans">K</kbd>
           </kbd>
@@ -58,7 +58,9 @@ export default async function Packages({
         ))}
       </ul>
 
-      {shouldPaginate && <Pagination total={total} page={page} limit={limit} query={query} />}
+      {shouldPaginate && (
+        <Pagination total={total} page={page} limit={limit} query={query} />
+      )}
 
       {packages.length === 0 && (
         <div className="mt-10 text-center">

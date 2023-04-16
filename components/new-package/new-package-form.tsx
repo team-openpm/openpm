@@ -54,7 +54,7 @@ export default function NewPackageForm() {
       <form onSubmit={onSubmit}>
         <div className="space-y-12">
           <div className="border-b border-slate-900/5 pb-12">
-            <h2 className="text-xl font-semibold leading-7 text-slate-900">
+            <h2 className="text-xl font-semibold leading-7 text-slate-900 dark:text-white/90">
               New package
             </h2>
 
@@ -62,7 +62,7 @@ export default function NewPackageForm() {
               <div className="sm:col-span-4">
                 <label
                   htmlFor="Package id"
-                  className="block text-sm font-medium leading-6 text-slate-900"
+                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-white/80"
                 >
                   Package ID
                 </label>
@@ -81,7 +81,7 @@ export default function NewPackageForm() {
               <div className="col-span-full">
                 <label
                   htmlFor="spec"
-                  className="block text-sm font-medium leading-6 text-slate-900"
+                  className="block text-sm font-medium leading-6 text-slate-900 dark:text-white/80"
                 >
                   OpenAPI JSON Spec
                 </label>
@@ -107,7 +107,10 @@ export default function NewPackageForm() {
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
-          <a href="/packages" className="text-sm font-semibold leading-6 text-slate-900">
+          <a
+            href="/packages"
+            className="text-sm font-semibold leading-6 text-slate-900 dark:text-white/80 dark:text-white/90"
+          >
             Cancel
           </a>
 

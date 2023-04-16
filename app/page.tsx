@@ -13,7 +13,7 @@ export default function Home() {
         </h2>
 
         <div className="relative mt-10 flex place-items-center">
-          <SearchInput className="h-12 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-zinc-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-zinc-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-zinc-400 dark:ring-white/10 dark:hover:ring-white/20 " />
+          <SearchInput className="h-12 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 " />
 
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
             <svg
@@ -31,7 +31,7 @@ export default function Home() {
           </div>
 
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-5">
-            <kbd className="ml-auto text-sm text-pink-400 dark:text-zinc-500">
+            <kbd className="ml-auto text-sm text-pink-400 dark:text-slate-500">
               <kbd className="font-sans">⌘</kbd>
               <kbd className="font-sans">K</kbd>
             </kbd>
@@ -42,7 +42,7 @@ export default function Home() {
       <div className="relative mb-32 mt-10 grid divide-x divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-center backdrop-blur-md lg:mb-0 lg:grid-cols-3 lg:text-left">
         <Link
           href="/about"
-          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:border-neutral-700 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
             About
@@ -57,7 +57,7 @@ export default function Home() {
 
         <Link
           href="/openapi"
-          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-neutral-800/30"
+          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
             Learn{' '}
@@ -73,7 +73,7 @@ export default function Home() {
 
         <Link
           href="/new"
-          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-neutral-800/30"
+          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
             Create{' '}

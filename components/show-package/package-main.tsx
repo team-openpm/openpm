@@ -30,7 +30,7 @@ export const PackageMain: React.FC<{package: Package; document: OpenApiDocument}
       <div className="divide-y divide-slate-900/5">
         {Array.from(document.groupedEndpoints).map(([group, endpoints]) => (
           <div className="space-y-5 px-20 py-10 first:pt-0 last:pb-0" key={group}>
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
               {capitalize(group)}
             </h2>
 

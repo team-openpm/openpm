@@ -16,7 +16,7 @@ export default async function AccountPage() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex-none border-r border-zinc-900/10 dark:border-white/10">
+      <div className="flex-none border-r border-slate-900/10 dark:border-white/10">
         <AccountSidebar />
       </div>
 
