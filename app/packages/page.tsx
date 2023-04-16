@@ -1,3 +1,5 @@
+'use server'
+
 import {MainTemplate} from '@/components/main-template'
 import {SearchInput} from '@/components/search-input'
 import {

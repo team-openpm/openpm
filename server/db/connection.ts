@@ -1,3 +1,5 @@
+import 'server-only'
+
 import {Kysely, PostgresDialect} from 'kysely'
 import {Pool} from 'pg'
 
