@@ -34,6 +34,8 @@ yarn dev
 [x] - package update
 [x] - disable button
 [x] - package sizes
+[ ] - dark mode
+[ ] - mobile
 
 # Release
 
