@@ -61,7 +61,7 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
                     <dl className="m-0 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
                       <dt className="sr-only">Name</dt>
                       <dd>
-                        <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300">
+                        <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
                           {parameter.name}
                         </code>
                       </dd>

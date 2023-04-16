@@ -42,8 +42,8 @@ export function DocumentEndpointRequestExampleTabs({
 
   return (
     <TabGroup selectedIndex={selectedIndex} onChange={onTabChange}>
-      <div className="my-6 overflow-hidden rounded-2xl bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10">
-        <div className="flex flex-wrap items-start gap-x-4 border-b border-zinc-700 bg-zinc-800 px-4 dark:border-zinc-800 dark:bg-transparent">
+      <div className="my-6 overflow-hidden rounded-2xl bg-slate-900 shadow-md dark:ring-1 dark:ring-white/10">
+        <div className="flex flex-wrap items-start gap-x-4 border-b border-slate-700 bg-slate-800 px-4 dark:border-slate-800 dark:bg-transparent">
           <h3 className="mr-auto pt-3 text-xs font-semibold text-white">Request</h3>
 
           <TabList className="-mb-px flex gap-4 text-xs font-medium">
@@ -53,7 +53,7 @@ export function DocumentEndpointRequestExampleTabs({
           </TabList>
         </div>
 
-        <TabPanels className="border-t border-white border-opacity-15 bg-white/2.5 bg-zinc-900 dark:border-b-white/5 dark:bg-white/1">
+        <TabPanels className="border-t border-white border-opacity-15 bg-slate-900 bg-white/2.5 dark:border-b-white/5 dark:bg-white/1">
           <TabPanel>
             <Code html={exampleCurlHtml} />
           </TabPanel>
@@ -77,7 +77,7 @@ export function Tab({children}: {children: React.ReactNode}) {
           className={clsx(
             'increase-click-area border-b py-3 transition focus-visible:outline-none',
             {'border-emerald-500 text-emerald-400': selected},
-            {'border-transparent text-zinc-400 hover:text-zinc-300': !selected},
+            {'border-transparent text-slate-400 hover:text-slate-300': !selected},
           )}
         >
           {children}

@@ -21,10 +21,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         />
       </Head>
 
-      <body
-        className={`${inter.className} bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-white/90`}
-      >
-        {children}
+      <body className={`${inter.className}`}>
+        <div className="bg-white text-zinc-900 antialiased dark:bg-slate-900 dark:text-white/90">
+          {children}
+        </div>
       </body>
     </html>
   )

@@ -4,6 +4,7 @@ import React from 'react'
 
 import {AcccountHeaderDropdown} from './account-header-dropdown'
 import {LogoGithub} from './icons/logo-github'
+import {ThemeToggle} from './theme-toggle'
 
 type Props = {
   children?: React.ReactNode
@@ -11,10 +12,10 @@ type Props = {
 
 export const MainTemplate: React.FC<Props> = ({children}) => {
   return (
-    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 text-slate-900 antialiased">
+    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 text-slate-900 antialiased dark:bg-slate-900">
       <img
         src="/background-gradient.jpg"
-        className="pointer-events-none absolute left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%]"
+        className="pointer-events-none absolute left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
         width={1558}
         height={946}
         alt=""
@@ -51,6 +52,10 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
 
             {/* @ts-expect-error Async Server Component */}
             <AcccountHeaderDropdown />
+          </div>
+
+          <div className="absolute bottom-0 right-0 top-0 flex items-center gap-5 px-10">
+            <ThemeToggle />
           </div>
         </div>
       </div>

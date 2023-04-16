@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <MainTemplate>
       <div className="flex flex-1 flex-col items-center justify-center">
-        <h2 className="text-lg font-medium text-slate-900/90">
+        <h2 className="text-lg font-medium text-slate-900/90 dark:text-white/90">
           The OpenAPI package manager
         </h2>
 

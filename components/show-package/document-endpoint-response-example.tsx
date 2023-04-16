@@ -18,8 +18,8 @@ export async function DocumentEndpointResponseExample({
   const exampleJsonHtml = await highlight(exampleJson, 'json')
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-zinc-900 shadow-md dark:ring-1 dark:ring-white/10">
-      <div className="flex h-12 flex-wrap items-center gap-x-4 border-b border-zinc-700 bg-zinc-800 px-4 dark:border-zinc-800 dark:bg-transparent">
+    <div className="overflow-hidden rounded-2xl bg-slate-900 shadow-md dark:ring-1 dark:ring-white/10">
+      <div className="flex h-12 flex-wrap items-center gap-x-4 border-b border-slate-700 bg-slate-800 px-4 dark:border-slate-800 dark:bg-transparent">
         <h3 className="text-xs font-semibold text-white">Response</h3>
 
         <div className="flex-1" />
@@ -31,7 +31,7 @@ export async function DocumentEndpointResponseExample({
         </div>
       </div>
 
-      <div className="border-t border-white border-opacity-15 bg-white/2.5 bg-zinc-900 dark:border-b-white/5 dark:bg-white/1">
+      <div className="border-t border-white border-opacity-15 bg-slate-900 bg-white/2.5 dark:border-b-white/5 dark:bg-white/1">
         <div>
           <Code html={exampleJsonHtml} />
         </div>

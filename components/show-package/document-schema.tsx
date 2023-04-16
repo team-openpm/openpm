@@ -33,7 +33,7 @@ export const DocumentSchema: React.FC<{
           <div className="min-w-sm flex min-w-[100px] items-center">
             <dt className="sr-only">Name</dt>
             <dd>
-              <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300">
+              <code className="rounded-md bg-zinc-100 px-2 py-1 text-xs text-zinc-900 ring-1 ring-zinc-300 dark:bg-white/5 dark:text-white dark:ring-white/10">
                 {schema.name}
               </code>
             </dd>
@@ -60,7 +60,7 @@ export const DocumentSchema: React.FC<{
       </dl>
 
       {schema.properties.length > 0 && (
-        <div className="divide-y divide-slate-900/5 border border-slate-900/5 px-5 py-5">
+        <div className="divide-y divide-slate-900/5 border border-slate-900/5 px-5 py-5 dark:divide-white/5 dark:border-white/5">
           {schema.properties.map((property) => (
             <DocumentSchema key={property.name} schema={property} nestled={true} />
           ))}
@@ -68,7 +68,7 @@ export const DocumentSchema: React.FC<{
       )}
 
       {schema.items && (
-        <div className="border border-slate-900/5 px-5 py-5">
+        <div className="border border-slate-900/5 px-5 py-5 dark:border-white/5">
           {schema.items && <DocumentSchema schema={schema.items} nestled={true} />}
         </div>
       )}
