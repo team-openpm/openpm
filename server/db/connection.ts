@@ -1,7 +1,7 @@
 import 'server-only'
 
-import {Pool} from '@neondatabase/serverless'
 import {Kysely, PostgresDialect} from 'kysely'
+import {Pool} from 'pg'
 
 import {assertString} from '@/lib/assert'
 
