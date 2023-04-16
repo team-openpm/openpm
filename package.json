@@ -13,7 +13,7 @@
     "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/types.ts --exclude-pattern spatial_ref_sys"
   },
   "dependencies": {
-    "@headlessui/react": "^0.0.0-insiders.2063132",
+    "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
     "@neondatabase/serverless": "^0.3.0",
     "@readme/openapi-parser": "^2.5.0",
