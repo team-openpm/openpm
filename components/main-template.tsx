@@ -54,7 +54,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
             <AcccountHeaderDropdown />
           </div>
 
-          <div className="absolute bottom-0 right-0 top-0 flex items-center gap-5 px-10">
+          <div className="absolute bottom-0 right-0 top-0 hidden items-center gap-5 px-10 sm:flex">
             <ThemeToggle />
           </div>
         </div>

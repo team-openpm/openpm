@@ -5,7 +5,7 @@ import {MainTemplate} from '@/components/main-template'
 export default async function AboutPage() {
   return (
     <MainTemplate>
-      <article className="prose dark:prose-invert prose-headings:text-xl prose-headings:font-medium dark:prose-p:text-white/70 dark:prose-a:text-blue-500 dark:prose-a:no-underline">
+      <article className="prose dark:prose-invert prose-headings:text-xl prose-headings:font-medium prose-a:no-underline dark:prose-p:text-white/70 dark:prose-a:text-blue-500">
         <h1>About</h1>
 
         <div className="prose max-w-prose">

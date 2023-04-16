@@ -34,7 +34,7 @@ yarn dev
 [x] - package update
 [x] - disable button
 [x] - package sizes
-[ ] - dark mode
+[x] - dark mode
 [ ] - mobile
 
 # Release
@@ -44,7 +44,6 @@ yarn dev
 [ ] - submit own openapi file
 [ ] - tos / privacy
 [ ] - migrate domain / hanko auth
-
 
 # V2
 
