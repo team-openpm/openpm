@@ -1,0 +1,31 @@
+import {Inter} from 'next/font/google'
+import './globals.css'
+import Head from 'next/head'
+
+export const metadata = {
+  title: 'openpm',
+  description: 'OpenAPI package manager',
+}
+
+const inter = Inter({subsets: ['latin']})
+
+export default function RootLayout({children}: {children: React.ReactNode}) {
+  return (
+    <html lang="en">
+      <Head>
+        <link
+          rel="search"
+          title="openpm"
+          href="/api/opensearch.xml"
+          type="application/opensearchdescription+xml"
+        />
+      </Head>
+
+      <body
+        className={`${inter.className} bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-white/90`}
+      >
+        {children}
+      </body>
+    </html>
+  )
+}

@@ -1,0 +1,401 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.2",
+    "title": "reflect",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://reflect.app/api"
+    }
+  ],
+  "paths": {
+    "/graphs/{graphId}/books": {
+      "get": {
+        "description": "Returns all books",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "graphId",
+            "required": true,
+            "description": "Your graph identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "reflect_auth": ["write:graph", "read:graph"]
+          }
+        ]
+      }
+    },
+    "/graphs/{graphId}/books/sync": {
+      "post": {
+        "description": "Sync new books and highlights",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "graphId",
+            "required": true,
+            "description": "Your graph identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/BookArray"
+        },
+        "responses": {
+          "200": {
+            "description": "Success message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "reflect_auth": ["write:graph", "read:graph"]
+          }
+        ]
+      }
+    },
+    "/graphs/{graphId}/links": {
+      "get": {
+        "description": "Returns all links",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "graphId",
+            "required": true,
+            "description": "Your graph identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of links",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Link"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "reflect_auth": ["read:graph"]
+          }
+        ]
+      },
+      "post": {
+        "description": "Create a new link",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "graphId",
+            "required": true,
+            "description": "Your graph identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Link"
+        },
+        "responses": {
+          "200": {
+            "description": "Your created link",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Link"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "reflect_auth": ["write:graph", "read:graph"]
+          }
+        ]
+      }
+    },
+    "/graphs/{graphId}/daily-notes": {
+      "patch": {
+        "description": "Appends to daily note",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "graphId",
+            "required": true,
+            "description": "Your graph identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "description": "Date of the daily note. ISO 8601 format",
+                    "type": "string"
+                  },
+                  "text": {
+                    "description": "Text to append to the daily note",
+                    "type": "string"
+                  },
+                  "transform_type": {
+                    "description": "Transform type to apply to the text",
+                    "type": "string",
+                    "enum": ["list-append"]
+                  },
+                  "list_name": {
+                    "description": "Name of the list to append to",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "description": "Returns current user",
+        "responses": {
+          "200": {
+            "description": "Current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "reflect_auth": ["read:graph"]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "requestBodies": {
+      "BookArray": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "books": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "List of book objects",
+        "required": true
+      },
+      "Link": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Link"
+            }
+          }
+        },
+        "description": "Link object",
+        "required": true
+      }
+    },
+    "schemas": {
+      "Book": {
+        "required": ["id", "asin", "title"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "asin": {
+            "type": "string",
+            "description": "Amazon Standard Identification Number"
+          },
+          "title": {
+            "type": "string",
+            "description": "Book title"
+          },
+          "authors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of book author names"
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookNote"
+            },
+            "description": "Array of book notes"
+          }
+        }
+      },
+      "BookNote": {
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["note", "highlight"],
+            "description": "Type of note"
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Page number of note (if applicable)"
+          },
+          "location": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Location of note (if applicable)"
+          },
+          "value": {
+            "type": "string",
+            "description": "Note contents"
+          }
+        }
+      },
+      "User": {
+        "required": ["uid"],
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "graph_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Link": {
+        "required": ["url"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "reflect_auth": {
+        "description": "Reflect OAuth",
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://reflect.app/oauth",
+            "tokenUrl": "https://reflect.app/api/oauth/token",
+            "scopes": {
+              "read:graph": "Read access to protected resources",
+              "write:graph": "Write access to protected resources"
+            }
+          }
+        }
+      }
+    }
+  }
+}
