@@ -36,6 +36,8 @@ yarn dev
 [x] - package sizes
 [x] - dark mode
 [ ] - mobile
+[ ] - markdown descriptions
+[ ] - debug wolfram alpha
 
 # Release
 
@@ -43,7 +45,7 @@ yarn dev
 [ ] - crawl for openapi files
 [ ] - submit own openapi file
 [ ] - tos / privacy
-[ ] - migrate domain / hanko auth
+[x] - migrate domain / hanko auth
 
 # V2
 

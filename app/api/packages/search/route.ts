@@ -19,10 +19,10 @@ export const GET = withApiBuilder<ApiRequestParams>(
   async (request: Request, {data}) => {
     const {query, limit, page} = data
 
-    const {results, total} = await searchPackagesWithPagination({query, page, limit})
+    const {packages, total} = await searchPackagesWithPagination({query, page, limit})
 
     return NextResponse.json({
-      results,
+      items: packages,
       page,
       limit,
       total,
