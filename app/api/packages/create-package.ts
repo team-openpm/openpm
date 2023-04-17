@@ -1,6 +1,5 @@
 import first from 'lodash/first'
 import {NextResponse} from 'next/server'
-import semver from 'semver'
 import {z} from 'zod'
 
 import {parseSpecJson} from '@/lib/openapi'
@@ -30,17 +29,19 @@ const createPackageEndpoint = withAuth(
         return error('Package already exists')
       }
 
-      const openapi = await parseSpecJson(data.openapi)
-      const version = semver.valid(openapi.version)
-      const domain = openapi.domain
+      const doc = await parseSpecJson(data.openapi)
 
-      if (!openapi) {
+      if (!doc) {
         return error('Invalid openapi')
       }
 
-      if (!version) {
+      const version = doc.version
+
+      if (typeof version !== 'string') {
         return error('Invalid version')
       }
+
+      const domain = doc.domain
 
       if (!domain) {
         return error('Missing openapi domain')
@@ -49,19 +50,19 @@ const createPackageEndpoint = withAuth(
       await createPackage({
         id: data.id,
         openapi: data.openapi,
-        name: openapi.name || data.id,
+        name: doc.name || data.id,
         version,
         userId,
         domain,
         logoUrl: defaultLogo(domain),
-        description: openapi.description,
+        description: doc.description,
         contactEmail: userRow ? first(userRow.emails) ?? null : null,
       })
 
       return NextResponse.json({
         id: data.id,
         version,
-        openapi,
+        openapi: doc,
       })
     },
   ),

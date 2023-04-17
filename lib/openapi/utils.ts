@@ -1,12 +1,20 @@
 import {OpenAPI} from './types'
 
-export const getDomain = (document: OpenAPI.Document) => {
+export function safeParseUrl(url: string) {
+  try {
+    return new URL(url)
+  } catch (err) {
+    return null
+  }
+}
+
+export function getDomain(document: OpenAPI.Document) {
   const baseUrl = getBaseUrl(document)
   const url = new URL(baseUrl ?? '')
   return url.hostname
 }
 
-export const getBaseUrl = (document: OpenAPI.Document) => {
+export function getBaseUrl(document: OpenAPI.Document) {
   return document.servers?.[0]?.url ?? null
 }
 

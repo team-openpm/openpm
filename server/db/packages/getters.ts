@@ -95,7 +95,7 @@ export async function getPackagesWithIds(ids: string[]): Promise<PackageFull[]> 
       'description',
       'machine_description',
       'user_id',
-      'openapi'
+      'openapi',
     ])
     .execute()
 }
@@ -109,12 +109,12 @@ export async function searchPackagesWithPagination({
   page?: number
   limit?: number
 }): Promise<{
-  packages: PackageLite[]
+  results: PackageLite[]
   page: number
   limit: number
   total: number
 }> {
-  const packages = await db
+  const results = await db
     .selectFrom('packages')
     .select((eb) => [
       'id',
@@ -142,10 +142,10 @@ export async function searchPackagesWithPagination({
     .offset((page - 1) * limit)
     .execute()
 
-  const total = (packages[0]?.total_count ?? 0) as number
+  const total = Number(results[0]?.total_count ?? 0)
 
   return {
-    packages,
+    results,
     page,
     limit,
     total,
@@ -163,12 +163,12 @@ export async function getPackagesWithPagination({
   orderBy?: 'id' | 'name' | 'domain' | 'published_at'
   orderDirection?: 'asc' | 'desc'
 }): Promise<{
-  packages: PackageLite[]
+  results: PackageLite[]
   page: number
   limit: number
   total: number
 }> {
-  const packages = await db
+  const results = await db
     .selectFrom('packages')
     .select((eb) => [
       'id',
@@ -193,10 +193,10 @@ export async function getPackagesWithPagination({
     .offset((page - 1) * limit)
     .execute()
 
-  const total = (packages[0]?.total_count ?? 0) as number
+  const total = Number(results[0]?.total_count ?? 0)
 
   return {
-    packages,
+    results,
     page,
     limit,
     total,

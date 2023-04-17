@@ -18,10 +18,10 @@ const endpoint = withApiBuilder<ApiRequestParams>(
   async (request: Request, {data}) => {
     const {limit, page} = data
 
-    const {packages, total} = await getPackagesWithPagination({page, limit})
+    const {results, total} = await getPackagesWithPagination({page, limit})
 
     return NextResponse.json({
-      packages,
+      results,
       page,
       limit,
       total,

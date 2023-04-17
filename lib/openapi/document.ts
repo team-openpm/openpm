@@ -1,6 +1,8 @@
+import semver from 'semver'
+
 import {OpenApiEndpoint} from './endpoint'
 import {OpenAPI} from './types'
-import {commonPrefix} from './utils'
+import {commonPrefix, safeParseUrl} from './utils'
 
 export class OpenApiDocument {
   private document: OpenAPI.Document
@@ -22,8 +24,12 @@ export class OpenApiDocument {
   }
 
   get domain(): string | null {
-    const url = new URL(this.baseUrl ?? '')
-    return url.hostname ?? null
+    if (!this.baseUrl) {
+      return null
+    }
+
+    const url = safeParseUrl(this.baseUrl)
+    return url?.hostname ?? null
   }
 
   get baseUrl(): string | null {
@@ -35,7 +41,13 @@ export class OpenApiDocument {
   }
 
   get version(): string | null {
-    return this.document.info.version ?? null
+    const value = this.document.info.version
+
+    if (!value) {
+      return null
+    }
+
+    return semver.valid(semver.coerce(value))
   }
 
   get endpoints() {
