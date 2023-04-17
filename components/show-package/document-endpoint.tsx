@@ -98,9 +98,7 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
         <Suspense>
           {/* @ts-expect-error Async Server Component */}
           <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
-        </Suspense>
 
-        <Suspense>
           {endpoint.responseExample && (
             /* @ts-expect-error Async Server Component */
             <DocumentEndpointResponseExample responseExample={endpoint.responseExample} />
