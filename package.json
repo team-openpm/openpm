@@ -31,7 +31,7 @@
     "kysely": "^0.24.2",
     "kysely-neon": "^1.0.2",
     "lodash": "^4.17.21",
-    "next": "13.3.0",
+    "next": "13.3.1-canary.8",
     "pg": "^8.10.0",
     "pg-native": "^3.0.1",
     "prettier": "^2.8.7",
