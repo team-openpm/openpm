@@ -10,26 +10,32 @@ export default async function AboutPage() {
 
         <div className="prose max-w-prose">
           <p>
-            AI is the next platform. It will fundamentally change how we live and work.
+            AI is fundamentally changing the way we live, work, and build software. It has
+            the potential to be the biggest platform shift since the iphone and mobile.
           </p>
 
           <p>
-            A new platform needs a new app-store. We engineers currently have a slim
-            chance of creating our own app-store before some large corporation does it.
+            With mobile we learned the painful lesson of the Apple app store, controlled
+            by any single monopolistic company, and stifling innovation and
+            entrepreneurship.
+          </p>
+
+          <p>
+            AI, our new platform, needs it&apos;s own app-store. One not controlled by a
+            single rent-seeking company, but an open and free app-store.
+          </p>
+
+          <p>
+            We engineers currently have a slim chance of creating our own app-store before
+            some large corporation does it.
           </p>
 
           <p>We must seize this chance.</p>
 
           <p>
-            It is vitally important that we don&apos;t repeat the travesty that is
-            Apple&apos;s App store. Fundamental layers of the internet are too important
-            to be controlled by any single monopolistic tax-collecting company.
-          </p>
-
-          <p>
-            APIs serve as the apps on the AI platform. We need a headless app-store so
-            that AIs can discover and use APIs. A store that is built upon the open web
-            and the OpenAPI specification.
+            APIs are the apps on the AI platform. We need a headless app-store so that AIs
+            can discover and use APIs. A store that is built upon the open web and the
+            OpenAPI specification.
           </p>
 
           <p>
