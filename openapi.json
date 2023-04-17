@@ -1,0 +1,374 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "openpm",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://openpm.ai/api"
+    }
+  ],
+  "paths": {
+    "/packages": {
+      "get": {
+        "description": "Returns all packages",
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "How many package to return per page (default 500)",
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Page number (default 1)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Package"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "page": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a package",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Package"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A package",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Package"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "openpm": []
+          }
+        ]
+      }
+    },
+    "/packages/search": {
+      "get": {
+        "description": "Searches packages",
+        "parameters": [
+          {
+            "name": "limit",
+            "description": "How many package to return per page (default 500)",
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "description": "Page number (default 1)",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "query",
+            "required": true,
+            "description": "Search query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Package"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "page": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packages/lookup": {
+      "get": {
+        "description": "Looks up packages by id",
+        "parameters": [
+          {
+            "name": "ids",
+            "description": "CSV list of package ids",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A paginated list of packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Package"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packages/{packageId}": {
+      "get": {
+        "description": "Returns a package",
+        "parameters": [
+          {
+            "name": "packageId",
+            "required": true,
+            "description": "Package id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A package",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Package"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Updates a package",
+        "parameters": [
+          {
+            "name": "packageId",
+            "required": true,
+            "description": "Package id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Package"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A package",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Package"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "openpm_auth": []
+          }
+        ]
+      }
+    },
+    "/packages/{packageId}/openai": {
+      "get": {
+        "description": "Returns an OpenAI spec",
+        "parameters": [
+          {
+            "name": "packageId",
+            "required": true,
+            "description": "Package id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An OpenAPI spec",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "openapi": {
+                      "type": "string"
+                    },
+                    "info": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Package": {
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "machine_name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "openapi": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "logo_url": {
+            "type": "string"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "legal_info_url": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "machine_description": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "openpm": {
+        "description": "Openpm API Key Authentication",
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
