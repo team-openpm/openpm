@@ -34,7 +34,7 @@ function getElementForScheme<T extends OpenAPI.SecuritySchemeObject>(scheme: T) 
 function HttpSecurityScheme({scheme}: {scheme: OpenAPI.HttpSecurityScheme}) {
   return (
     <div className="space-y-5">
-      <div className="text-lg font-semibold ">{scheme.scheme}</div>
+      <div className="font-semibold capitalize">{scheme.scheme}</div>
 
       <div className="">{scheme.description}</div>
 

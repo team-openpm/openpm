@@ -3,6 +3,8 @@ import Link from 'next/link'
 import {OpenApiDocument} from '@/lib/openapi/document'
 import {Package} from '@/server/db/packages/types'
 
+import {Markdown} from '../markdown'
+
 export function PackageInfo({
   package: pkg,
   document,
@@ -14,10 +16,6 @@ export function PackageInfo({
     <div className="space-y-5">
       <div className="space-y-2">
         <h1 className="text-xl font-medium">{pkg.id}</h1>
-
-        {document.description && (
-          <h2 className="text-base font-semibold">{document.description}</h2>
-        )}
 
         {pkg.version !== document.version && (
           <>
@@ -77,6 +75,12 @@ export function PackageInfo({
           </a>
         </div>
       </div>
+
+      {pkg.description && (
+        <div className="prose prose-sm max-w-none">
+          <Markdown text={pkg.description} />
+        </div>
+      )}
     </div>
   )
 }

@@ -20,7 +20,7 @@ export function PackageItem({pkg}: {pkg: PackageLite}) {
           <div className="truncate">{pkg.description}</div>
 
           <div className="text-right text-sm text-slate-900/80 dark:text-white/70">
-            v{pkg.version}{' '}
+            {pkg.version}{' '}
             <time title={pkg.published_at.toUTCString()}>
               published {formatDistanceToNow(pkg.published_at)}
             </time>

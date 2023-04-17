@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import {Suspense} from 'react'
 
 import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 
@@ -94,13 +95,17 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
       </div>
 
       <div className="space-y-14 py-5">
-        {/* @ts-expect-error Async Server Component */}
-        <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
+        <Suspense>
+          {/* @ts-expect-error Async Server Component */}
+          <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
+        </Suspense>
 
-        {endpoint.responseExample && (
-          /* @ts-expect-error Async Server Component */
-          <DocumentEndpointResponseExample responseExample={endpoint.responseExample} />
-        )}
+        <Suspense>
+          {endpoint.responseExample && (
+            /* @ts-expect-error Async Server Component */
+            <DocumentEndpointResponseExample responseExample={endpoint.responseExample} />
+          )}
+        </Suspense>
       </div>
     </div>
   )

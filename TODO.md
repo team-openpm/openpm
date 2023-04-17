@@ -36,6 +36,7 @@ yarn dev
 [x] - package sizes
 [x] - dark mode
 [ ] - mobile
+[x] - openapi file
 [ ] - markdown descriptions
 [ ] - debug wolfram alpha
 

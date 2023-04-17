@@ -141,7 +141,9 @@ export class OpenApiRequestExample {
 
     if (securitySchema?.type === 'oauth2') {
       headers.set('Authorization', `Bearer YOUR_ACCESS_TOKEN`)
-    } else if (securitySchema?.type === 'http') {
+    } else if (securitySchema?.type === 'http' && securitySchema.scheme === 'bearer') {
+      headers.set('Authorization', 'Bearer YOUR_API_KEY')
+    } else if (securitySchema?.type === 'http' && securitySchema.scheme === 'basic') {
       headers.set('Authorization', 'Basic YOUR_API_KEY')
     } else if (securitySchema?.type === 'apiKey') {
       headers.set(securitySchema.name ?? 'Authorization', 'YOUR_API_KEY')
