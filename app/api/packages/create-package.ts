@@ -13,7 +13,8 @@ import {error} from '@/server/helpers/error'
 
 const ApiSchema = z.object({
   openapi: z.string(),
-  id: z.string(),
+  // Validate no spaces
+  id: z.string().regex(/^[a-z0-9-]+$/),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
