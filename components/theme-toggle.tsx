@@ -8,12 +8,8 @@ export function ThemeToggle() {
   const [darkMode, setDarkMode] = useTheme()
 
   useEffect(() => {
-    if (darkMode) {
-      // TODO check toggle
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
+    const html = document.querySelector('html')
+    html?.classList.toggle('dark', darkMode)
   }, [darkMode])
 
   const toggleMode = () => {
