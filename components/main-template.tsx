@@ -62,11 +62,11 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
       <div className="flex min-h-screen flex-col items-center overflow-auto p-24 lg:p-36">
         <div className="relative flex w-full max-w-prose flex-1 flex-col">{children}</div>
 
-        <footer className="mt-10 flex items-center justify-center gap-5 lg:mt-24">
+        <footer className="z-10 mt-10 flex items-center justify-center gap-5 lg:mt-28">
           <Link
             prefetch={false}
             href="/about"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             about
           </Link>
@@ -74,7 +74,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/terms"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             terms
           </Link>
@@ -82,7 +82,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/privacy"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             privacy
           </Link>
@@ -90,7 +90,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="https://github.com/team-openpm/openpm"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             github
           </Link>
