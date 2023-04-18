@@ -2,10 +2,10 @@
 
 -- Drop tables
 
-DROP TABLE IF EXISTS package_versions;
-DROP TABLE IF EXISTS packages;
-DROP TABLE IF EXISTS api_keys;
-DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS package_versions;
+-- DROP TABLE IF EXISTS packages;
+-- DROP TABLE IF EXISTS api_keys;
+-- DROP TABLE IF EXISTS users;
 
 -- Enable uuid
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -112,8 +112,8 @@ CREATE TABLE package_versions (
 
   UNIQUE(package_id, version),
 
-  -- uuid package_id
-  package_id TEXT REFERENCES packages(id) NOT NULL,
+  -- uuid package_id, cascade delete
+  package_id TEXT REFERENCES packages(id) ON DELETE CASCADE NOT NULL,
 
   -- String openapi spec
   openapi TEXT NOT NULL,
