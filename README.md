@@ -1,6 +1,6 @@
 # openpm
 
-openpm is a package manager for OpenAPI files.
+[openpm](https://openpm.ai) is a package manager for OpenAPI files.
 
 ## Why do we exist?
 
@@ -16,11 +16,9 @@ That's why we're building [openpm.ai](https://openpm.ai), an open source package
 
 Everything we release is under the MIT license. We will never charge a transaction fee for our services. We will never wield editorial control. We will only remove packages that are scams or illegal under US law. At any point you can choose to export all of our packages and run them on your own server.
 
-For more information please see: https://openpm.ai
-
 ## Retriving OpenAPI files
 
-You can browse OpenAPI 'packages' on openpm.ai. You can also download the entire database of packages as a p[single JSON file](https://openpm.ai/export).
+You can browse OpenAPI 'packages' on openpm.ai. You can also download the entire database of packages as a [single JSON file](https://openpm.ai/export).
 
 Every package has a unique ID. You can use this ID to retrieve the OpenAPI file via the API:
 
