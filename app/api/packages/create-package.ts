@@ -50,7 +50,7 @@ const createPackageEndpoint = withAuth(
 
       await createPackage({
         id: data.id,
-        openapi: JSON.stringify(doc),
+        openapi: JSON.stringify(doc, null, 2),
         name: doc.name || data.id,
         version,
         userId,
