@@ -2,9 +2,9 @@
 import Link from 'next/link'
 import React from 'react'
 
-import {AccountHeaderDropdownSuspense} from './account-header-dropdown-suspense'
+import AccountHeaderMenu from './account-header/menu'
+import {ThemeToggle} from './account-header/theme-toggle'
 import {LogoGithub} from './icons/logo-github'
-import {ThemeToggle} from './theme-toggle'
 
 type Props = {
   children?: React.ReactNode
@@ -50,7 +50,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
               submit api...
             </Link>
 
-            <AccountHeaderDropdownSuspense />
+            <AccountHeaderMenu />
           </div>
 
           <div className="absolute bottom-0 right-0 top-0 hidden items-center gap-5 px-10 sm:flex">

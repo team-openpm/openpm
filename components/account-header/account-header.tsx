@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-import {AccountHeaderDropdownSuspense} from './account-header-dropdown-suspense'
-import {SearchInput} from './search-input'
+import AccountHeaderMenu from './menu'
 import {ThemeToggle} from './theme-toggle'
+import {SearchInput} from '../search-input'
 
 export const AccountHeader = () => {
   return (
@@ -40,7 +40,7 @@ export const AccountHeader = () => {
           submit api...
         </Link>
 
-        <AccountHeaderDropdownSuspense />
+        <AccountHeaderMenu />
 
         <ThemeToggle />
       </div>
