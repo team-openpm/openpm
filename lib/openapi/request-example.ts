@@ -146,22 +146,26 @@ export class OpenApiRequestExample {
 
     // Sort schemes by type:
     //  first http
-    //  then apiKey
+    //  then apiKey (only header)
     //  then oauth2
 
-    schemes.sort((a, b) => {
-      if (a.type === 'http') {
-        return -1
-      } else if (b.type === 'http') {
-        return 1
-      } else if (a.type === 'apiKey') {
-        return -1
-      } else if (b.type === 'apiKey') {
-        return 1
-      } else {
+    const getSortIndex = (scheme: OpenAPI.SecuritySchemeObject) => {
+      if (scheme.type === 'http') {
         return 0
       }
-    })
+
+      if (scheme.type === 'apiKey' && scheme.in === 'header') {
+        return 1
+      }
+
+      if (scheme.type === 'oauth2') {
+        return 2
+      }
+
+      return 3
+    }
+
+    schemes.sort((a, b) => getSortIndex(a) - getSortIndex(b))
 
     return first(schemes)
   }
@@ -171,13 +175,17 @@ export class OpenApiRequestExample {
 
     const scheme = this.securityScheme
 
-    if (scheme?.type === 'oauth2') {
+    if (!scheme) {
+      return headers
+    }
+
+    if (scheme.type === 'oauth2') {
       headers.set('Authorization', `Bearer YOUR_ACCESS_TOKEN`)
-    } else if (scheme?.type === 'http' && scheme.scheme === 'bearer') {
+    } else if (scheme.type === 'http' && scheme.scheme === 'bearer') {
       headers.set('Authorization', 'Bearer YOUR_API_KEY')
-    } else if (scheme?.type === 'http' && scheme.scheme === 'basic') {
+    } else if (scheme.type === 'http' && scheme.scheme === 'basic') {
       headers.set('Authorization', 'Basic YOUR_API_KEY')
-    } else if (scheme?.type === 'apiKey') {
+    } else if (scheme.type === 'apiKey' && scheme.in === 'header') {
       headers.set(scheme.name ?? 'Authorization', 'YOUR_API_KEY')
     }
 
