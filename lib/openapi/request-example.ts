@@ -1,9 +1,11 @@
+import first from 'lodash/first'
 import isEmpty from 'lodash/isEmpty'
 import {format as prettier} from 'prettier'
 
 import {OpenApiDocument} from './document'
 import {OpenAPI} from './types'
 import {schemaAsJson} from './utils'
+import {notEmpty} from '../not-empty'
 
 export class OpenApiRequestExample {
   path: string
@@ -123,30 +125,60 @@ export class OpenApiRequestExample {
     return this.method.toUpperCase()
   }
 
-  private get security() {
+  private get securitySchemes() {
     if (!this.operation.security) {
-      return null
+      return []
     }
 
-    const [security] = this.operation.security
-    const [securityType] = Object.keys(security)
+    const securityTypes = this.operation.security
+      .map((security) => Object.keys(security))
+      .flat()
 
-    return this.document.securitySchemes.get(securityType)
+    const schemes = securityTypes.map((securityType) =>
+      this.document.securitySchemes.get(securityType),
+    )
+
+    return schemes.filter(notEmpty)
+  }
+
+  private get securityScheme() {
+    const schemes = this.securitySchemes
+
+    // Sort schemes by type:
+    //  first http
+    //  then apiKey
+    //  then oauth2
+
+    schemes.sort((a, b) => {
+      if (a.type === 'http') {
+        return -1
+      } else if (b.type === 'http') {
+        return 1
+      } else if (a.type === 'apiKey') {
+        return -1
+      } else if (b.type === 'apiKey') {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
+    return first(schemes)
   }
 
   private get authenticationHeaders(): Map<string, string> {
     const headers: Map<string, string> = new Map<string, string>()
 
-    const securitySchema = this.security
+    const scheme = this.securityScheme
 
-    if (securitySchema?.type === 'oauth2') {
+    if (scheme?.type === 'oauth2') {
       headers.set('Authorization', `Bearer YOUR_ACCESS_TOKEN`)
-    } else if (securitySchema?.type === 'http' && securitySchema.scheme === 'bearer') {
+    } else if (scheme?.type === 'http' && scheme.scheme === 'bearer') {
       headers.set('Authorization', 'Bearer YOUR_API_KEY')
-    } else if (securitySchema?.type === 'http' && securitySchema.scheme === 'basic') {
+    } else if (scheme?.type === 'http' && scheme.scheme === 'basic') {
       headers.set('Authorization', 'Basic YOUR_API_KEY')
-    } else if (securitySchema?.type === 'apiKey') {
-      headers.set(securitySchema.name ?? 'Authorization', 'YOUR_API_KEY')
+    } else if (scheme?.type === 'apiKey') {
+      headers.set(scheme.name ?? 'Authorization', 'YOUR_API_KEY')
     }
 
     return headers

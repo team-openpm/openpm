@@ -8,7 +8,7 @@ export function DocumentAuthentication({document}: {document: OpenApiDocument}) 
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
       <h2 className="text-base font-semibold">Authentication</h2>
 
       <div className="space-y-3">
