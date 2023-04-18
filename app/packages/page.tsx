@@ -1,8 +1,9 @@
 'use client'
 
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 
 import {MainTemplate} from '@/components/main-template'
+import {useDebouncedState} from '@/lib/use-debounced-state'
 
 import {Header} from './header'
 import {PackageItem} from './package-item'
@@ -13,13 +14,14 @@ import {PackageResponse, PaginatedResponse} from './types'
 export default function Packages() {
   const [loading, setLoading] = useState(false)
   const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useDebouncedState(query, 100)
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [results, setResults] = useState<PackageResponse[]>([])
   const [hasRequested, setHasRequested] = useState(false)
   const limit = 50
-
   const shouldPaginate = total > limit
+  const requestCounter = useRef(0)
 
   const onResults = (results: PaginatedResponse) => {
     setHasRequested(true)
@@ -27,11 +29,23 @@ export default function Packages() {
     setTotal(results.total)
   }
 
-  const withLoading = useCallback(async (fn: () => Promise<void>) => {
+  const withDuplicatedRequests = useCallback(async function (
+    fn: () => Promise<PaginatedResponse>,
+  ) {
+    const currentRequest = ++requestCounter.current
+
     setLoading(true)
-    await fn()
+    const result = await fn()
+
+    if (currentRequest !== requestCounter.current) {
+      // There is a newer request, ignore this one
+      return
+    }
+
+    onResults(result)
     setLoading(false)
-  }, [])
+  },
+  [])
 
   useEffect(() => {
     const uri = new URL(window.location.href)
@@ -43,16 +57,23 @@ export default function Packages() {
   }, [])
 
   useEffect(() => {
-    if (query) {
-      withLoading(() => searchPackages({query, page, limit}).then(onResults))
+    setDebouncedQuery(query)
+  }, [query, setDebouncedQuery])
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      withDuplicatedRequests(() => {
+        return searchPackages({query: debouncedQuery, page, limit})
+      })
+
       setUrlSearchParams({
-        q: query,
+        q: debouncedQuery,
         page: page.toString(),
       })
     } else {
-      withLoading(() => fetchPackages({page, limit}).then(onResults))
+      withDuplicatedRequests(() => fetchPackages({page, limit}))
     }
-  }, [query, page, limit, withLoading])
+  }, [debouncedQuery, page, limit, withDuplicatedRequests])
 
   return (
     <MainTemplate>

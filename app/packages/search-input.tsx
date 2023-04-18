@@ -40,13 +40,14 @@ export function SearchInput({
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
         <Transition
           show={!loading}
-          enter="transition-opacity duration-75 delay-300"
+          enter="transition-opacity duration-500 delay-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition-opacity duration-300 delay-0"
+          leave="transition-opacity duration-100 delay-0"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
+          {/* Magnifying glass */}
           <svg
             viewBox="0 0 20 20"
             fill="none"
@@ -65,13 +66,14 @@ export function SearchInput({
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-3">
         <Transition
           show={loading}
-          enter="transition-opacity duration-75"
+          enter="transition-opacity duration-200"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="transition-opacity duration-150"
+          leave="transition-opacity duration-200"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
+          {/* Spinner */}
           <svg
             className="h-6 w-6 animate-spin text-pink-500"
             xmlns="http://www.w3.org/2000/svg"
