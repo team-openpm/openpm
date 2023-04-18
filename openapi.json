@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "0.0.1",
+    "version": "0.0.2",
     "title": "openpm",
     "license": {
       "name": "MIT"
@@ -314,9 +314,9 @@
         }
       }
     },
-    "/packages/{packageId}/openai-manifest": {
+    "/packages/{packageId}/ai-plugin": {
       "get": {
-        "description": "Returns an OpenAI api-plugin manifest",
+        "description": "Returns an OpenAI plugin manifest",
         "parameters": [
           {
             "name": "packageId",

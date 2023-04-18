@@ -29,7 +29,7 @@ export function PackageItem({pkg}: {pkg: PackageResponse}) {
               : null}
           </div>
 
-          <div className="text-right text-sm text-slate-900/80 dark:text-white/70">
+          <div className="text-right text-xs text-slate-900/80 dark:text-white/70">
             {pkg.version}{' '}
             <time title={publishedAt.toUTCString()}>
               published {formatDistanceToNow(publishedAt)}
