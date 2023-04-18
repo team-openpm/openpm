@@ -26,7 +26,7 @@ export function SearchInput({
   )
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       <input
         ref={ref}
         name="q"

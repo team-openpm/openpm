@@ -18,7 +18,7 @@ export function Header({children}: {children: ReactNode}) {
   return (
     <header
       className={clsx(
-        'top-14 z-30 flex flex-1 transform-gpu flex-col transition duration-300 ease-in-out sm:sticky',
+        'top-14 z-30 flex transform-gpu flex-col transition duration-300 ease-in-out sm:sticky',
         {'sm:drop-shadow-lg': !top},
       )}
     >
