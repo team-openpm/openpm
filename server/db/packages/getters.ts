@@ -203,6 +203,10 @@ export async function getPackagesWithPagination({
   }
 }
 
+export async function getAllPackageIds() {
+  return db.selectFrom('packages').select(['id']).execute()
+}
+
 export async function getAllPackages() {
   return db
     .selectFrom('packages')
