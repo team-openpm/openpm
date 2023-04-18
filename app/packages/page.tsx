@@ -87,8 +87,8 @@ export default function Packages() {
         />
       )}
 
-      {hasRequested && results.length === 0 && (
-        <div className="mt-10 text-center">
+      {hasRequested && query && results.length === 0 && (
+        <div className="mt-14 text-center">
           <h4 className="text-base font-medium opacity-60">No APIs found :(</h4>
         </div>
       )}
