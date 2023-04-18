@@ -58,7 +58,7 @@ export const getEmailsFromSessionToken = async (
       Authorization: `Bearer ${token}`,
     },
     next: {
-      revalidate: 10,
+      revalidate: 120,
     },
   })
 

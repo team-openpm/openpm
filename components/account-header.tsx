@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import {AcccountHeaderDropdown} from './account-header-dropdown'
+import {AccountHeaderDropdownSuspense} from './account-header-dropdown-suspense'
 import {SearchInput} from './search-input'
 import {ThemeToggle} from './theme-toggle'
 
@@ -40,8 +40,7 @@ export const AccountHeader = () => {
           submit api...
         </Link>
 
-        {/* @ts-expect-error Async Server Component */}
-        <AcccountHeaderDropdown />
+        <AccountHeaderDropdownSuspense />
 
         <ThemeToggle />
       </div>

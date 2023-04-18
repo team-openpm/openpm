@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-import {AcccountHeaderDropdown} from './account-header-dropdown'
+import {AccountHeaderDropdownSuspense} from './account-header-dropdown-suspense'
 import {LogoGithub} from './icons/logo-github'
 import {ThemeToggle} from './theme-toggle'
 
@@ -50,8 +50,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
               submit api...
             </Link>
 
-            {/* @ts-expect-error Async Server Component */}
-            <AcccountHeaderDropdown />
+            <AccountHeaderDropdownSuspense />
           </div>
 
           <div className="absolute bottom-0 right-0 top-0 hidden items-center gap-5 px-10 sm:flex">

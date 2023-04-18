@@ -7,6 +7,7 @@ import {getUserIdFromApiKey} from '@/server/db/api-keys/getters'
 import {getEmailsFromSessionToken, safeGetUserIdFromSessionToken} from './session'
 import {getToken} from './token'
 import {error} from '../error'
+import {getUserById} from '@/server/db/users/getters'
 
 export function auth() {
   const headersList = headers()
@@ -46,15 +47,16 @@ export function getSessionEmails() {
 
 export async function getSessionInfo() {
   const userId = await auth()
-  const emails = await getSessionEmails()
 
   if (!userId) {
-    null
+    return null
   }
+
+  const user = await getUserById(userId)
 
   return {
     userId: userId,
-    userEmail: first(emails) ?? null,
+    userEmail: first(user?.emails) ?? null,
   }
 }
 

@@ -1,5 +1,7 @@
+import {truncate} from 'lodash'
 import Link from 'next/link'
 
+import {cleanDescription} from '@/lib/description'
 import {formatDistanceToNow} from '@/lib/format-distance'
 import {PackageLite} from '@/server/db/packages/types'
 
@@ -17,7 +19,11 @@ export function PackageItem({pkg}: {pkg: PackageLite}) {
         </div>
 
         <div className="grid grid-cols-2 gap-1">
-          <div className="truncate">{pkg.description}</div>
+          <div className="truncate text-sm">
+            {pkg.description
+              ? truncate(cleanDescription(pkg.description), {length: 80})
+              : null}
+          </div>
 
           <div className="text-right text-sm text-slate-900/80 dark:text-white/70">
             {pkg.version}{' '}

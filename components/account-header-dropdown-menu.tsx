@@ -14,7 +14,7 @@ export default function AccountHeaderDropdownMenu({
   userEmail: string | null
 }) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block w-[110px] text-left">
       <div>
         <Menu.Button className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-4 py-1 text-sm font-medium">
           account

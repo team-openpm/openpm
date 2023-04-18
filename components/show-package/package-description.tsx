@@ -1,17 +1,21 @@
 import Link from 'next/link'
 
+import {cleanDescription} from '@/lib/description'
+
 export const PackageDescription = ({
   packageId,
   description,
   maxLength,
+  showMore = true,
 }: {
   packageId: string
   description: string
+  showMore?: boolean
   maxLength?: number
 }) => {
   const cleanedDescription = cleanDescription(description)
-  const shouldTruncate = maxLength ? cleanedDescription.length > maxLength : false
-  const truncatedDescription = shouldTruncate
+  const willTruncate = maxLength ? cleanedDescription.length > maxLength : false
+  const truncatedDescription = willTruncate
     ? cleanedDescription.substring(0, maxLength) + '...'
     : cleanedDescription
 
@@ -19,7 +23,7 @@ export const PackageDescription = ({
     <div className="prose prose-sm">
       {truncatedDescription}
 
-      {shouldTruncate && (
+      {willTruncate && showMore && (
         <Link
           prefetch={false}
           href={`/packages/${packageId}/description`}
@@ -30,21 +34,4 @@ export const PackageDescription = ({
       )}
     </div>
   )
-}
-
-/**
- * Removes markdown specific characters
- *
- * @param description - The input string to be cleaned.
- * @returns The cleaned description string
- */
-
-function cleanDescription(description: string): string {
-  // - Strip `#` `*`, `_` and `[]()` from description
-  // Strip html tags
-
-  return description
-    .replace(/[`#*_]/g, '')
-    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
-    .replace(/<[^>]*>/g, '')
 }
