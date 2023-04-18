@@ -19,7 +19,7 @@ export default function Packages() {
 
   const shouldPaginate = total > limit
 
-  const onSearchResults = (results: PaginatedResponse) => {
+  const onResults = (results: PaginatedResponse) => {
     setHasRequested(true)
     setResults(results.items)
     setTotal(results.total)
@@ -36,9 +36,9 @@ export default function Packages() {
 
   useEffect(() => {
     if (query) {
-      performSearch({query, page, limit}).then(onSearchResults)
+      searchPackages({query, page, limit}).then(onResults)
     } else {
-      setResults([])
+      fetchPackages({page, limit}).then(onResults)
     }
   }, [query, page, limit])
 
@@ -96,7 +96,7 @@ export default function Packages() {
   )
 }
 
-async function performSearch({
+async function searchPackages({
   query,
   page,
   limit,
@@ -107,6 +107,24 @@ async function performSearch({
 }) {
   const uri = new URL('/api/packages/search', window.location.origin)
   uri.searchParams.set('query', query)
+  uri.searchParams.set('page', page.toString())
+  uri.searchParams.set('limit', limit.toString())
+
+  const request = await fetch(uri)
+
+  if (request.ok) {
+    const results: PaginatedResponse = await request.json()
+    return results
+  } else {
+    return {
+      items: [],
+      total: 0,
+    }
+  }
+}
+
+async function fetchPackages({page, limit}: {page: number; limit: number}) {
+  const uri = new URL('/api/packages', window.location.origin)
   uri.searchParams.set('page', page.toString())
   uri.searchParams.set('limit', limit.toString())
 
