@@ -12,11 +12,35 @@ AI, our new platform, needs it's own app-store. One not controlled by a single r
 
 We engineers currently have a slim chance of creating this app-store layer before some large corporation does it. We must seize this chance.
 
-That's why we're building openpm.ai, an open source package-manager for OpenAPI files.
+That's why we're building [openpm.ai](https://openpm.ai), an open source package-manager for OpenAPI files.
 
 Everything we release is under the MIT license. We will never charge a transaction fee for our services. We will never wield editorial control. We will only remove packages that are scams or illegal under US law. At any point you can choose to export all of our packages and run them on your own server.
 
 For more information please see: https://openpm.ai
+
+## Retriving OpenAPI files
+
+You can browse OpenAPI 'packages' on openpm.ai. You can also download the entire database of packages as a p[single JSON file](https://openpm.ai/export).
+
+Every package has a unique ID. You can use this ID to retrieve the OpenAPI file via the API:
+
+```bash
+curl https://openpm.ai/api/packages/neon/openapi?format=json
+```
+
+You can search for packages via the API:
+
+```bash
+curl 'https://openpm.ai/api/packages/search?query=neon'
+```
+
+Lastly, you can lookup multiple packages at once:
+
+```bash
+curl 'https://openpm.ai/api/packages/lookup?ids=neon,openai'
+```
+
+For more details, please see the [API documentation](https://openpm.ai/packages/openpm).
 
 # Development
 

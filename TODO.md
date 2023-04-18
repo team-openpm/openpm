@@ -43,7 +43,7 @@ yarn dev
 
 # Release
 
-[ ] - readme file
+[x] - readme file
 [ ] - autogpt example
 [ ] - crawl for openapi files
 [x] - submit own openapi file
