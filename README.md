@@ -34,10 +34,16 @@ You can search for packages via the API:
 curl 'https://openpm.ai/api/packages/search?query=neon'
 ```
 
-Lastly, you can lookup multiple packages at once:
+You can lookup multiple packages at once:
 
 ```bash
 curl 'https://openpm.ai/api/packages/lookup?ids=neon,openai'
+```
+
+Lastly, you can return the package's ai-plugin manifest:
+
+```bash
+curl 'https://openpm.ai/api/packages/neon/ai-plugin'
 ```
 
 For more details, please see the [API documentation](https://openpm.ai/packages/openpm).
