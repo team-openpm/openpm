@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import capitalize from 'lodash/capitalize'
+import startCase from 'lodash/startCase'
 import Link from 'next/link'
 import React from 'react'
 
@@ -56,7 +56,7 @@ export const PackageSidebar: React.FC<{
           {Array.from(document.groupedEndpoints).map(([group, endpoints]) => (
             <div key={group} className="space-y-3">
               <h3 className="text-xs font-semibold text-slate-900 dark:text-white">
-                {capitalize(group)}
+                {startCase(group)}
               </h3>
 
               <ul

@@ -10,7 +10,7 @@ export class OpenApiResponseExample {
 
   get exampleJson(): string | null {
     if (this.schema.example) {
-      return this.schema.example
+      return JSON.stringify(this.schema.example)
     }
 
     const json = schemaAsJson(this.schema)

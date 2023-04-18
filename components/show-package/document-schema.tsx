@@ -27,7 +27,7 @@ export const DocumentSchema: React.FC<{
   }
 
   return (
-    <div className="space-y-4 text-sm">
+    <div className="space-y-4 py-4 text-sm first:pt-0 last:pb-0">
       <dl className="flex flex-wrap items-center gap-x-5">
         {schema.name && (
           <div className="min-w-sm flex min-w-[100px] items-center">
@@ -54,7 +54,7 @@ export const DocumentSchema: React.FC<{
         {schema.description && (
           <>
             <dt className="sr-only">Description</dt>
-            <dd className="mt-1 w-full flex-none">{schema.description}</dd>
+            <dd className="inl mt-3 w-full flex-none">{schema.description}</dd>
           </>
         )}
       </dl>

@@ -6,6 +6,8 @@ import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {DocumentEndpointRequestExample} from './document-endpoint-request-example'
 import {DocumentEndpointResponseExample} from './document-endpoint-response-example'
 import {DocumentSchema} from './document-schema'
+import {ErrorBoundary} from '../error-boundary'
+import {Markdown} from '../markdown'
 
 export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
   return (
@@ -16,7 +18,7 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
       <div className="space-y-8">
         <section className="space-y-2">
           <h3
-            className={clsx('space-x-3 font-mono text-sm', {
+            className={clsx('flex gap-3 font-mono text-sm', {
               'text-blue-500': endpoint.method === 'GET',
               'text-green-500': endpoint.method === 'POST',
               'text-orange-500': endpoint.method === 'PATCH',
@@ -31,19 +33,23 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
                     endpoint.method === 'GET',
                   'bg-green-400/10 ring-green-300 dark:text-green-400 dark:ring-green-400/30':
                     endpoint.method === 'POST',
-                  'bgring-ange-300 bg-orange-400/10 dark:text-orange-400 dark:ring-orange-400/30':
+                  'bg-orange-400/10 ring-orange-300 dark:text-orange-400 dark:ring-orange-400/30':
                     endpoint.method === 'PATCH',
-                  'bg-red-400/10ring--red-300 dark:text-red-400 dark:ring-red-400/30':
+                  'bg-red-400/10 ring-red-300 dark:text-red-400 dark:ring-red-400/30':
                     endpoint.method === 'DELETE',
                 },
               )}
             >
               {endpoint.method}
             </div>
-            <span>{endpoint.path}</span>
+            <div>{endpoint.path}</div>
           </h3>
 
-          <h4 className="text-sm">{endpoint.description}</h4>
+          {endpoint.description && (
+            <div className="prose prose-sm prose-slate dark:prose-invert">
+              <Markdown text={endpoint.description} />
+            </div>
+          )}
         </section>
 
         {endpoint.pathParameters.length > 0 && (
@@ -96,13 +102,17 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
 
       <div className="space-y-14 py-5">
         <Suspense>
-          {/* @ts-expect-error Async Server Component */}
-          <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
+          <ErrorBoundary fallback={<div>Failed to load example</div>}>
+            {/* @ts-expect-error Async Server Component */}
+            <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
 
-          {endpoint.responseExample && (
-            /* @ts-expect-error Async Server Component */
-            <DocumentEndpointResponseExample responseExample={endpoint.responseExample} />
-          )}
+            {endpoint.responseExample && (
+              /* @ts-expect-error Async Server Component */
+              <DocumentEndpointResponseExample
+                responseExample={endpoint.responseExample}
+              />
+            )}
+          </ErrorBoundary>
         </Suspense>
       </div>
     </div>
