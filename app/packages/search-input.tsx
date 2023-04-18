@@ -52,7 +52,7 @@ export function SearchInput({
             viewBox="0 0 20 20"
             fill="none"
             aria-hidden="true"
-            className="h-7 w-7 stroke-current text-pink-400/50"
+            className="h-8 w-8 stroke-current text-pink-400/50"
           >
             <path
               strokeLinecap="round"

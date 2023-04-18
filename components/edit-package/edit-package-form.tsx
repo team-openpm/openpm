@@ -45,6 +45,26 @@ export default function EditPackageForm({package: pkg}: {package: Package}) {
     router.push(`/packages/${id}`)
   }
 
+  const deletePackage = async () => {
+    const response = await fetch(`/api/packages/${pkg.id}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      const {error} = await response.json()
+      alert(error?.message ?? 'Something went wrong')
+      return
+    }
+
+    router.push(`/account`)
+  }
+
+  const confirmDeletePackage = () => {
+    if (confirm('Are you sure you want to delete this package?')) {
+      deletePackage()
+    }
+  }
+
   const setNewPackageKey = (key: keyof Package, value: string) => {
     setNewPackage((prev) => ({
       ...prev,
@@ -73,10 +93,7 @@ export default function EditPackageForm({package: pkg}: {package: Package}) {
                 <div className="mt-2">
                   <div className="flex justify-between">
                     <span className="font-mono">{pkg.id}</span>{' '}
-                    <Link
-                      href={`/packages/${pkg.id}`}
-                      className="text-blue-500"
-                    >
+                    <Link href={`/packages/${pkg.id}`} className="text-blue-500">
                       view package
                     </Link>
                   </div>
@@ -249,12 +266,27 @@ export default function EditPackageForm({package: pkg}: {package: Package}) {
           </div>
         </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <a href="/packages" className="text-sm font-semibold leading-6 text-slate-900">
-            Cancel
-          </a>
+        <div className="mt-6 flex items-center justify-between gap-x-6">
+          <div>
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-red-600"
+              onClick={() => confirmDeletePackage()}
+            >
+              Delete package
+            </button>
+          </div>
 
-          <DefaultButton loading={loading}>Update package</DefaultButton>
+          <div className="flex items-center gap-x-6">
+            <a
+              href="/packages"
+              className="text-sm font-semibold leading-6 text-slate-900"
+            >
+              Cancel
+            </a>
+
+            <DefaultButton loading={loading}>Update package</DefaultButton>
+          </div>
         </div>
       </form>
     </div>

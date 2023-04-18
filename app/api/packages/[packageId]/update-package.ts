@@ -2,7 +2,7 @@ import {NextResponse} from 'next/server'
 import semver from 'semver'
 import {z} from 'zod'
 
-import {parseSpecJson} from '@/lib/openapi'
+import {parseSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
@@ -12,6 +12,7 @@ import {error} from '@/server/helpers/error'
 const ApiSchema = z.object({
   packageId: z.string(),
   openapi: z.string().nullable(),
+  openapi_format: z.enum(['json', 'yaml']).default('json'),
   name: z.string().nullable(),
   machine_name: z.string().nullable(),
   domain: z.string(),
@@ -52,8 +53,8 @@ const endpoint = withAuth(
       })
 
       if (data.openapi) {
-        const openapi = await parseSpecJson(data.openapi)
-        const version = semver.valid(openapi.version)
+        const doc = await parseSpec(data.openapi, data.openapi_format)
+        const version = semver.valid(doc.version)
 
         if (!version) {
           return error('Invalid version')
@@ -62,7 +63,7 @@ const endpoint = withAuth(
         if (semver.gt(version, packageRow.version)) {
           await updatePackageSpec({
             packageId: data.packageId,
-            openapi: data.openapi,
+            openapi: JSON.stringify(doc),
             version,
           })
         }

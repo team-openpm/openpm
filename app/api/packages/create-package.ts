@@ -2,7 +2,7 @@ import first from 'lodash/first'
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {parseSpecJson} from '@/lib/openapi'
+import {parseSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
@@ -11,9 +11,10 @@ import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
 
 const ApiSchema = z.object({
-  openapi: z.string(),
   // Validate no spaces
   id: z.string().regex(/^[a-z0-9-]+$/),
+  openapi: z.string(),
+  openapi_format: z.enum(['json', 'yaml']).default('json'),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
@@ -29,7 +30,7 @@ const createPackageEndpoint = withAuth(
         return error('Package already exists')
       }
 
-      const doc = await parseSpecJson(data.openapi)
+      const doc = await parseSpec(data.openapi, data.openapi_format)
 
       if (!doc) {
         return error('Invalid openapi')
@@ -49,7 +50,7 @@ const createPackageEndpoint = withAuth(
 
       await createPackage({
         id: data.id,
-        openapi: data.openapi,
+        openapi: JSON.stringify(doc),
         name: doc.name || data.id,
         version,
         userId,

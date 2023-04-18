@@ -1,9 +1,10 @@
 import OpenAPIParser from '@readme/openapi-parser'
+import {parse as parseYaml} from 'yaml'
 
 import {OpenApiDocument} from './document'
 import {OpenAPIV3, OpenAPIV3_1} from './types'
 
-export async function parseSpec(spec: any): Promise<OpenApiDocument> {
+export async function parseSpecObject(spec: any): Promise<OpenApiDocument> {
   const document = await OpenAPIParser.parse(spec)
   const deferenced = await OpenAPIParser.dereference(document)
 
@@ -19,6 +20,22 @@ export async function parseSpec(spec: any): Promise<OpenApiDocument> {
 }
 
 export async function parseSpecJson(spec: string): Promise<OpenApiDocument> {
-  const specJson = JSON.parse(spec)
-  return parseSpec(specJson)
+  const specObject = JSON.parse(spec)
+  return parseSpecObject(specObject)
+}
+
+export async function parseSpecYaml(spec: string): Promise<OpenApiDocument> {
+  const specObject = await parseYaml(spec)
+  return parseSpecObject(specObject)
+}
+
+export async function parseSpec(
+  spec: string,
+  format: 'json' | 'yaml',
+): Promise<OpenApiDocument> {
+  if (format === 'json') {
+    return parseSpecJson(spec)
+  } else {
+    return parseSpecYaml(spec)
+  }
 }

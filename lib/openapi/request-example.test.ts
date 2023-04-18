@@ -2,10 +2,10 @@ import petstore from './fixtures/petstore.json'
 import reflect from './fixtures/reflect.json'
 import {OpenApiRequestExample} from './request-example'
 
-import {parseSpec} from '.'
+import {parseSpecObject} from '.'
 
 describe('request-example petstore', async () => {
-  const document = await parseSpec(petstore)
+  const document = await parseSpecObject(petstore)
 
   const requestExample = new OpenApiRequestExample({
     document,
@@ -78,7 +78,7 @@ describe('request-example petstore', async () => {
 })
 
 describe('request-example reflect', async () => {
-  const document = await parseSpec(reflect)
+  const document = await parseSpecObject(reflect)
   const endpoint = document.endpoints.find(
     (ep) => ep.path === '/graphs/{graphId}/books/sync',
   )!

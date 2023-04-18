@@ -1,4 +1,4 @@
-import {dump as toYAML} from 'js-yaml'
+import {stringify as yamlStringify} from 'yaml'
 
 import {parseSpecJson} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
@@ -19,7 +19,7 @@ export async function GET(req: Request, {params}: {params: {packageId: string}})
   const doc = await parseSpecJson(pkg.openapi)
 
   if (format === 'yaml') {
-    return new Response(toYAML(doc.toJSON()), {
+    return new Response(yamlStringify(doc.toJSON()), {
       headers: {
         'Content-Type': 'text/yaml',
       },

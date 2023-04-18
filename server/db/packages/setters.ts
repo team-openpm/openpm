@@ -1,24 +1,27 @@
 import {db} from '../connection'
 
-export async function updatePackage(packageId: string, {
-  name,
-  machineName,
-  domain,
-  contactEmail,
-  legalInfoUrl,
-  logoUrl,
-  description,
-  machineDescription,
-}: {
-  name: string | null
-  machineName: string | null
-  domain: string
-  contactEmail: string | null
-  legalInfoUrl: string | null
-  logoUrl: string | null
-  description: string | null
-  machineDescription: string | null
-}) {
+export async function updatePackage(
+  packageId: string,
+  {
+    name,
+    machineName,
+    domain,
+    contactEmail,
+    legalInfoUrl,
+    logoUrl,
+    description,
+    machineDescription,
+  }: {
+    name: string | null
+    machineName: string | null
+    domain: string
+    contactEmail: string | null
+    legalInfoUrl: string | null
+    logoUrl: string | null
+    description: string | null
+    machineDescription: string | null
+  },
+) {
   await db
     .updateTable('packages')
     .set({
@@ -34,7 +37,6 @@ export async function updatePackage(packageId: string, {
     .where('id', '=', packageId)
     .executeTakeFirstOrThrow()
 }
-
 
 export async function updatePackageSpec({
   packageId,
@@ -121,4 +123,8 @@ export async function createPackage({
       })
       .execute()
   })
+}
+
+export async function deletePackage(packageId: string) {
+  await db.deleteFrom('packages').where('id', '=', packageId).executeTakeFirstOrThrow()
 }
