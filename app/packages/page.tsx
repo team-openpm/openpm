@@ -25,14 +25,6 @@ export default function Packages() {
     setTotal(results.total)
   }
 
-  const setUrl = (query: string) => {
-    // push state to the url
-    const uri = new URL(window.location.href)
-    uri.searchParams.set('q', query)
-    uri.searchParams.set('page', page.toString())
-    window.history.replaceState({}, '', uri.toString())
-  }
-
   useEffect(() => {
     const uri = new URL(window.location.href)
     const search = uri.searchParams.get('q')
@@ -45,7 +37,10 @@ export default function Packages() {
   useEffect(() => {
     if (query) {
       searchPackages({query, page, limit}).then(onResults)
-      setUrl(query)
+      setUrlSearchParams({
+        q: query,
+        page: page.toString(),
+      })
     } else {
       fetchPackages({page, limit}).then(onResults)
     }
@@ -148,4 +143,15 @@ async function fetchPackages({page, limit}: {page: number; limit: number}) {
       total: 0,
     }
   }
+}
+
+const setUrlSearchParams = (searchParams: Record<string, string>) => {
+  // push state to the url
+  const uri = new URL(window.location.href)
+
+  for (const [key, value] of Object.entries(searchParams)) {
+    uri.searchParams.set(key, value)
+  }
+
+  window.history.replaceState({}, '', uri.toString())
 }
