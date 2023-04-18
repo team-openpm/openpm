@@ -1,20 +1,19 @@
 import clsx from 'clsx'
 import {Suspense} from 'react'
 
+import {ErrorBoundary} from '@/components/error-boundary'
+import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
 import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 
 import {DocumentEndpointRequestExample} from './document-endpoint-request-example'
 import {DocumentEndpointResponseExample} from './document-endpoint-response-example'
 import {DocumentSchema} from './document-schema'
-import {ErrorBoundary} from '../error-boundary'
-import {Markdown} from '../markdown'
 
 export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
   return (
-    <div
-      className="grid grid-cols-1 items-start gap-x-16 gap-y-10 py-12 xl:max-w-none xl:grid-cols-2"
-      id={endpoint.path}
-    >
+    <div className="relative grid grid-cols-1 items-start gap-x-16 gap-y-10 py-12 xl:max-w-none xl:grid-cols-2">
+      <div className="anchor absolute -top-10" id={endpoint.path} />
+
       <div className="space-y-8">
         <section className="space-y-2">
           <h3
@@ -47,7 +46,7 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
 
           {endpoint.description && (
             <div className="prose prose-sm prose-slate dark:prose-invert">
-              <Markdown text={endpoint.description} />
+              <MarkdownDynamic text={endpoint.description} />
             </div>
           )}
         </section>

@@ -3,6 +3,7 @@ import semver from 'semver'
 import {OpenApiEndpoint} from './endpoint'
 import {OpenAPI} from './types'
 import {commonPrefix, safeParseUrl} from './utils'
+import {memoize} from '../lodash-memoize'
 
 export class OpenApiDocument {
   private document: OpenAPI.Document
@@ -23,6 +24,7 @@ export class OpenApiDocument {
     return this.document.info.license?.name ?? null
   }
 
+  @memoize()
   get domain(): string | null {
     if (!this.baseUrl) {
       return null
@@ -40,6 +42,7 @@ export class OpenApiDocument {
     return this.document.info.description ?? null
   }
 
+  @memoize()
   get version(): string | null {
     const value = this.document.info.version
 
@@ -50,6 +53,7 @@ export class OpenApiDocument {
     return semver.valid(semver.coerce(value))
   }
 
+  @memoize()
   get endpoints() {
     const results: OpenApiEndpoint[] = []
 
@@ -104,6 +108,7 @@ export class OpenApiDocument {
     return results
   }
 
+  @memoize()
   get paths() {
     return this.endpoints.map((endpoint) => endpoint.path)
   }
@@ -125,6 +130,7 @@ export class OpenApiDocument {
    *  This would return: null
    *  Because the prefix is exactly the same as one of the paths.
    */
+  @memoize()
   get commonPathPrefix(): string | null {
     return commonPrefix(this.paths)
   }
@@ -142,6 +148,7 @@ export class OpenApiDocument {
    *   dogs: [ ... ]
    *   cats: [ ... ]
    */
+  @memoize()
   get groupedEndpoints(): Map<string, OpenApiEndpoint[]> {
     const results = new Map<string, OpenApiEndpoint[]>()
 
@@ -166,6 +173,7 @@ export class OpenApiDocument {
     return results
   }
 
+  @memoize()
   get securitySchemes() {
     const schemes = this.document.components?.securitySchemes
 
