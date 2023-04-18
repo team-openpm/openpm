@@ -3,11 +3,11 @@ import {headers} from 'next/headers'
 import {redirect} from 'next/navigation'
 
 import {getUserIdFromApiKey} from '@/server/db/api-keys/getters'
+import {getUserById} from '@/server/db/users/getters'
 
 import {getEmailsFromSessionToken, safeGetUserIdFromSessionToken} from './session'
 import {getToken} from './token'
 import {error} from '../error'
-import {getUserById} from '@/server/db/users/getters'
 
 export function auth() {
   const headersList = headers()

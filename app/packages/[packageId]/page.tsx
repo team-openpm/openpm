@@ -1,3 +1,4 @@
+import truncate from 'lodash/truncate'
 import React from 'react'
 
 import {AccountHeader} from '@/components/account-header'
@@ -14,6 +15,28 @@ export async function generateStaticParams() {
   return packages.map((pkg) => ({
     packageId: pkg.id,
   }))
+}
+
+export async function generateMetadata({params}: {params: {packageId: string}}) {
+  const pkg = await getPackageByIdOrNotFound(params.packageId)
+
+  const title = `${pkg.id} | openpm`
+  const description = truncate(pkg.description || 'OpenAPI package manager', {
+    length: 160,
+  })
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://openpm.ai/packages/${pkg.id}`,
+      siteName: 'openpm',
+      locale: 'en-US',
+      type: 'website',
+    },
+  }
 }
 
 export default async function Package({params}: {params: {packageId: string}}) {
