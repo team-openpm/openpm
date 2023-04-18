@@ -35,7 +35,7 @@ yarn dev
 [x] - disable button
 [x] - package sizes
 [x] - dark mode
-[ ] - mobile
+[x] - mobile
 [x] - openapi file
 [x] - markdown descriptions
 [ ] - debug wolfram alpha
@@ -43,7 +43,7 @@ yarn dev
 
 # Release
 
-[ ] - fix support email
+[x] - fix support email
 [x] - readme file
 [ ] - autogpt example
 [ ] - crawl for openapi files

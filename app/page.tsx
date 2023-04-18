@@ -39,7 +39,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative mt-10 grid divide-y divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-left backdrop-blur-md sm:mb-32 lg:mb-0 lg:grid-cols-3 lg:divide-x lg:divide-y-0 lg:text-center">
+      <div className="relative mt-10 grid divide-y divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-left backdrop-blur-md sm:mb-32 lg:mb-0 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
         <Link
           href="/about"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:border-neutral-700 hover:dark:bg-white/5"
