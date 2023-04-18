@@ -4,8 +4,8 @@ import React from 'react'
 import {OpenApiDocument} from '@/lib/openapi/document'
 import {Package} from '@/server/db/packages/types'
 
+import {DocumentAuthentication} from './document-authentication'
 import {DocumentEndpoint} from './document-endpoint'
-import {DocumentSecurityScheme} from './document-security-schema'
 import {PackageInfo} from './package-info'
 import {PackageVersions} from './package-versions'
 
@@ -21,10 +21,7 @@ export const PackageMain: React.FC<{package: Package; document: OpenApiDocument}
         {/* @ts-expect-error Async Server Component */}
         <PackageVersions package={pkg} />
 
-        {document.securitySchemes.size > 0 &&
-          Array.from(document.securitySchemes).map(([name, scheme]) => (
-            <DocumentSecurityScheme key={name} scheme={scheme} />
-          ))}
+        <DocumentAuthentication document={document} />
       </div>
 
       <div className="divide-y divide-slate-900/5">

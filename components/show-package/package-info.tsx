@@ -3,7 +3,7 @@ import Link from 'next/link'
 import {OpenApiDocument} from '@/lib/openapi/document'
 import {Package} from '@/server/db/packages/types'
 
-import {Markdown} from '../markdown'
+import {PackageDescription} from './package-description'
 
 export function PackageInfo({
   package: pkg,
@@ -77,9 +77,11 @@ export function PackageInfo({
       </div>
 
       {pkg.description && (
-        <div className="prose prose-sm max-w-none">
-          <Markdown text={pkg.description} />
-        </div>
+        <PackageDescription
+          packageId={pkg.id}
+          description={pkg.description}
+          maxLength={200}
+        />
       )}
     </div>
   )

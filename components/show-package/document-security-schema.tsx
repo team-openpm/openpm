@@ -1,21 +1,6 @@
 import {OpenAPI} from '@/lib/openapi/types'
 
 export function DocumentSecurityScheme({scheme}: {scheme: OpenAPI.SecuritySchemeObject}) {
-  const schemaElement = getElementForScheme(scheme)
-
-  if (!schemaElement) {
-    return null
-  }
-
-  return (
-    <div className="space-y-5 text-sm">
-      <h2 className="text-base font-semibold">Authentication</h2>
-      <div className="space-y-5">{schemaElement}</div>
-    </div>
-  )
-}
-
-function getElementForScheme<T extends OpenAPI.SecuritySchemeObject>(scheme: T) {
   if (isHttpSecurityScheme(scheme)) {
     return <HttpSecurityScheme scheme={scheme} />
   }
@@ -33,13 +18,15 @@ function getElementForScheme<T extends OpenAPI.SecuritySchemeObject>(scheme: T) 
 
 function HttpSecurityScheme({scheme}: {scheme: OpenAPI.HttpSecurityScheme}) {
   return (
-    <div className="space-y-5">
+    <div className="max-w-sm space-y-2 text-sm">
+      <h3 className="text-sm font-semibold">HTTP Authentication</h3>
+
       <div className="font-semibold capitalize">{scheme.scheme}</div>
 
       <div className="">{scheme.description}</div>
 
       {scheme.bearerFormat && (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-1">
           <div className="font-medium">Bearer format</div>
           <div>{scheme.bearerFormat}</div>
         </div>
@@ -50,27 +37,16 @@ function HttpSecurityScheme({scheme}: {scheme: OpenAPI.HttpSecurityScheme}) {
 
 function ApiKeySecurityScheme({scheme}: {scheme: OpenAPI.ApiKeySecurityScheme}) {
   return (
-    <div className="space-y-5">
-      <div className="text-lg font-semibold ">{scheme.name}</div>
+    <div className="max-w-sm space-y-2 text-sm">
+      <h3 className="text-sm font-semibold">API Key Authentication</h3>
 
       <div className="">{scheme.description}</div>
 
-      <div className="grid grid-cols-2 gap-2">
-        <div className="font-medium">In:</div>
+      <div className="grid grid-cols-2 gap-1">
+        <div className="">Name</div>
+        <div>{scheme.name}</div>
+        <div className="">In</div>
         <div className="">{scheme.in}</div>
-
-        {scheme.name && (
-          <>
-            <div className="font-medium">Name</div>
-            <div>{scheme.name}</div>
-          </>
-        )}
-        {scheme.in && (
-          <>
-            <div className="font-medium">In</div>
-            <div>{scheme.in}</div>
-          </>
-        )}
       </div>
     </div>
   )
@@ -78,11 +54,13 @@ function ApiKeySecurityScheme({scheme}: {scheme: OpenAPI.ApiKeySecurityScheme}) 
 
 function OAuth2SecurityScheme({scheme}: {scheme: OpenAPI.OAuth2SecurityScheme}) {
   return (
-    <div className="space-y-5">
+    <div className="max-w-sm space-y-2 text-sm">
+      <h3 className="text-sm font-semibold">OAuth2 Authentication</h3>
+
       <div className="">{scheme.description}</div>
 
       <div className="">
-        <div className="max-w-sm space-y-1">
+        <div className="pace-y-1">
           <div className="grid grid-cols-2 gap-1">
             <div className="">Type</div>
             <div>oauth2</div>
