@@ -6,7 +6,7 @@ import {SearchInput} from '../search-input'
 
 export const AccountHeader = () => {
   return (
-    <header className="sticky top-0 flex items-center border-b border-slate-900/10 bg-white/80 px-10 py-0 backdrop-blur-md dark:border-white/7.5 dark:bg-transparent">
+    <header className="sticky top-0 z-10 flex items-center border-b border-slate-900/10 bg-white/80 px-10 py-0 backdrop-blur-md dark:border-white/7.5 dark:bg-transparent">
       <div className="flex flex-1 items-center space-x-2 py-3 pl-10 text-sm text-slate-600">
         <div className="relative flex w-full max-w-lg place-items-center">
           <SearchInput className="h-8 w-full appearance-none rounded-full border border-pink-500/30 bg-white px-9 text-xs text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10  dark:hover:ring-white/20" />

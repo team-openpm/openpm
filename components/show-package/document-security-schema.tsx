@@ -1,4 +1,5 @@
 import {OpenAPI} from '@/lib/openapi/types'
+import {MarkdownDynamic} from '../markdown/markdown-dynamic'
 
 export function DocumentSecurityScheme({scheme}: {scheme: OpenAPI.SecuritySchemeObject}) {
   if (isHttpSecurityScheme(scheme)) {
@@ -23,7 +24,11 @@ function HttpSecurityScheme({scheme}: {scheme: OpenAPI.HttpSecurityScheme}) {
 
       <div className="font-semibold capitalize">{scheme.scheme}</div>
 
-      <div className="">{scheme.description}</div>
+      {scheme.description && (
+        <div className="prose prose-sm prose-slate dark:prose-invert">
+          <MarkdownDynamic text={scheme.description} />
+        </div>
+      )}
 
       {scheme.bearerFormat && (
         <div className="grid grid-cols-2 gap-1">
@@ -40,7 +45,11 @@ function ApiKeySecurityScheme({scheme}: {scheme: OpenAPI.ApiKeySecurityScheme}) 
     <div className="max-w-sm space-y-2 text-sm">
       <h3 className="text-sm font-semibold">API Key Authentication</h3>
 
-      <div className="">{scheme.description}</div>
+      {scheme.description && (
+        <div className="prose prose-sm prose-slate dark:prose-invert">
+          <MarkdownDynamic text={scheme.description} />
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-1">
         <div className="">Name</div>
@@ -57,7 +66,11 @@ function OAuth2SecurityScheme({scheme}: {scheme: OpenAPI.OAuth2SecurityScheme}) 
     <div className="max-w-sm space-y-2 text-sm">
       <h3 className="text-sm font-semibold">OAuth2 Authentication</h3>
 
-      <div className="">{scheme.description}</div>
+      {scheme.description && (
+        <div className="prose prose-sm prose-slate dark:prose-invert">
+          <MarkdownDynamic text={scheme.description} />
+        </div>
+      )}
 
       <div className="">
         <div className="pace-y-1">
