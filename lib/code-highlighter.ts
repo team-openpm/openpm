@@ -3,6 +3,8 @@ import {join as pathJoin} from 'path'
 
 import {Highlighter, getHighlighter, renderToHtml} from 'shiki'
 
+import {assertString} from './assert'
+
 import type {Theme} from 'shiki'
 
 let highlighter: Highlighter
@@ -12,6 +14,8 @@ export async function highlight(
   lang: 'shellscript' | 'javascript' | 'python' | 'json',
   theme: Theme = 'css-variables',
 ) {
+  assertString(code, 'code must be a string')
+
   // Touch the file system to ensure vercel bundles it
   const path = pathJoin(process.cwd(), 'lib', 'shiki')
   readdir(path)

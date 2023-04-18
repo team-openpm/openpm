@@ -5,7 +5,7 @@ import {MainTemplate} from '@/components/main-template'
 export default async function AboutPage() {
   return (
     <MainTemplate>
-      <article className="prose dark:prose-invert prose-headings:text-xl prose-headings:font-medium prose-a:no-underline dark:prose-p:text-white/70 dark:prose-a:text-blue-500">
+      <article className="prose prose-slate dark:prose-invert prose-headings:text-xl prose-headings:font-medium prose-a:no-underline dark:prose-p:text-white/70 dark:prose-a:text-blue-500">
         <h1>About</h1>
 
         <div className="prose max-w-prose">
@@ -16,8 +16,7 @@ export default async function AboutPage() {
 
           <p>
             With mobile we learned the painful lesson of the Apple app-store, controlled
-            by a single monopolistic company, stifling innovation and
-            entrepreneurship.
+            by a single monopolistic company, stifling innovation and entrepreneurship.
           </p>
 
           <p>
@@ -38,8 +37,8 @@ export default async function AboutPage() {
             <Link prefetch={false} href="/" className="text-pink-500">
               openpm.ai
             </Link>{' '}
-            is that store. We are building an open source package-manager for OpenAPI files.
-            Everything we release is under the MIT license. We will never charge a
+            is that store. We are building an open source package-manager for OpenAPI
+            files. Everything we release is under the MIT license. We will never charge a
             transaction fee for our services. We will never wield editorial control. We
             will only take down packages that are scams or illegal under US law. At any
             point you can choose to{' '}

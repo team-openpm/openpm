@@ -1,4 +1,4 @@
-import {capitalize} from 'lodash'
+import startCase from 'lodash/startCase'
 import React from 'react'
 
 import {OpenApiDocument} from '@/lib/openapi/document'
@@ -28,7 +28,7 @@ export const PackageMain: React.FC<{package: Package; document: OpenApiDocument}
         {Array.from(document.groupedEndpoints).map(([group, endpoints]) => (
           <div className="space-y-5 px-20 py-10 first:pt-0 last:pb-0" key={group}>
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white">
-              {capitalize(group)}
+              {startCase(group)}
             </h2>
 
             <div className="divide-y divide-slate-900/5">

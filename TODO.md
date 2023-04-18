@@ -37,8 +37,9 @@ yarn dev
 [x] - dark mode
 [ ] - mobile
 [x] - openapi file
-[ ] - markdown descriptions
+[x] - markdown descriptions
 [ ] - debug wolfram alpha
+[ ] - fix footer
 
 # Release
 

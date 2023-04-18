@@ -109,7 +109,7 @@ export default function NewPackageForm() {
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <a
             href="/packages"
-            className="text-sm font-semibold leading-6 text-slate-900 dark:text-white/80 dark:text-white/90"
+            className="text-sm font-semibold leading-6 text-slate-900 dark:text-white/80"
           >
             Cancel
           </a>

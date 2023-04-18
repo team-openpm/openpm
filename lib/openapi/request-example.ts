@@ -2,10 +2,12 @@ import first from 'lodash/first'
 import isEmpty from 'lodash/isEmpty'
 import {format as prettier} from 'prettier'
 
+import {memoize} from '@/lib/lodash-memoize'
+import {notEmpty} from '@/lib/not-empty'
+
 import {OpenApiDocument} from './document'
 import {OpenAPI} from './types'
 import {schemaAsJson} from './utils'
-import {notEmpty} from '../not-empty'
 
 export class OpenApiRequestExample {
   path: string
@@ -36,6 +38,7 @@ export class OpenApiRequestExample {
     return this.document.baseUrl ?? ''
   }
 
+  @memoize()
   get exampleCurl(): string {
     const lines: string[] = []
 
@@ -55,6 +58,7 @@ export class OpenApiRequestExample {
     return lines.join(' \\\n')
   }
 
+  @memoize()
   get exampleJavaScript(): string {
     const fetchHeaders: Map<string, string> = this.authenticationHeaders
     const fetchOptions: Map<string, any> = new Map<string, any>()
@@ -87,6 +91,7 @@ export class OpenApiRequestExample {
     return prettier(js, {semi: false, parser: 'babel', printWidth: 60})
   }
 
+  @memoize()
   get examplePython(): string {
     const headers = this.authenticationHeaders
 

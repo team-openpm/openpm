@@ -1,3 +1,5 @@
+import {memoize} from '@/lib/lodash-memoize'
+
 import {OpenAPI} from './types'
 import {schemaAsJson} from './utils'
 
@@ -8,9 +10,10 @@ export class OpenApiResponseExample {
     this.schema = schema
   }
 
+  @memoize()
   get exampleJson(): string | null {
     if (this.schema.example) {
-      return this.schema.example
+      return JSON.stringify(this.schema.example)
     }
 
     const json = schemaAsJson(this.schema)

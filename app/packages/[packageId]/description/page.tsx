@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import {AccountHeader} from '@/components/account-header'
-import {Markdown} from '@/components/markdown'
+import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 30
@@ -37,11 +37,11 @@ export default async function Package({params}: {params: {packageId: string}}) {
         <div className="mt-12">
           <Link
             prefetch={false}
-            href={`/packages/${pkg.id}`}
+            href={`/apis/${pkg.id}`}
             className="flex flex-col space-y-1 text-sm"
           >
             <ArrowLongLeftIcon className="h-5 w-5" />
-            <span>Back to package</span>
+            <span>Back to api</span>
           </Link>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default async function Package({params}: {params: {packageId: string}}) {
           <h1 className="text-medium text-2xl">{pkg.id}</h1>
 
           <div className="prose prose-sm max-w-none">
-            <Markdown text={pkg.description ?? ''} />
+            <MarkdownDynamic text={pkg.description ?? ''} />
           </div>
         </div>
       </div>

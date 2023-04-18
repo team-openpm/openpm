@@ -5,8 +5,8 @@ import {getPackagesWithPagination} from '@/server/db/packages/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 
 const ApiSchema = z.object({
-  limit: z.number().min(1).max(500).default(100),
-  page: z.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(500).default(100),
+  page: z.coerce.number().min(1).default(1),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
