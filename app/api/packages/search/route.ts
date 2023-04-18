@@ -6,8 +6,8 @@ import {withApiBuilder} from '@/server/helpers/api-builder'
 
 const ApiSchema = z.object({
   query: z.string(),
-  limit: z.number().min(1).max(500).default(100),
-  page: z.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(500).default(100),
+  page: z.coerce.number().min(1).default(1),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
@@ -21,11 +21,18 @@ export const GET = withApiBuilder<ApiRequestParams>(
 
     const {packages, total} = await searchPackagesWithPagination({query, page, limit})
 
-    return NextResponse.json({
-      items: packages,
-      page,
-      limit,
-      total,
-    })
+    return NextResponse.json(
+      {
+        items: packages,
+        page,
+        limit,
+        total,
+      },
+      {
+        headers: {
+          'Cache-Control': 's-maxage=30, stale-while-revalidate=59',
+        },
+      },
+    )
   },
 )
