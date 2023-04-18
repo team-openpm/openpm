@@ -39,14 +39,15 @@ yarn dev
 [x] - openapi file
 [x] - markdown descriptions
 [ ] - debug wolfram alpha
-[ ] - fix footer
+[x] - fix footer
 
 # Release
 
+[ ] - readme file
 [ ] - autogpt example
 [ ] - crawl for openapi files
 [ ] - submit own openapi file
-[ ] - tos / privacy
+[x] - tos / privacy
 [x] - migrate domain / hanko auth
 
 # V2
