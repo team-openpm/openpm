@@ -25,6 +25,14 @@ export default function Packages() {
     setTotal(results.total)
   }
 
+  const setUrl = (query: string) => {
+    // push state to the url
+    const uri = new URL(window.location.href)
+    uri.searchParams.set('q', query)
+    uri.searchParams.set('page', page.toString())
+    window.history.replaceState({}, '', uri.toString())
+  }
+
   useEffect(() => {
     const uri = new URL(window.location.href)
     const search = uri.searchParams.get('q')
@@ -37,6 +45,7 @@ export default function Packages() {
   useEffect(() => {
     if (query) {
       searchPackages({query, page, limit}).then(onResults)
+      setUrl(query)
     } else {
       fetchPackages({page, limit}).then(onResults)
     }
