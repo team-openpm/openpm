@@ -1,15 +1,11 @@
 import {truncate} from 'lodash'
 import Link from 'next/link'
-import {useMemo} from 'react'
 
 import {cleanDescription} from '@/lib/description'
 import {formatDistanceToNow} from '@/lib/format-distance'
+import {PackageLite} from '@/server/db/packages/types'
 
-import {PackageResponse} from './types'
-
-export function PackageItem({pkg}: {pkg: PackageResponse}) {
-  const publishedAt = useMemo(() => new Date(pkg.published_at), [pkg.published_at])
-
+export function PackageItem({pkg}: {pkg: PackageLite}) {
   return (
     <li
       className="rounded-xl bg-white/50 ring-1 ring-pink-900/10 backdrop-blur-md hover:bg-white/70 dark:bg-white/5 dark:ring-pink-400/50"
@@ -31,8 +27,8 @@ export function PackageItem({pkg}: {pkg: PackageResponse}) {
 
           <div className="text-right text-sm text-slate-900/80 dark:text-white/70">
             {pkg.version}{' '}
-            <time title={publishedAt.toUTCString()}>
-              published {formatDistanceToNow(publishedAt)}
+            <time title={pkg.published_at.toUTCString()}>
+              published {formatDistanceToNow(pkg.published_at)}
             </time>
           </div>
         </div>
