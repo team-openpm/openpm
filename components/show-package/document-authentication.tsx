@@ -9,7 +9,9 @@ export function DocumentAuthentication({document}: {document: OpenApiDocument}) 
 
   return (
     <div className="space-y-5">
-      <h2 className="text-base font-semibold">Authentication</h2>
+      <h2 className="text-base font-semibold" id="auth">
+        Authentication
+      </h2>
 
       <div className="space-y-3">
         {Array.from(document.securitySchemes).map(([name, scheme]) => (

@@ -15,7 +15,9 @@ export function PackageInfo({
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <h1 className="text-xl font-medium">{pkg.id}</h1>
+        <h1 className="text-xl font-medium" id="intro">
+          {pkg.id}
+        </h1>
 
         {pkg.version !== document.version && (
           <>
