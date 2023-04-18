@@ -66,6 +66,18 @@ export default async function OpenapiPage() {
 The API uses JSON for request and response bodies. The API is authenticated using Bearer tokens.`}
           </code>
         </pre>
+
+        <h2>Further reading</h2>
+
+        <p>We recommend these resources:</p>
+
+        <ul>
+          <li>
+            <a href="https://blog.readme.com/how-to-use-openapi-and-swagger-spec-for-documentation/">
+              ReadMe: How to Use OpenAPI and Swagger for Documentation
+            </a>
+          </li>
+        </ul>
       </article>
     </MainTemplate>
   )
