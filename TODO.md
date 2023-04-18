@@ -46,7 +46,7 @@ yarn dev
 [ ] - readme file
 [ ] - autogpt example
 [ ] - crawl for openapi files
-[ ] - submit own openapi file
+[x] - submit own openapi file
 [x] - tos / privacy
 [x] - migrate domain / hanko auth
 
