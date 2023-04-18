@@ -77,6 +77,9 @@ The API uses JSON for request and response bodies. The API is authenticated usin
               ReadMe: How to Use OpenAPI and Swagger for Documentation
             </a>
           </li>
+          <li>
+            <a href="https://openapi.tools/">openapi.tools</a>
+          </li>
         </ul>
       </article>
     </MainTemplate>
