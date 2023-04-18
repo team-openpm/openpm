@@ -20,12 +20,19 @@ const endpoint = withApiBuilder<ApiRequestParams>(
 
     const {packages, total} = await getPackagesWithPagination({page, limit})
 
-    return NextResponse.json({
-      items: packages,
-      page,
-      limit,
-      total,
-    })
+    return NextResponse.json(
+      {
+        items: packages,
+        page,
+        limit,
+        total,
+      },
+      {
+        headers: {
+          'Cache-Control': 's-maxage=30, stale-while-revalidate=59',
+        },
+      },
+    )
   },
 )
 
