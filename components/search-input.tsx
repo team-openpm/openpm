@@ -1,11 +1,9 @@
 'use client'
 
-import {useSearchParams} from 'next/navigation'
 import {useEffect, useRef, useState} from 'react'
 
 export function SearchInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  const searchParams = useSearchParams()
-  const [value, setValue] = useState(searchParams.get('q') ?? '')
+  const [value, setValue] = useState('')
   const ref = useRef<HTMLInputElement | null>(null)
 
   // Add a cmd+k hotkey to focus the search input
@@ -23,6 +21,15 @@ export function SearchInput(props: React.InputHTMLAttributes<HTMLInputElement>) 
       document.removeEventListener('keydown', handleKeyPress)
     }
   })
+
+  useEffect(() => {
+    const uri = new URL(window.location.href)
+    const search = uri.searchParams.get('q')
+
+    if (search) {
+      setValue(search)
+    }
+  }, [])
 
   return (
     <form action="/packages" className="contents">
