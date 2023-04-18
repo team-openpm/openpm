@@ -12,10 +12,10 @@ type Props = {
 
 export const MainTemplate: React.FC<Props> = ({children}) => {
   return (
-    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 dark:bg-slate-900">
+    <main className="flex flex-col scroll-smooth bg-slate-50 dark:bg-slate-900">
       <img
         src="/background-gradient.jpg"
-        className="pointer-events-none absolute left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
+        className="pointer-events-none fixed left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
         width={1558}
         height={946}
         alt=""
@@ -45,7 +45,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
             </a>
           </div>
 
-          <div className="flex items-center justify-end gap-10">
+          <div className="hidden items-center justify-end gap-10 sm:flex">
             <Link href="/new" className="text-sm font-medium">
               submit api...
             </Link>
@@ -59,10 +59,10 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
         </div>
       </div>
 
-      <div className="flex min-h-screen flex-col items-center overflow-auto p-24 lg:p-36">
-        <div className="relative flex w-full max-w-prose flex-1 flex-col">{children}</div>
+      <div className="z-10 flex min-h-screen flex-col items-center px-5 pt-16 sm:p-24 lg:p-36">
+        <div className="flex w-full max-w-prose flex-1 flex-col">{children}</div>
 
-        <footer className="z-10 mt-10 flex items-center justify-center gap-5 lg:mt-28">
+        <footer className="z-10 mt-5 flex items-center justify-center gap-5 py-5 sm:mt-10 lg:mt-28">
           <Link
             prefetch={false}
             href="/about"

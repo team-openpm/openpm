@@ -21,8 +21,7 @@ export default async function AboutPage() {
         <p>
           AI, our new platform, needs it&apos;s own app-store. One not controlled by a
           single rent-seeking company, but an open and free app-store built upon the open
-          web and the OpenAPI specification. This will let AIs discover and interact with
-          the world via APIs.
+          web and the OpenAPI specification.
         </p>
 
         <p>
@@ -35,7 +34,9 @@ export default async function AboutPage() {
           <Link prefetch={false} href="/" className="text-pink-500">
             openpm.ai
           </Link>
-          , an open source package-manager for OpenAPI files.
+          , an open source package-manager for OpenAPI files. AIs can use consume packages
+          from openpm in a similar fashion to how ChatGPT plugins work. Ultimately, AIs
+          can use openpm to discover and interact with the world via APIs.
         </p>
 
         <p>

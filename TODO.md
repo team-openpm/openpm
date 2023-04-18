@@ -43,6 +43,7 @@ yarn dev
 
 # Release
 
+[ ] - fix support email
 [x] - readme file
 [ ] - autogpt example
 [ ] - crawl for openapi files
