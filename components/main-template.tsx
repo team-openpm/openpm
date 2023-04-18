@@ -53,7 +53,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
             <AccountHeaderMenu />
           </div>
 
-          <div className="absolute bottom-0 right-0 top-0 hidden items-center gap-5 px-10 sm:flex">
+          <div className="absolute bottom-0 right-3 top-0 hidden items-center sm:flex">
             <ThemeToggle />
           </div>
         </div>
