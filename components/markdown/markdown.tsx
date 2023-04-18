@@ -1,6 +1,4 @@
-'use client'
-
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import {marked} from 'marked'
 
 export function Markdown({text}: {text: string}) {
