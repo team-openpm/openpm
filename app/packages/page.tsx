@@ -1,33 +1,51 @@
-'use server'
+'use client'
+
+import {useEffect, useState} from 'react'
 
 import {MainTemplate} from '@/components/main-template'
-import {SearchInput} from '@/components/search-input'
-import {
-  getPackagesWithPagination,
-  searchPackagesWithPagination,
-} from '@/server/db/packages/getters'
 
 import {PackageItem} from './package-item'
 import {Pagination} from './pagination'
+import {SearchInput} from './search-input'
+import {PackageResponse, PaginatedResponse} from './types'
 
-export default async function Packages({
-  searchParams: {q: query = '', p = 1},
-}: {
-  searchParams: {q: string; p: number}
-}) {
+export default function Packages() {
+  const [query, setQuery] = useState('')
+  const [total, setTotal] = useState(0)
+  const [page, setPage] = useState(1)
+  const [results, setResults] = useState<PackageResponse[]>([])
+  const [hasRequested, setHasRequested] = useState(false)
   const limit = 50
-  const page = Number(p)
-
-  const {packages, total} = query
-    ? await searchPackagesWithPagination({query, limit, page})
-    : await getPackagesWithPagination({limit, page})
 
   const shouldPaginate = total > limit
+
+  const onSearchResults = (results: PaginatedResponse) => {
+    setHasRequested(true)
+    setResults(results.items)
+    setTotal(results.total)
+  }
+
+  useEffect(() => {
+    const uri = new URL(window.location.href)
+    const search = uri.searchParams.get('q')
+
+    if (search) {
+      setQuery(search)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (query) {
+      performSearch({query, page, limit}).then(onSearchResults)
+    } else {
+      setResults([])
+    }
+  }, [query, page, limit])
 
   return (
     <MainTemplate>
       <div className="relative mt-10 flex place-items-center">
-        <SearchInput className="h-11 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/30 bg-white px-12 text-center text-sm text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 " />
+        <SearchInput value={query} onChange={setQuery} />
 
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
           <svg
@@ -52,21 +70,55 @@ export default async function Packages({
         </div>
       </div>
 
-      <ul className="mt-10 space-y-2">
-        {packages.map((pkg) => (
-          <PackageItem key={pkg.id} pkg={pkg} />
-        ))}
-      </ul>
-
-      {shouldPaginate && (
-        <Pagination total={total} page={page} limit={limit} query={query} />
+      {results.length > 0 && (
+        <ul className="mt-10 space-y-2">
+          {results.map((pkg) => (
+            <PackageItem key={pkg.id} pkg={pkg} />
+          ))}
+        </ul>
       )}
 
-      {packages.length === 0 && (
+      {hasRequested && shouldPaginate && (
+        <Pagination
+          onChange={(page) => setPage(page)}
+          total={total}
+          page={page}
+          limit={limit}
+        />
+      )}
+
+      {hasRequested && results.length === 0 && (
         <div className="mt-10 text-center">
-          <h4 className="text-base font-medium">No APIs found</h4>
+          <h4 className="text-base font-medium opacity-60">No APIs found :(</h4>
         </div>
       )}
     </MainTemplate>
   )
+}
+
+async function performSearch({
+  query,
+  page,
+  limit,
+}: {
+  query: string
+  page: number
+  limit: number
+}) {
+  const uri = new URL('/api/packages/search', window.location.origin)
+  uri.searchParams.set('query', query)
+  uri.searchParams.set('page', page.toString())
+  uri.searchParams.set('limit', limit.toString())
+
+  const request = await fetch(uri)
+
+  if (request.ok) {
+    const results: PaginatedResponse = await request.json()
+    return results
+  } else {
+    return {
+      items: [],
+      total: 0,
+    }
+  }
 }
