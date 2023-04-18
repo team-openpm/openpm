@@ -141,7 +141,7 @@ export class OpenApiRequestExample {
     return schemes.filter(notEmpty)
   }
 
-  private get securityScheme() {
+  private get favoredSecurityScheme() {
     const schemes = this.securitySchemes
 
     // Sort schemes by type:
@@ -173,7 +173,7 @@ export class OpenApiRequestExample {
   private get authenticationHeaders(): Map<string, string> {
     const headers: Map<string, string> = new Map<string, string>()
 
-    const scheme = this.securityScheme
+    const scheme = this.favoredSecurityScheme
 
     if (!scheme) {
       return headers
