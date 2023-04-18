@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import {MainTemplate} from '@/components/main-template'
 
 export default async function OpenapiPage() {
@@ -10,6 +12,7 @@ export default async function OpenapiPage() {
           simplifies API documentation, client libraries generation, validation, and
           testing.
         </p>
+
         <h2>Benefits</h2>
         <p>By creating an OpenAPI specification, you can enjoy the following benefits:</p>
         <ul>
@@ -26,6 +29,15 @@ export default async function OpenapiPage() {
             ensuring consistency and reducing errors.
           </li>
         </ul>
+
+        <h2>How do we fit in?</h2>
+
+        <p>
+          <Link className="text-pink-500 " href="/">
+            openpm.ai
+          </Link>{' '}
+          is a package manager used for publishing and discovering OpenAPI specs.
+        </p>
 
         <h2>Learning by Example</h2>
 

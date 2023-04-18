@@ -41,21 +41,6 @@ export default function Home() {
 
       <div className="relative mt-10 grid divide-y divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-left backdrop-blur-md sm:mb-32 lg:mb-0 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
         <Link
-          href="/about"
-          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:border-neutral-700 hover:dark:bg-white/5"
-        >
-          <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
-            About
-            <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
-              <ArrowRightIcon className="h-4 w-4" />
-            </span>
-          </h2>
-          <p className={`m-0 text-sm opacity-80`}>
-            What is openpm.ai and how does it work?
-          </p>
-        </Link>
-
-        <Link
           href="/openapi"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
@@ -72,17 +57,35 @@ export default function Home() {
         </Link>
 
         <Link
+          prefetch={false}
           href="/new"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
-            Create{' '}
+            Publish{' '}
             <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
               <ArrowRightIcon className="h-4 w-4" />
             </span>
           </h2>
           <p className={`m-0 text-sm opacity-80`}>
             Submit OpenAPI specs to the registry.
+          </p>
+        </Link>
+
+        <Link
+          prefetch={false}
+          href="/apis/openpm"
+          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
+        >
+          <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
+            Build{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
+              <ArrowRightIcon className="h-4 w-4" />
+            </span>
+          </h2>
+
+          <p className={`m-0 text-sm opacity-80`}>
+            Use our API to search for OpenAPI specs.
           </p>
         </Link>
       </div>
