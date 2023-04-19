@@ -8,6 +8,7 @@ describe('request-example petstore', async () => {
   const document = await parseSpecObject(petstore)
 
   const requestExample = new OpenApiRequestExample({
+    origin: 'http://petstore.swagger.io/v1',
     document,
     path: '/api/v1/users',
     method: 'post',
