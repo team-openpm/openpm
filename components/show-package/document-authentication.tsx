@@ -1,11 +1,9 @@
-import isEmpty from 'lodash/isEmpty'
-
 import {OpenApiDocument} from '@/lib/openapi/document'
 
 import {DocumentSecurityScheme} from './document-security-schema'
 
 export function DocumentAuthentication({document}: {document: OpenApiDocument}) {
-  if (isEmpty(document.securitySchemes)) {
+  if (!document.hasAuthentication) {
     return null
   }
 

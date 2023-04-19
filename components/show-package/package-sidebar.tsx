@@ -42,7 +42,7 @@ export const PackageSidebar: React.FC<{
                 <span className="truncate">Introduction</span>
               </a>
 
-              {document.securitySchemes.size > 0 && (
+              {document.hasAuthentication && (
                 <a
                   className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                   href="#auth"

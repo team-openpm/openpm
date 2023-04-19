@@ -1,4 +1,5 @@
-import {first} from 'lodash'
+import first from 'lodash/first'
+import isEmpty from 'lodash/isEmpty'
 import semver from 'semver'
 
 import {memoize} from '@/lib/lodash-memoize'
@@ -209,6 +210,10 @@ export class OpenApiDocument {
     }
 
     return results
+  }
+
+  get hasAuthentication(): boolean {
+    return !isEmpty(this.securitySchemes)
   }
 
   get securitySchemes(): Record<string, OpenAPI.SecuritySchemeObject> {
