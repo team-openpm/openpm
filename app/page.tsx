@@ -13,7 +13,7 @@ export default function Home() {
         </h2>
 
         <div className="relative mt-10 flex place-items-center">
-          <SearchInput className="h-12 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 " />
+          <SearchInput className="h-12 w-full appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 sm:min-w-[320px] " />
 
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
             <svg
