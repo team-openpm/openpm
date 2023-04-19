@@ -13,6 +13,8 @@ const nextConfig = {
     ],
   },
 
+  staticPageGenerationTimeout: 1000,
+
   async rewrites() {
     return [
       {
