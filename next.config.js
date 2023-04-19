@@ -4,7 +4,12 @@ const nextConfig = {
 
   experimental: {
     appDir: true,
-    serverComponentsExternalPackages: ['shiki', 'vscode-oniguruma', 'pg', 'pg-native'],
+    serverComponentsExternalPackages: [
+      '@maccman/shiki',
+      'vscode-oniguruma',
+      'pg',
+      'pg-native',
+    ],
   },
 
   async rewrites() {
@@ -19,7 +24,7 @@ const nextConfig = {
         source: '/packages/:package/openapi.yaml',
         destination: '/api/packages/:package/openapi',
       },
-      
+
       // Rewrite /packages to /apis
       {
         source: '/apis',
@@ -29,7 +34,7 @@ const nextConfig = {
       {
         source: '/apis/:path*',
         destination: '/packages/:path*',
-      }
+      },
     ]
   },
 }

@@ -15,6 +15,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
+    "@maccman/shiki": "^0.14.1",
     "@neondatabase/serverless": "^0.3.0",
     "@readme/openapi-parser": "^2.5.0",
     "@teamhanko/hanko-elements": "^0.2.2-alpha",
@@ -42,7 +43,6 @@
     "react-json-view": "^1.21.3",
     "semver": "^7.3.8",
     "server-only": "^0.0.1",
-    "shiki": "^0.14.1",
     "typescript": "5.0.4",
     "uuid": "^9.0.0",
     "vscode-oniguruma": "^1.7.0",
