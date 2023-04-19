@@ -105,7 +105,7 @@ export class OpenApiRequestExample {
       result += ',\n\theaders={\n'
 
       for (const [key, value] of headers) {
-        result += `\t\t${key}: ${JSON.stringify(value, null, 2)},\n`
+        result += `\t\t${JSON.stringify(key)}: ${JSON.stringify(value, null, 2)},\n`
       }
 
       result += '\t}'
@@ -115,7 +115,7 @@ export class OpenApiRequestExample {
       result += ',\n\tjson={\n'
 
       for (const [key, value] of this.properties) {
-        result += `\t\t${key}: ${JSON.stringify(value, null, 2)},\n`
+        result += `\t\t${JSON.stringify(key)}: ${JSON.stringify(value, null, 2)},\n`
       }
 
       result += '\t}\n'
