@@ -78,8 +78,15 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
                       {parameter.required && (
                         <dd className="text-xs text-red-500">Required</dd>
                       )}
-                      <dt className="sr-only">Description</dt>
-                      <dd className="w-full flex-none">{parameter.description}</dd>
+
+                      {parameter.description && (
+                        <>
+                          <dt className="sr-only">Description</dt>
+                          <dd className="prose prose-sm w-full flex-none">
+                            <MarkdownDynamic text={parameter.description} />
+                          </dd>
+                        </>
+                      )}
                     </dl>
                   </li>
                 ))}

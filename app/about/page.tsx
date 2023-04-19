@@ -6,7 +6,7 @@ export default async function AboutPage() {
   return (
     <MainTemplate>
       <article className="prose prose-slate max-w-prose dark:prose-invert prose-headings:text-xl prose-headings:font-medium prose-a:no-underline dark:prose-p:text-white/70 dark:prose-a:text-blue-500">
-        <h1>openpm</h1>
+        <h1>Our purpose</h1>
 
         <p>
           AI is fundamentally changing the way we live, work, and build software. It has

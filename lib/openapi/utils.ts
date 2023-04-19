@@ -51,10 +51,14 @@ export function commonPrefix(paths: string[]): string {
 export const isArraySchemaObject = (
   schema: OpenAPI.SchemaObject,
 ): schema is OpenAPI.ArraySchemaObject => {
-  return schema.type === 'array'
+  return schema.type === 'array' && typeof schema.items === 'object'
 }
 
 export function schemaAsJson(schema: OpenAPI.SchemaObject): any {
+  if (!schema) {
+    return ''
+  }
+
   switch (schema.type) {
     case 'object':
       return Object.fromEntries(
