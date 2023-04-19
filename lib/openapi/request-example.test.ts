@@ -67,7 +67,7 @@ describe('request-example petstore', async () => {
       	headers={
       	},
       	json={
-      		0: {
+      		\\"0\\": {
         \\"name\\": \\"John Doe\\",
         \\"email\\": \\"john@example.com\\"
       },
@@ -133,10 +133,10 @@ describe('request-example reflect', async () => {
 
       requests.request('POST', 'https://reflect.app/api/graphs/{graphId}/books/sync',
       	headers={
-      		Authorization: \\"Bearer YOUR_ACCESS_TOKEN\\",
+      		\\"Authorization\\": \\"Bearer YOUR_ACCESS_TOKEN\\",
       	},
       	json={
-      		books: [
+      		\\"books\\": [
         {
           \\"id\\": \\"string\\",
           \\"asin\\": \\"string\\",

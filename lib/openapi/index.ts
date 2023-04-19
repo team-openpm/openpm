@@ -6,14 +6,20 @@ import {OpenAPIV3, OpenAPIV3_1} from './types'
 
 export async function parseSpecObject(spec: any): Promise<OpenApiDocument> {
   const document = await OpenAPIParser.parse(spec)
-  const deferenced = await OpenAPIParser.dereference(document)
+  const dereferenced = await OpenAPIParser.dereference(document)
 
   const version = spec?.openapi ?? ''
 
   if (version.startsWith('3.1')) {
-    return new OpenApiDocument(deferenced as OpenAPIV3_1.Document)
+    return new OpenApiDocument({
+      dereferenced: dereferenced as OpenAPIV3_1.Document,
+      document: document as OpenAPIV3_1.Document,
+    })
   } else if (version.startsWith('3.0')) {
-    return new OpenApiDocument(deferenced as OpenAPIV3.Document)
+    return new OpenApiDocument({
+      dereferenced: dereferenced as OpenAPIV3.Document,
+      document: document as OpenAPIV3.Document,
+    })
   } else {
     throw new Error('Unsupported OpenAPI version')
   }

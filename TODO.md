@@ -40,9 +40,11 @@ yarn dev
 [x] - markdown descriptions
 [ ] - debug wolfram alpha
 [x] - fix footer
+[ ] - debug ip2location
 
 # Release
 
+[ ] - error tracking
 [x] - fix support email
 [x] - readme file
 [ ] - autogpt example

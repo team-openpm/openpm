@@ -9,13 +9,21 @@ import {commonPrefix, safeParseUrl} from './utils'
 
 export class OpenApiDocument {
   private document: OpenAPI.Document
+  private original: OpenAPI.Document
 
-  constructor(document: OpenAPI.Document) {
-    this.document = document
+  constructor({
+    document,
+    dereferenced,
+  }: {
+    document: OpenAPI.Document
+    dereferenced: OpenAPI.Document
+  }) {
+    this.original = document
+    this.document = dereferenced
   }
 
   toJSON() {
-    return this.document
+    return this.original
   }
 
   get name(): string | null {
