@@ -13,7 +13,7 @@ export async function highlight(
   code: string,
   lang: 'shellscript' | 'javascript' | 'python' | 'json',
   theme: Theme = 'css-variables',
-) {
+): Promise<string> {
   assertString(code, 'code must be a string')
 
   // Touch the file system to ensure vercel bundles it
@@ -36,4 +36,17 @@ export async function highlight(
   const html = renderToHtml(tokens, {bg: 'transparent'})
 
   return html
+}
+
+export async function safeHighlight(
+  code: string,
+  lang: 'shellscript' | 'javascript' | 'python' | 'json',
+  theme: Theme = 'css-variables',
+): Promise<string> {
+  try {
+    return await highlight(code, lang, theme)
+  } catch (error) {
+    console.error(error)
+    return code
+  }
 }
