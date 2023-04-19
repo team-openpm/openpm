@@ -14,13 +14,13 @@ export class OpenApiDocument {
 
   constructor({
     document,
-    dereferenced,
+    parsed,
   }: {
     document: OpenAPI.Document
-    dereferenced: OpenAPI.Document
+    parsed: OpenAPI.Document
   }) {
     this.original = document
-    this.document = dereferenced
+    this.document = parsed
   }
 
   toJSON() {

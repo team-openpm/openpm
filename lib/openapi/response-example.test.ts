@@ -2,11 +2,11 @@ import petstore from './fixtures/petstore.json'
 import reflect from './fixtures/reflect.json'
 import {OpenApiResponseExample} from './response-example'
 
-import {parseSpecObject} from '.'
+import {parseOpenApiObject} from '.'
 
 describe('response-example', () => {
   it('should return a json example for petstore', async () => {
-    const document = await parseSpecObject(petstore)
+    const document = await parseOpenApiObject(petstore)
 
     const responseExample = new OpenApiResponseExample({
       schema: document.endpoints[0].successResponseSchema!,
@@ -24,7 +24,7 @@ describe('response-example', () => {
   })
 
   it('should return a json example for reflect schema', async () => {
-    const document = await parseSpecObject(reflect)
+    const document = await parseOpenApiObject(reflect)
     const firstEndpoint = document.endpoints[0]
 
     expect(firstEndpoint.path).toMatchInlineSnapshot('"/graphs/{graphId}/books"')

@@ -8,6 +8,7 @@ import {Select} from '@/components/select'
 import {TextInput} from '@/components/text-input'
 import {TextareaInput} from '@/components/textarea-input'
 import {Package} from '@/server/db/packages/types'
+import {safeJson} from '@/lib/response-json'
 
 type PackageForm = Partial<Package> & {
   openapi_format?: string
@@ -36,7 +37,7 @@ export default function NewPackageForm() {
     })
 
     if (!response.ok) {
-      const {error} = await response.json()
+      const {error} = (await safeJson(response)) ?? {}
       alert(error?.message ?? 'Something went wrong')
       setLoading(false)
       return

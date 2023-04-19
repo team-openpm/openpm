@@ -2,7 +2,7 @@ import first from 'lodash/first'
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {parseSpec} from '@/lib/openapi'
+import {parseOpenApiSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
@@ -30,22 +30,24 @@ const createPackageEndpoint = withAuth(
         return error('Package already exists')
       }
 
-      const doc = await parseSpec(data.openapi, data.openapi_format)
+      let doc
 
-      if (!doc) {
-        return error('Invalid openapi')
+      try {
+        doc = await parseOpenApiSpec(data.openapi, data.openapi_format)
+      } catch (err) {
+        return error('Invalid OpenAPI document')
       }
 
       const version = doc.version
 
       if (typeof version !== 'string') {
-        return error('Invalid version')
+        return error('Invalid OpenAPI version')
       }
 
       const domain = doc.domain
 
       if (!domain) {
-        return error('Missing openapi domain')
+        return error('Missing OpenAPI domain')
       }
 
       await createPackage({

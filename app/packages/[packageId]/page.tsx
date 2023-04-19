@@ -4,7 +4,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseSpecJson} from '@/lib/openapi'
+import {parseOpenApiSpecJson} from '@/lib/openapi'
 import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 15
@@ -41,7 +41,7 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
 
 export default async function Package({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const doc = await parseSpecJson(pkg.openapi)
+  const doc = await parseOpenApiSpecJson(pkg.openapi)
 
   return (
     <div className="flex">
