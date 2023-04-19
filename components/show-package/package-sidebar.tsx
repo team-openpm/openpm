@@ -79,10 +79,11 @@ export const PackageSidebar: React.FC<{
                       {endpoint.method && (
                         <span
                           className={clsx('text-[10px] font-semibold uppercase', {
-                            'text-blue-500': endpoint.method === 'GET',
-                            'text-green-500': endpoint.method === 'POST',
-                            'text-orange-500': endpoint.method === 'PATCH',
-                            'text-red-500': endpoint.method === 'DELETE',
+                            'text-blue-500': endpoint.method === 'get',
+                            'text-green-500': endpoint.method === 'post',
+                            'text-orange-500':
+                              endpoint.method === 'patch' || endpoint.method === 'put',
+                            'text-red-500': endpoint.method === 'delete',
                           })}
                         >
                           {endpoint.method}

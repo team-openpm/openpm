@@ -18,10 +18,10 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
         <section className="space-y-2">
           <h3
             className={clsx('flex gap-3 font-mono text-sm', {
-              'text-blue-500': endpoint.method === 'GET',
-              'text-green-500': endpoint.method === 'POST',
-              'text-orange-500': endpoint.method === 'PATCH',
-              'text-red-500': endpoint.method === 'DELETE',
+              'text-blue-500': endpoint.method === 'get',
+              'text-green-500': endpoint.method === 'post',
+              'text-orange-500': endpoint.method === 'patch',
+              'text-red-500': endpoint.method === 'delete',
             })}
           >
             <div
@@ -29,13 +29,13 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
                 'inline-flex rounded-lg px-1.5 font-mono text-[0.625rem] font-semibold leading-6 ring-1 ring-inset',
                 {
                   'bg-blue-400/10 ring-blue-300 dark:text-blue-400 dark:ring-blue-400/30':
-                    endpoint.method === 'GET',
+                    endpoint.method === 'get',
                   'bg-green-400/10 ring-green-300 dark:text-green-400 dark:ring-green-400/30':
-                    endpoint.method === 'POST',
+                    endpoint.method === 'post',
                   'bg-orange-400/10 ring-orange-300 dark:text-orange-400 dark:ring-orange-400/30':
-                    endpoint.method === 'PATCH',
+                    endpoint.method === 'patch' || endpoint.method === 'put',
                   'bg-red-400/10 ring-red-300 dark:text-red-400 dark:ring-red-400/30':
-                    endpoint.method === 'DELETE',
+                    endpoint.method === 'delete',
                 },
               )}
             >

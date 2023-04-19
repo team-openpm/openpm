@@ -100,7 +100,7 @@ export class OpenApiDocument {
           results.push(
             new OpenApiEndpoint({
               path,
-              method: method.toUpperCase(),
+              method,
               operation: pathObject[method]!,
               servers,
               security: this.security,

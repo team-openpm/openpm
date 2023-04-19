@@ -10,7 +10,7 @@ import {schemaAsJson} from './utils'
 
 export class OpenApiRequestExample {
   path: string
-  method: string
+  method: OpenAPI.HttpMethods
   operation: OpenAPI.Operation
   servers: OpenAPI.ServerObject[]
   security: OpenAPI.SecurityRequirementObject[]
@@ -28,7 +28,7 @@ export class OpenApiRequestExample {
     security: OpenAPI.SecurityRequirementObject[]
     securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
-    method: string
+    method: OpenAPI.HttpMethods
     operation: OpenAPI.Operation
   }) {
     this.servers = servers
@@ -43,7 +43,7 @@ export class OpenApiRequestExample {
   get exampleCurl(): string {
     const lines: string[] = []
 
-    const curlMethod = this.uppercaseMethod !== 'GET' ? ` -X ${this.uppercaseMethod}` : ''
+    const curlMethod = this.method !== 'get' ? ` -X ${this.uppercaseMethod}` : ''
 
     lines.push(`curl${curlMethod} '${this.origin}${this.path}'`)
 
@@ -66,7 +66,7 @@ export class OpenApiRequestExample {
     const fetchHeaders: Map<string, string> = this.authenticationHeaders
     const fetchOptions: Map<string, any> = new Map<string, any>()
 
-    if (this.uppercaseMethod !== 'GET') {
+    if (this.method !== 'get') {
       fetchOptions.set('method', this.uppercaseMethod)
     }
 

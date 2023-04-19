@@ -2,6 +2,7 @@ import clearbit from './fixtures/clearbit.json'
 import petstore from './fixtures/petstore.json'
 import reflect from './fixtures/reflect.json'
 import {OpenApiRequestExample} from './request-example'
+import {OpenAPI} from './types'
 
 import {parseSpecObject} from '.'
 
@@ -13,7 +14,7 @@ describe('request-example petstore', async () => {
     security: [],
     servers: document.servers,
     path: '/api/v1/users',
-    method: 'post',
+    method: OpenAPI.HttpMethods.POST,
     operation: {
       requestBody: {
         content: {

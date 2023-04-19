@@ -6,7 +6,7 @@ import {OpenAPI} from './types'
 
 export class OpenApiEndpoint {
   path: string
-  method: string
+  method: OpenAPI.HttpMethods
   servers: OpenAPI.ServerObject[]
   security: OpenAPI.SecurityRequirementObject[]
   securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
@@ -23,7 +23,7 @@ export class OpenApiEndpoint {
     servers: OpenAPI.ServerObject[]
     securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
-    method: string
+    method: OpenAPI.HttpMethods
     security: OpenAPI.SecurityRequirementObject[]
     operation: OpenAPI.Operation
   }) {
@@ -59,7 +59,7 @@ export class OpenApiEndpoint {
   }
 
   get bodySchema() {
-    if (this.method === 'GET') {
+    if (this.method === 'get') {
       return null
     }
 
