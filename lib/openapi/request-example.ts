@@ -205,7 +205,7 @@ export class OpenApiRequestExample {
   }
 
   private get requestBodySchema() {
-    return this.operation?.requestBody?.content?.['application/json']?.schema ?? null
+    return this.operation.requestBody?.content?.['application/json']?.schema ?? null
   }
 
   @memoize()

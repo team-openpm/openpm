@@ -154,7 +154,12 @@
           "404": {
             "description": "Neither the Person or the Company were found."
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     },
     "/people/find": {
@@ -208,7 +213,12 @@
             "description": "Person not found."
           }
         }
-      }
+      },
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ]
     },
     "/companies/find": {
       "servers": [

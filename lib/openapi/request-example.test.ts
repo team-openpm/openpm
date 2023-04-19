@@ -169,7 +169,11 @@ describe('request-example clearbit', async () => {
 
   it('should return a JavaScript example', () => {
     expect(requestExample.exampleJavaScript).toMatchInlineSnapshot(`
-      "fetch(\\"https://person.clearbit.com/v2/combined/find\\")
+      "fetch(\\"https://person.clearbit.com/v2/combined/find\\", {
+        headers: {
+          Authorization: \\"Basic YOUR_API_KEY\\",
+        },
+      })
       "
     `)
   })
