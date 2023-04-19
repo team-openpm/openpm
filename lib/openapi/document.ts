@@ -1,9 +1,11 @@
+import {first} from 'lodash'
 import semver from 'semver'
+
+import {memoize} from '@/lib/lodash-memoize'
 
 import {OpenApiEndpoint} from './endpoint'
 import {OpenAPI} from './types'
 import {commonPrefix, safeParseUrl} from './utils'
-import {memoize} from '../lodash-memoize'
 
 export class OpenApiDocument {
   private document: OpenAPI.Document
@@ -25,12 +27,35 @@ export class OpenApiDocument {
   }
 
   @memoize()
+  get allServerUrls(): string[] {
+    const urls: string[] = []
+
+    if (this.document.servers) {
+      this.document.servers.map((server) => urls.push(server.url))
+    }
+
+    const paths = this.document.paths
+
+    if (paths) {
+      for (const pathObject of Object.values(paths)) {
+        if (pathObject?.servers) {
+          pathObject.servers.map((server) => urls.push(server.url))
+        }
+      }
+    }
+
+    return urls
+  }
+
+  @memoize()
   get domain(): string | null {
-    if (!this.baseUrl) {
+    const firstUrl = first(this.allServerUrls)
+
+    if (!firstUrl) {
       return null
     }
 
-    const url = safeParseUrl(this.baseUrl)
+    const url = safeParseUrl(firstUrl)
     return url?.hostname ?? null
   }
 

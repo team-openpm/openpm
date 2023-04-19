@@ -26,8 +26,16 @@ describe('OpenApiDocument', () => {
     expect(document.baseUrl).toMatchInlineSnapshot('"http://petstore.swagger.io/v1"')
   })
 
+  test('allServerUrls', () => {
+    expect(document.allServerUrls).toMatchInlineSnapshot(`
+      [
+        "http://petstore.swagger.io/v1",
+      ]
+    `)
+  })
+
   test('description', () => {
-    expect(document.description).toMatchInlineSnapshot('""')
+    expect(document.description).toMatchInlineSnapshot('null')
   })
 
   test('version', () => {
@@ -53,6 +61,276 @@ describe('OpenApiDocument', () => {
       Map {
         "pets" => [
           OpenApiEndpoint {
+            "document": {
+              "components": {
+                "schemas": {
+                  "Error": {
+                    "properties": {
+                      "code": {
+                        "format": "int32",
+                        "type": "integer",
+                      },
+                      "message": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "code",
+                      "message",
+                    ],
+                    "type": "object",
+                  },
+                  "Pet": {
+                    "properties": {
+                      "id": {
+                        "format": "int64",
+                        "type": "integer",
+                      },
+                      "name": {
+                        "type": "string",
+                      },
+                      "tag": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                    ],
+                    "type": "object",
+                  },
+                  "Pets": {
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "format": "int64",
+                          "type": "integer",
+                        },
+                        "name": {
+                          "type": "string",
+                        },
+                        "tag": {
+                          "type": "string",
+                        },
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                      ],
+                      "type": "object",
+                    },
+                    "maxItems": 100,
+                    "type": "array",
+                  },
+                },
+              },
+              "info": {
+                "license": {
+                  "name": "MIT",
+                },
+                "title": "Swagger Petstore",
+                "version": "1.0.0",
+              },
+              "openapi": "3.0.0",
+              "paths": {
+                "/pets": {
+                  "get": {
+                    "operationId": "listPets",
+                    "parameters": [
+                      {
+                        "description": "How many items to return at one time (max 100)",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                          "format": "int32",
+                          "maximum": 100,
+                          "type": "integer",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "format": "int64",
+                                    "type": "integer",
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                  },
+                                  "tag": {
+                                    "type": "string",
+                                  },
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                ],
+                                "type": "object",
+                              },
+                              "maxItems": 100,
+                              "type": "array",
+                            },
+                          },
+                        },
+                        "description": "A paged array of pets",
+                        "headers": {
+                          "x-next": {
+                            "description": "A link to the next page of responses",
+                            "schema": {
+                              "type": "string",
+                            },
+                          },
+                        },
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "List all pets",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                  "post": {
+                    "operationId": "createPets",
+                    "responses": {
+                      "201": {
+                        "description": "Null response",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Create a pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+                "/pets/{petId}": {
+                  "get": {
+                    "operationId": "showPetById",
+                    "parameters": [
+                      {
+                        "description": "The id of the pet to retrieve",
+                        "in": "path",
+                        "name": "petId",
+                        "required": true,
+                        "schema": {
+                          "type": "string",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "id": {
+                                  "format": "int64",
+                                  "type": "integer",
+                                },
+                                "name": {
+                                  "type": "string",
+                                },
+                                "tag": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "Expected response to a valid request",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Info for a specific pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+              },
+              "servers": [
+                {
+                  "url": "http://petstore.swagger.io/v1",
+                },
+              ],
+            },
             "method": "GET",
             "operationObject": {
               "operationId": "listPets",
@@ -137,10 +415,279 @@ describe('OpenApiDocument', () => {
                 "pets",
               ],
             },
-            "origin": "http://petstore.swagger.io/v1",
             "path": "/pets",
           },
           OpenApiEndpoint {
+            "document": {
+              "components": {
+                "schemas": {
+                  "Error": {
+                    "properties": {
+                      "code": {
+                        "format": "int32",
+                        "type": "integer",
+                      },
+                      "message": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "code",
+                      "message",
+                    ],
+                    "type": "object",
+                  },
+                  "Pet": {
+                    "properties": {
+                      "id": {
+                        "format": "int64",
+                        "type": "integer",
+                      },
+                      "name": {
+                        "type": "string",
+                      },
+                      "tag": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                    ],
+                    "type": "object",
+                  },
+                  "Pets": {
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "format": "int64",
+                          "type": "integer",
+                        },
+                        "name": {
+                          "type": "string",
+                        },
+                        "tag": {
+                          "type": "string",
+                        },
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                      ],
+                      "type": "object",
+                    },
+                    "maxItems": 100,
+                    "type": "array",
+                  },
+                },
+              },
+              "info": {
+                "license": {
+                  "name": "MIT",
+                },
+                "title": "Swagger Petstore",
+                "version": "1.0.0",
+              },
+              "openapi": "3.0.0",
+              "paths": {
+                "/pets": {
+                  "get": {
+                    "operationId": "listPets",
+                    "parameters": [
+                      {
+                        "description": "How many items to return at one time (max 100)",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                          "format": "int32",
+                          "maximum": 100,
+                          "type": "integer",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "format": "int64",
+                                    "type": "integer",
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                  },
+                                  "tag": {
+                                    "type": "string",
+                                  },
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                ],
+                                "type": "object",
+                              },
+                              "maxItems": 100,
+                              "type": "array",
+                            },
+                          },
+                        },
+                        "description": "A paged array of pets",
+                        "headers": {
+                          "x-next": {
+                            "description": "A link to the next page of responses",
+                            "schema": {
+                              "type": "string",
+                            },
+                          },
+                        },
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "List all pets",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                  "post": {
+                    "operationId": "createPets",
+                    "responses": {
+                      "201": {
+                        "description": "Null response",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Create a pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+                "/pets/{petId}": {
+                  "get": {
+                    "operationId": "showPetById",
+                    "parameters": [
+                      {
+                        "description": "The id of the pet to retrieve",
+                        "in": "path",
+                        "name": "petId",
+                        "required": true,
+                        "schema": {
+                          "type": "string",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "id": {
+                                  "format": "int64",
+                                  "type": "integer",
+                                },
+                                "name": {
+                                  "type": "string",
+                                },
+                                "tag": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "Expected response to a valid request",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Info for a specific pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+              },
+              "servers": [
+                {
+                  "url": "http://petstore.swagger.io/v1",
+                },
+              ],
+            },
             "method": "POST",
             "operationObject": {
               "operationId": "createPets",
@@ -177,10 +724,279 @@ describe('OpenApiDocument', () => {
                 "pets",
               ],
             },
-            "origin": "http://petstore.swagger.io/v1",
             "path": "/pets",
           },
           OpenApiEndpoint {
+            "document": {
+              "components": {
+                "schemas": {
+                  "Error": {
+                    "properties": {
+                      "code": {
+                        "format": "int32",
+                        "type": "integer",
+                      },
+                      "message": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "code",
+                      "message",
+                    ],
+                    "type": "object",
+                  },
+                  "Pet": {
+                    "properties": {
+                      "id": {
+                        "format": "int64",
+                        "type": "integer",
+                      },
+                      "name": {
+                        "type": "string",
+                      },
+                      "tag": {
+                        "type": "string",
+                      },
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                    ],
+                    "type": "object",
+                  },
+                  "Pets": {
+                    "items": {
+                      "properties": {
+                        "id": {
+                          "format": "int64",
+                          "type": "integer",
+                        },
+                        "name": {
+                          "type": "string",
+                        },
+                        "tag": {
+                          "type": "string",
+                        },
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                      ],
+                      "type": "object",
+                    },
+                    "maxItems": 100,
+                    "type": "array",
+                  },
+                },
+              },
+              "info": {
+                "license": {
+                  "name": "MIT",
+                },
+                "title": "Swagger Petstore",
+                "version": "1.0.0",
+              },
+              "openapi": "3.0.0",
+              "paths": {
+                "/pets": {
+                  "get": {
+                    "operationId": "listPets",
+                    "parameters": [
+                      {
+                        "description": "How many items to return at one time (max 100)",
+                        "in": "query",
+                        "name": "limit",
+                        "required": false,
+                        "schema": {
+                          "format": "int32",
+                          "maximum": 100,
+                          "type": "integer",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "items": {
+                                "properties": {
+                                  "id": {
+                                    "format": "int64",
+                                    "type": "integer",
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                  },
+                                  "tag": {
+                                    "type": "string",
+                                  },
+                                },
+                                "required": [
+                                  "id",
+                                  "name",
+                                ],
+                                "type": "object",
+                              },
+                              "maxItems": 100,
+                              "type": "array",
+                            },
+                          },
+                        },
+                        "description": "A paged array of pets",
+                        "headers": {
+                          "x-next": {
+                            "description": "A link to the next page of responses",
+                            "schema": {
+                              "type": "string",
+                            },
+                          },
+                        },
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "List all pets",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                  "post": {
+                    "operationId": "createPets",
+                    "responses": {
+                      "201": {
+                        "description": "Null response",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Create a pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+                "/pets/{petId}": {
+                  "get": {
+                    "operationId": "showPetById",
+                    "parameters": [
+                      {
+                        "description": "The id of the pet to retrieve",
+                        "in": "path",
+                        "name": "petId",
+                        "required": true,
+                        "schema": {
+                          "type": "string",
+                        },
+                      },
+                    ],
+                    "responses": {
+                      "200": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "id": {
+                                  "format": "int64",
+                                  "type": "integer",
+                                },
+                                "name": {
+                                  "type": "string",
+                                },
+                                "tag": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "id",
+                                "name",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "Expected response to a valid request",
+                      },
+                      "default": {
+                        "content": {
+                          "application/json": {
+                            "schema": {
+                              "properties": {
+                                "code": {
+                                  "format": "int32",
+                                  "type": "integer",
+                                },
+                                "message": {
+                                  "type": "string",
+                                },
+                              },
+                              "required": [
+                                "code",
+                                "message",
+                              ],
+                              "type": "object",
+                            },
+                          },
+                        },
+                        "description": "unexpected error",
+                      },
+                    },
+                    "summary": "Info for a specific pet",
+                    "tags": [
+                      "pets",
+                    ],
+                  },
+                },
+              },
+              "servers": [
+                {
+                  "url": "http://petstore.swagger.io/v1",
+                },
+              ],
+            },
             "method": "GET",
             "operationObject": {
               "operationId": "showPetById",
@@ -251,7 +1067,6 @@ describe('OpenApiDocument', () => {
                 "pets",
               ],
             },
-            "origin": "http://petstore.swagger.io/v1",
             "path": "/pets/{petId}",
           },
         ],

@@ -51,7 +51,7 @@ export default function Packages() {
     const uri = new URL(window.location.href)
     const search = uri.searchParams.get('q')
 
-    if (search) {
+    if (typeof search === 'string') {
       setQuery(search)
     }
   }, [])
