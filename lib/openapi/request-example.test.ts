@@ -10,6 +10,7 @@ describe('request-example petstore', async () => {
 
   const requestExample = new OpenApiRequestExample({
     securitySchemes: document.securitySchemes,
+    security: [],
     servers: document.servers,
     path: '/api/v1/users',
     method: 'post',

@@ -8,48 +8,53 @@ export class OpenApiEndpoint {
   path: string
   method: string
   servers: OpenAPI.ServerObject[]
+  security: OpenAPI.SecurityRequirementObject[]
   securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
-  operationObject: OpenAPI.Operation
+  operation: OpenAPI.Operation
 
   constructor({
     servers,
     securitySchemes,
     path,
     method,
-    operationObject,
+    security,
+    operation,
   }: {
     servers: OpenAPI.ServerObject[]
     securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
     method: string
-    operationObject: OpenAPI.Operation
+    security: OpenAPI.SecurityRequirementObject[]
+    operation: OpenAPI.Operation
   }) {
     this.servers = servers
     this.securitySchemes = securitySchemes
     this.path = path
     this.method = method
-    this.operationObject = operationObject
+    this.operation = operation
+    this.security = security
   }
 
   get description(): string {
-    return this.operationObject.description ?? ''
+    return this.operation.description ?? ''
   }
 
   get pathParameters(): OpenAPI.Parameter[] {
-    return this.operationObject.parameters ?? []
+    return this.operation.parameters ?? []
   }
 
   get combinedServers() {
-    return (this.operationObject.servers ?? []).concat(this.servers)
+    return (this.operation.servers ?? []).concat(this.servers)
   }
 
   get requestExample() {
     return new OpenApiRequestExample({
+      security: this.security,
       securitySchemes: this.securitySchemes,
       servers: this.combinedServers,
       path: this.path,
       method: this.method,
-      operation: this.operationObject,
+      operation: this.operation,
     })
   }
 
@@ -58,19 +63,19 @@ export class OpenApiEndpoint {
       return null
     }
 
-    const result = this.operationObject.requestBody?.content?.['application/json']?.schema
+    const result = this.operation.requestBody?.content?.['application/json']?.schema
     return result ? new OpenApiSchema(result) : null
   }
 
   get responses() {
-    if (!this.operationObject.responses) {
+    if (!this.operation.responses) {
       return []
     }
 
     const results: OpenApiResponse[] = []
 
-    for (const statusCode in this.operationObject.responses) {
-      const responseObject = this.operationObject.responses[statusCode]!
+    for (const statusCode in this.operation.responses) {
+      const responseObject = this.operation.responses[statusCode]!
       results.push(new OpenApiResponse(statusCode, responseObject))
     }
 
@@ -79,8 +84,7 @@ export class OpenApiEndpoint {
 
   get successResponseSchema() {
     return (
-      this.operationObject.responses?.['200']?.content?.['application/json']?.schema ??
-      null
+      this.operation.responses?.['200']?.content?.['application/json']?.schema ?? null
     )
   }
 

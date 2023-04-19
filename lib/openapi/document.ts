@@ -100,8 +100,9 @@ export class OpenApiDocument {
           new OpenApiEndpoint({
             path,
             method: 'GET',
-            operationObject: pathObject.get,
+            operation: pathObject.get,
             servers,
+            security: this.security,
             securitySchemes: this.securitySchemes,
           }),
         )
@@ -112,8 +113,9 @@ export class OpenApiDocument {
           new OpenApiEndpoint({
             path,
             method: 'POST',
-            operationObject: pathObject.post,
+            operation: pathObject.post,
             servers,
+            security: this.security,
             securitySchemes: this.securitySchemes,
           }),
         )
@@ -124,8 +126,9 @@ export class OpenApiDocument {
           new OpenApiEndpoint({
             path,
             method: 'PUT',
-            operationObject: pathObject.put,
+            operation: pathObject.put,
             servers,
+            security: this.security,
             securitySchemes: this.securitySchemes,
           }),
         )
@@ -136,8 +139,9 @@ export class OpenApiDocument {
           new OpenApiEndpoint({
             path,
             method: 'DELETE',
-            operationObject: pathObject.delete,
+            operation: pathObject.delete,
             servers,
+            security: this.security,
             securitySchemes: this.securitySchemes,
           }),
         )
@@ -218,6 +222,10 @@ export class OpenApiDocument {
 
   get securitySchemes(): Record<string, OpenAPI.SecuritySchemeObject> {
     return this.document.components?.securitySchemes ?? {}
+  }
+
+  get security(): OpenAPI.SecurityRequirementObject[] {
+    return this.document.security ?? []
   }
 
   get servers(): OpenAPI.ServerObject[] {

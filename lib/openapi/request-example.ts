@@ -13,22 +13,26 @@ export class OpenApiRequestExample {
   method: string
   operation: OpenAPI.Operation
   servers: OpenAPI.ServerObject[]
+  security: OpenAPI.SecurityRequirementObject[]
   securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
 
   constructor({
     servers,
+    security,
     securitySchemes,
     path,
     method,
     operation,
   }: {
     servers: OpenAPI.ServerObject[]
+    security: OpenAPI.SecurityRequirementObject[]
     securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
     method: string
     operation: OpenAPI.Operation
   }) {
     this.servers = servers
+    this.security = security
     this.securitySchemes = securitySchemes
     this.path = path
     this.method = method
@@ -39,7 +43,9 @@ export class OpenApiRequestExample {
   get exampleCurl(): string {
     const lines: string[] = []
 
-    lines.push(`curl -X ${this.uppercaseMethod} '${this.origin}${this.path}'`)
+    const curlMethod = this.uppercaseMethod !== 'GET' ? ` -X ${this.uppercaseMethod}` : ''
+
+    lines.push(`curl${curlMethod} '${this.origin}${this.path}'`)
 
     if (this.authenticationHeaders) {
       for (const [key, value] of this.authenticationHeaders) {
@@ -138,13 +144,9 @@ export class OpenApiRequestExample {
   }
 
   private get operationSecuritySchemes() {
-    if (!this.operation.security) {
-      return []
-    }
+    const securityReqs = [...this.security, ...(this.operation.security || [])]
 
-    const securityTypes = this.operation.security
-      .map((security) => Object.keys(security))
-      .flat()
+    const securityTypes = securityReqs.map((security) => Object.keys(security)).flat()
 
     const schemes = securityTypes.map(
       (securityType) => this.securitySchemes[securityType],
