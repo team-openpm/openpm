@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Enrichment API",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "The Enrichment API provides a single API to lookup person and company data. The API is designed to be simple and easy to use."
   },
   "paths": {

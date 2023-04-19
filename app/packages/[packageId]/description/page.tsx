@@ -6,7 +6,7 @@ import {AccountHeader} from '@/components/account-header'
 import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
-export const revalidate = 30
+export const revalidate = 15
 
 export default async function Package({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)

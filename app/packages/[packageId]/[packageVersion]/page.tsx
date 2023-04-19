@@ -9,7 +9,7 @@ import {
   getPackageVersionOrNotFound,
 } from '@/server/db/packages/getters'
 
-export const revalidate = 30
+export const revalidate = 15
 
 export default async function PackageVersion({
   params,
