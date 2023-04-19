@@ -1,11 +1,11 @@
 import {readdir} from 'fs/promises'
 import {join as pathJoin} from 'path'
 
-import {Highlighter, getHighlighter, renderToHtml} from '@maccman/shiki'
+import {Highlighter, getHighlighter, renderToHtml} from 'shiki'
 
 import {assertString} from './assert'
 
-import type {Theme} from '@maccman/shiki'
+import type {Theme} from 'shiki'
 
 let highlighter: Highlighter
 

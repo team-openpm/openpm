@@ -5,8 +5,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: [
-      '@maccman/shiki',
+      'shiki',
       'vscode-oniguruma',
+      'vscode-textmate',
       'pg',
       'pg-native',
     ],
