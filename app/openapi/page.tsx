@@ -48,16 +48,16 @@ export default async function OpenapiPage() {
 
         <ul>
           <li>
-            <a href="https://openapi.pm/apis/openai/openapi">OpenAI</a>
+            <a href="/apis/openai/openapi">OpenAI</a>
           </li>
           <li>
-            <a href="https://openapi.pm/apis/neon/openapi">Neon</a>
+            <a href="/apis/neon/openapi">Neon</a>
           </li>
           <li>
-            <a href="https://openapi.pm/apis/clearbit/openapi">Clearbit</a>
+            <a href="/apis/clearbit/openapi">Clearbit</a>
           </li>
           <li>
-            <a href="https://openapi.pm/apis/petstore/openapi">Petstore (sample)</a>
+            <a href="/apis/petstore/openapi">Petstore (sample)</a>
           </li>
         </ul>
 
