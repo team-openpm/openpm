@@ -1,3 +1,4 @@
+import clearbit from './fixtures/clearbit.json'
 import petstore from './fixtures/petstore.json'
 import reflect from './fixtures/reflect.json'
 import {OpenApiRequestExample} from './request-example'
@@ -8,8 +9,8 @@ describe('request-example petstore', async () => {
   const document = await parseSpecObject(petstore)
 
   const requestExample = new OpenApiRequestExample({
-    origin: 'http://petstore.swagger.io/v1',
-    document,
+    securitySchemes: document.securitySchemes,
+    servers: document.servers,
     path: '/api/v1/users',
     method: 'post',
     operation: {
@@ -157,6 +158,19 @@ describe('request-example reflect', async () => {
       ],
       	}
       )"
+    `)
+  })
+})
+
+describe('request-example clearbit', async () => {
+  const document = await parseSpecObject(clearbit)
+  const endpoint = document.endpoints[0]
+  const requestExample = endpoint.requestExample
+
+  it('should return a JavaScript example', () => {
+    expect(requestExample.exampleJavaScript).toMatchInlineSnapshot(`
+      "fetch(\\"https://person.clearbit.com/v2/combined/find\\")
+      "
     `)
   })
 })

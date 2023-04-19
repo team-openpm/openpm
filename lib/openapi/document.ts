@@ -92,6 +92,7 @@ export class OpenApiDocument {
 
     for (const path in this.document.paths ?? {}) {
       const pathObject = this.document.paths![path]!
+      const servers = (pathObject.servers ?? []).concat(this.servers)
 
       if (pathObject.get) {
         results.push(
@@ -99,7 +100,8 @@ export class OpenApiDocument {
             path,
             method: 'GET',
             operationObject: pathObject.get,
-            document: this,
+            servers,
+            securitySchemes: this.securitySchemes,
           }),
         )
       }
@@ -110,7 +112,8 @@ export class OpenApiDocument {
             path,
             method: 'POST',
             operationObject: pathObject.post,
-            document: this,
+            servers,
+            securitySchemes: this.securitySchemes,
           }),
         )
       }
@@ -121,7 +124,8 @@ export class OpenApiDocument {
             path,
             method: 'PUT',
             operationObject: pathObject.put,
-            document: this,
+            servers,
+            securitySchemes: this.securitySchemes,
           }),
         )
       }
@@ -132,7 +136,8 @@ export class OpenApiDocument {
             path,
             method: 'DELETE',
             operationObject: pathObject.delete,
-            document: this,
+            servers,
+            securitySchemes: this.securitySchemes,
           }),
         )
       }
@@ -206,18 +211,11 @@ export class OpenApiDocument {
     return results
   }
 
-  @memoize()
-  get securitySchemes() {
-    const schemes = this.document.components?.securitySchemes
+  get securitySchemes(): Record<string, OpenAPI.SecuritySchemeObject> {
+    return this.document.components?.securitySchemes ?? {}
+  }
 
-    // convert object to map
-    const results = new Map<string, OpenAPI.SecuritySchemeObject>()
-
-    for (const name in schemes ?? {}) {
-      const scheme = schemes![name]!
-      results.set(name, scheme)
-    }
-
-    return results
+  get servers(): OpenAPI.ServerObject[] {
+    return this.document.servers ?? []
   }
 }

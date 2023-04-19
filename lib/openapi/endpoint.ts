@@ -1,4 +1,3 @@
-import {OpenApiDocument} from './document'
 import {OpenApiRequestExample} from './request-example'
 import {OpenApiResponse} from './response'
 import {OpenApiResponseExample} from './response-example'
@@ -8,28 +7,28 @@ import {OpenAPI} from './types'
 export class OpenApiEndpoint {
   path: string
   method: string
-  private operationObject: OpenAPI.Operation
-  private document: OpenApiDocument
+  servers: OpenAPI.ServerObject[]
+  securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
+  operationObject: OpenAPI.Operation
 
   constructor({
+    servers,
+    securitySchemes,
     path,
     method,
     operationObject,
-    document,
   }: {
+    servers: OpenAPI.ServerObject[]
+    securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
     method: string
     operationObject: OpenAPI.Operation
-    document: OpenApiDocument
   }) {
+    this.servers = servers
+    this.securitySchemes = securitySchemes
     this.path = path
     this.method = method
     this.operationObject = operationObject
-    this.document = document
-  }
-
-  get origin(): string | null {
-    return this.operationObject.servers?.[0]?.url || this.document.origin
   }
 
   get description(): string {
@@ -40,13 +39,17 @@ export class OpenApiEndpoint {
     return this.operationObject.parameters ?? []
   }
 
+  get combinedServers() {
+    return (this.operationObject.servers ?? []).concat(this.servers)
+  }
+
   get requestExample() {
     return new OpenApiRequestExample({
-      origin: this.origin ?? '',
+      securitySchemes: this.securitySchemes,
+      servers: this.combinedServers,
       path: this.path,
       method: this.method,
       operation: this.operationObject,
-      document: this.document,
     })
   }
 

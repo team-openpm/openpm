@@ -42,6 +42,8 @@ export namespace OpenAPI {
     | OpenAPIV3.OAuth2SecurityScheme
     | OpenAPIV3_1.OAuth2SecurityScheme
 
+  export type ServerObject = OpenAPIV3.ServerObject | OpenAPIV3_1.ServerObject
+
   export interface Request {
     body?: any
     headers?: object

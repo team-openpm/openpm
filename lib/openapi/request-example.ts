@@ -5,7 +5,6 @@ import {format as prettier} from 'prettier'
 import {memoize} from '@/lib/lodash-memoize'
 import {notEmpty} from '@/lib/not-empty'
 
-import {OpenApiDocument} from './document'
 import {OpenAPI} from './types'
 import {schemaAsJson} from './utils'
 
@@ -13,29 +12,27 @@ export class OpenApiRequestExample {
   path: string
   method: string
   operation: OpenAPI.Operation
-  document: OpenApiDocument
-  properties: Map<string, unknown> | null = null
-  origin: string
+  servers: OpenAPI.ServerObject[]
+  securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
 
   constructor({
-    origin,
+    servers,
+    securitySchemes,
     path,
     method,
     operation,
-    document,
   }: {
-    origin: string
+    servers: OpenAPI.ServerObject[]
+    securitySchemes: Record<string, OpenAPI.SecuritySchemeObject>
     path: string
     method: string
     operation: OpenAPI.Operation
-    document: OpenApiDocument
   }) {
-    this.origin = origin
+    this.servers = servers
+    this.securitySchemes = securitySchemes
     this.path = path
     this.method = method
     this.operation = operation
-    this.document = document
-    this.properties = this.requestBodySchemaAsMap
   }
 
   @memoize()
@@ -126,11 +123,21 @@ export class OpenApiRequestExample {
     return result
   }
 
+  private get origin(): string {
+    const server = first(this.servers)
+
+    if (!server) {
+      return ''
+    }
+
+    return server.url
+  }
+
   private get uppercaseMethod(): string {
     return this.method.toUpperCase()
   }
 
-  private get securitySchemes() {
+  private get operationSecuritySchemes() {
     if (!this.operation.security) {
       return []
     }
@@ -139,15 +146,15 @@ export class OpenApiRequestExample {
       .map((security) => Object.keys(security))
       .flat()
 
-    const schemes = securityTypes.map((securityType) =>
-      this.document.securitySchemes.get(securityType),
+    const schemes = securityTypes.map(
+      (securityType) => this.securitySchemes[securityType],
     )
 
     return schemes.filter(notEmpty)
   }
 
   private get favoredSecurityScheme() {
-    const schemes = this.securitySchemes
+    const schemes = this.operationSecuritySchemes
 
     // Sort schemes by type:
     //  first http
@@ -201,7 +208,8 @@ export class OpenApiRequestExample {
     return this.operation?.requestBody?.content?.['application/json']?.schema ?? null
   }
 
-  private get requestBodySchemaAsMap() {
+  @memoize()
+  private get properties() {
     const schema = this.requestBodySchema
 
     if (schema && !isEmpty(schema)) {

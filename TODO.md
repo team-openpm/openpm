@@ -45,6 +45,7 @@ yarn dev
 # Release
 
 [ ] - error tracking
+[x] - fix clearbit
 [x] - fix support email
 [x] - readme file
 [ ] - autogpt example
