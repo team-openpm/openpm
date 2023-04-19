@@ -15,27 +15,27 @@ export class OpenApiRequestExample {
   operation: OpenAPI.Operation
   document: OpenApiDocument
   properties: Map<string, unknown> | null = null
+  origin: string
 
   constructor({
+    origin,
     path,
     method,
     operation,
     document,
   }: {
+    origin: string
     path: string
     method: string
     operation: OpenAPI.Operation
     document: OpenApiDocument
   }) {
+    this.origin = origin
     this.path = path
     this.method = method
     this.operation = operation
     this.document = document
     this.properties = this.requestBodySchemaAsMap
-  }
-
-  get origin(): string {
-    return this.document.baseUrl ?? ''
   }
 
   @memoize()

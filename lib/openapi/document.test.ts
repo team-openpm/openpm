@@ -23,7 +23,7 @@ describe('OpenApiDocument', () => {
   })
 
   test('baseUrl', () => {
-    expect(document.baseUrl).toMatchInlineSnapshot('"http://petstore.swagger.io/v1"')
+    expect(document.origin).toMatchInlineSnapshot('"http://petstore.swagger.io/v1"')
   })
 
   test('allServerUrls', () => {

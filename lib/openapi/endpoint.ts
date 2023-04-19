@@ -28,8 +28,8 @@ export class OpenApiEndpoint {
     this.document = document
   }
 
-  get origin() {
-    return this.document.baseUrl ?? ''
+  get origin(): string | null {
+    return this.operationObject.servers?.[0]?.url || this.document.origin
   }
 
   get description(): string {
@@ -42,6 +42,7 @@ export class OpenApiEndpoint {
 
   get requestExample() {
     return new OpenApiRequestExample({
+      origin: this.origin ?? '',
       path: this.path,
       method: this.method,
       operation: this.operationObject,

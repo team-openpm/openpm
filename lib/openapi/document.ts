@@ -67,7 +67,7 @@ export class OpenApiDocument {
     return url?.hostname ?? null
   }
 
-  get baseUrl(): string | null {
+  get origin(): string | null {
     return this.document.servers?.[0]?.url ?? null
   }
 
