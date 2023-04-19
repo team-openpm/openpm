@@ -95,56 +95,19 @@ export class OpenApiDocument {
       const pathObject = this.document.paths![path]!
       const servers = (pathObject.servers ?? []).concat(this.servers)
 
-      if (pathObject.get) {
-        results.push(
-          new OpenApiEndpoint({
-            path,
-            method: 'GET',
-            operation: pathObject.get,
-            servers,
-            security: this.security,
-            securitySchemes: this.securitySchemes,
-          }),
-        )
-      }
-
-      if (pathObject.post) {
-        results.push(
-          new OpenApiEndpoint({
-            path,
-            method: 'POST',
-            operation: pathObject.post,
-            servers,
-            security: this.security,
-            securitySchemes: this.securitySchemes,
-          }),
-        )
-      }
-
-      if (pathObject.put) {
-        results.push(
-          new OpenApiEndpoint({
-            path,
-            method: 'PUT',
-            operation: pathObject.put,
-            servers,
-            security: this.security,
-            securitySchemes: this.securitySchemes,
-          }),
-        )
-      }
-
-      if (pathObject.delete) {
-        results.push(
-          new OpenApiEndpoint({
-            path,
-            method: 'DELETE',
-            operation: pathObject.delete,
-            servers,
-            security: this.security,
-            securitySchemes: this.securitySchemes,
-          }),
-        )
+      for (const method of Object.values(OpenAPI.HttpMethods)) {
+        if (pathObject[method]) {
+          results.push(
+            new OpenApiEndpoint({
+              path,
+              method: method.toUpperCase(),
+              operation: pathObject[method]!,
+              servers,
+              security: this.security,
+              securitySchemes: this.securitySchemes,
+            }),
+          )
+        }
       }
     }
 

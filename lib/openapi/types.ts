@@ -48,6 +48,18 @@ export namespace OpenAPI {
 
   export type ServerObject = OpenAPIV3.ServerObject | OpenAPIV3_1.ServerObject
 
+  // Export enum httpmethods
+  export enum HttpMethods {
+    GET = 'get',
+    PUT = 'put',
+    POST = 'post',
+    DELETE = 'delete',
+    OPTIONS = 'options',
+    HEAD = 'head',
+    PATCH = 'patch',
+    TRACE = 'trace',
+  }
+
   export interface Request {
     body?: any
     headers?: object
