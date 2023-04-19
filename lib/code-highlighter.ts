@@ -16,18 +16,20 @@ export async function highlight(
 ): Promise<string> {
   assertString(code, 'code must be a string')
 
-  // Touch the file system to ensure vercel bundles it
-  const path = pathJoin(process.cwd(), 'lib', 'shiki')
-  readdir(path)
+  if (!highlighter) {
+    // Touch the file system to ensure vercel bundles it
+    const path = pathJoin(process.cwd(), 'lib', 'shiki')
+    readdir(path)
 
-  highlighter = await getHighlighter({
-    langs: ['shellscript', 'javascript', 'python', 'json'],
-    theme: theme,
-    paths: {
-      languages: `${path}/languages/`,
-      themes: `${path}/themes/`,
-    },
-  })
+    highlighter = await getHighlighter({
+      langs: ['shellscript', 'javascript', 'python', 'json'],
+      theme: theme,
+      paths: {
+        languages: `${path}/languages/`,
+        themes: `${path}/themes/`,
+      },
+    })
+  }
 
   const tokens = highlighter.codeToThemedTokens(code, lang, theme, {
     includeExplanation: false,
@@ -48,6 +50,6 @@ export async function safeHighlight(
   } catch (error) {
     console.error('Error highlighting lang=', lang, code)
     console.error(error)
-    return code
+    return `<pre>${code}</pre>`
   }
 }
