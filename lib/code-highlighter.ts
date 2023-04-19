@@ -46,7 +46,7 @@ export async function safeHighlight(
   try {
     return await highlight(code, lang, theme)
   } catch (error) {
-    console.error('Error highlighting code: ', code)
+    console.error('Error highlighting lang=', lang, code)
     console.error(error)
     return code
   }
