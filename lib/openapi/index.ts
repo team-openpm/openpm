@@ -12,7 +12,9 @@ export async function parseOpenApiObject(document: any): Promise<OpenApiDocument
   }
 
   // We need to clone the document because the parser will mutate it.
-  const parsed = await OpenAPIParser.validate(clone(document))
+  const parsed = await OpenAPIParser.validate(clone(document), {
+    dereference: {circular: 'ignore'},
+  })
 
   return new OpenApiDocument({
     parsed: parsed as OpenAPIV3.Document | OpenAPIV3_1.Document,
