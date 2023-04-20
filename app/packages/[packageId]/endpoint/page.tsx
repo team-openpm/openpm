@@ -5,17 +5,9 @@ import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
-import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
+import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 15
-
-export async function generateStaticParams() {
-  const packages = await getAllPackageIds()
-
-  return packages.map((pkg) => ({
-    packageId: pkg.id,
-  }))
-}
 
 export async function generateMetadata({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
