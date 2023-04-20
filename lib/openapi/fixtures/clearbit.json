@@ -213,12 +213,7 @@
             "description": "Person not found."
           }
         }
-      },
-      "security": [
-        {
-          "ApiKeyAuth": []
-        }
-      ]
+      }
     },
     "/companies/find": {
       "servers": [
