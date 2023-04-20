@@ -4,6 +4,7 @@ import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {
   getPackageByIdOrNotFound,
   getPackageVersionOrNotFound,
@@ -23,20 +24,26 @@ export default async function PackageVersion({
   })
   const doc = await parseOpenApiSpecJson(version.openapi)
 
+  let groupedEndpoints: Map<string, OpenApiEndpoint[]>
+  let pagedEndpoints = false
+
+  if (doc.pagedEndpoints) {
+    groupedEndpoints = doc.firstGroupedEndpoint
+    pagedEndpoints = true
+  } else {
+    groupedEndpoints = doc.groupedEndpoints
+  }
+
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} pagedEndpoints={false} />
+        <PackageSidebar package={pkg} document={doc} pagedEndpoints={pagedEndpoints} />
       </div>
 
       <div className="flex-grow">
         <AccountHeader />
 
-        <PackageMain
-          package={pkg}
-          document={doc}
-          groupedEndpoints={doc.groupedEndpoints}
-        />
+        <PackageMain package={pkg} document={doc} groupedEndpoints={groupedEndpoints} />
       </div>
     </div>
   )

@@ -6,7 +6,10 @@ import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
-import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
+import {
+  getPackageByIdOrNotFound,
+  getPackageVersionOrNotFound,
+} from '@/server/db/packages/getters'
 
 export const revalidate = 60
 
@@ -32,15 +35,19 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
   }
 }
 
-export default async function PackageEndpoint({
+export default async function PackageVersionEndpoint({
   params,
   searchParams,
 }: {
-  params: {packageId: string}
+  params: {packageId: string; packageVersion: string}
   searchParams: {path: string}
 }) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const version = await getPackageVersionOrNotFound({
+    packageId: params.packageId,
+    version: params.packageVersion,
+  })
+  const doc = await parseOpenApiSpecJson(version.openapi)
 
   if (!searchParams.path) {
     redirect(`/packages/${pkg.id}`)
@@ -51,7 +58,12 @@ export default async function PackageEndpoint({
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} pagedEndpoints={true} />
+        <PackageSidebar
+          package={pkg}
+          document={doc}
+          pagedEndpoints={true}
+          version={version.version}
+        />
       </div>
 
       <div className="flex-grow">
