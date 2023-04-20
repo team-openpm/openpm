@@ -34,8 +34,9 @@ const createPackageEndpoint = withAuth(
 
       try {
         doc = await parseOpenApiSpec(data.openapi, data.openapi_format)
-      } catch (err) {
-        return error('Invalid OpenAPI document')
+      } catch (err: any) {
+        console.error(err)
+        return error(`Invalid OpenAPI document: ${err?.message}`)
       }
 
       const version = doc.version
