@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "0.0.4",
+    "version": "0.0.5",
     "title": "openpm",
     "license": {
       "name": "MIT",
@@ -20,6 +20,7 @@
         "parameters": [
           {
             "name": "limit",
+            "in": "query",
             "description": "How many package to return per page (default 500)",
             "schema": {
               "type": "integer",
@@ -29,6 +30,7 @@
           },
           {
             "name": "page",
+            "in": "query",
             "description": "Page number (default 1)",
             "schema": {
               "type": "integer",
@@ -172,6 +174,7 @@
         "parameters": [
           {
             "name": "ids",
+            "in": "query",
             "description": "CSV list of package ids",
             "schema": {
               "type": "string"
@@ -269,15 +272,16 @@
         "parameters": [
           {
             "name": "packageId",
+            "in": "path",
             "required": true,
             "description": "Package id",
-            "in": "path",
             "schema": {
               "type": "string"
             }
           },
           {
             "name": "format",
+            "in": "query",
             "description": "Format of the OpenAPI spec (default json)",
             "schema": {
               "type": "string",
