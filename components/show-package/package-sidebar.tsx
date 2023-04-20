@@ -10,7 +10,7 @@ export const PackageSidebar: React.FC<{
   package: Package
   document: OpenApiDocument
   pagedEndpoints: boolean
-}> = ({package: pkg, document}) => {
+}> = ({package: pkg, document, pagedEndpoints}) => {
   return (
     <aside className="sticky bottom-0 top-0 h-screen w-72 flex-1 overflow-auto border-r border-slate-900/10  px-6 py-4 dark:border-white/10">
       <div className="space-y-3">
@@ -38,7 +38,7 @@ export const PackageSidebar: React.FC<{
             <li className="relative">
               <a
                 className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                href="#intro"
+                href={`/apis/${pkg.id}#intro`}
               >
                 <span className="truncate">Introduction</span>
               </a>
@@ -46,7 +46,7 @@ export const PackageSidebar: React.FC<{
               {document.hasAuthentication && (
                 <a
                   className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  href="#auth"
+                  href={`/apis/${pkg.id}#auth`}
                 >
                   <span className="truncate">Authentication</span>
                 </a>
@@ -68,9 +68,13 @@ export const PackageSidebar: React.FC<{
               >
                 {endpoints.map((endpoint, index) => (
                   <li key={index} className="relative">
-                    <Link
+                    <a
                       className="flex cursor-pointer justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                      href={`#${endpoint.path}`}
+                      href={
+                        pagedEndpoints
+                          ? `/apis/${pkg.id}/endpoint?path=${endpoint.path}`
+                          : `#${endpoint.path}`
+                      }
                       title={`${endpoint.method} ${endpoint.path}`}
                     >
                       <span className="truncate">
@@ -90,7 +94,7 @@ export const PackageSidebar: React.FC<{
                           {endpoint.method}
                         </span>
                       )}
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
