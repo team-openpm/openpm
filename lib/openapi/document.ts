@@ -69,7 +69,14 @@ export class OpenApiDocument {
   }
 
   get origin(): string | null {
-    return this.document.servers?.[0]?.url ?? null
+    const origin = this.document.servers?.[0]?.url
+
+    if (!origin) {
+      return null
+    }
+
+    // Strip trailing slash
+    return origin.replace(/\/$/, '')
   }
 
   get description(): string | null {
