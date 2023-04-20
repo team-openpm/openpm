@@ -10,7 +10,8 @@
     "prettier-write": "prettier --write app/ components/ lib/ server/ --ignore-path shiki",
     "test": "TZ=UTC vitest",
     "check:types": "tsc --noEmit",
-    "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/types.ts --exclude-pattern spatial_ref_sys"
+    "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/types.ts --exclude-pattern spatial_ref_sys",
+    "script:validate-documents": "tsx -r dotenv/config scripts/validate-documents.ts dotenv_config_path=./.env.local"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
@@ -75,6 +76,7 @@
     "postcss": "^8.4.21",
     "prettier-plugin-tailwindcss": "0.2.4",
     "tailwindcss": "^3.3.1",
+    "tsx": "^3.12.6",
     "vitest": "^0.30.1"
   }
 }
