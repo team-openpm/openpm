@@ -26,13 +26,17 @@ export default async function PackageVersion({
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} />
+        <PackageSidebar package={pkg} document={doc} pagedEndpoints={false} />
       </div>
 
       <div className="flex-grow">
         <AccountHeader />
 
-        <PackageMain package={pkg} document={doc} />
+        <PackageMain
+          package={pkg}
+          document={doc}
+          groupedEndpoints={doc.groupedEndpoints}
+        />
       </div>
     </div>
   )
