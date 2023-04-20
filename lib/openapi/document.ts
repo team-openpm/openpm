@@ -179,6 +179,31 @@ export class OpenApiDocument {
     return results
   }
 
+  // Returns grouped endpoints filtered by the given path
+  groupedEndpointsForPath(path: string): Map<string, OpenApiEndpoint[]> {
+    const groupedEndpoints = this.groupedEndpoints
+
+    const filteredGroupedEndpoints = new Map<string, OpenApiEndpoint[]>()
+
+    for (const [group, endpoints] of groupedEndpoints) {
+      const filteredEndpoints = endpoints.filter((endpoint) =>
+        endpoint.path.startsWith(path),
+      )
+
+      if (filteredEndpoints.length > 0) {
+        filteredGroupedEndpoints.set(group, filteredEndpoints)
+      }
+    }
+
+    return filteredGroupedEndpoints
+  }
+
+  // If there are more than 7 groups, we should split
+  // them up into separate pages to reduce the page size
+  get pagedEndpoints(): boolean {
+    return this.groupedEndpoints.size > 7
+  }
+
   get hasAuthentication(): boolean {
     return !isEmpty(this.securitySchemes)
   }

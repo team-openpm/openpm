@@ -39,9 +39,17 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
   }
 }
 
-export default async function Package({params}: {params: {packageId: string}}) {
+export default async function PackageEndpoint({
+  params,
+  searchParams,
+}: {
+  params: {packageId: string}
+  searchParams: {path: string}
+}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
   const doc = await parseOpenApiSpecJson(pkg.openapi)
+
+  const groupedEndpoints = doc.groupedEndpointsForPath(searchParams.path)
 
   return (
     <div className="flex">
@@ -52,11 +60,7 @@ export default async function Package({params}: {params: {packageId: string}}) {
       <div className="flex-grow">
         <AccountHeader />
 
-        <PackageMain
-          package={pkg}
-          document={doc}
-          groupedEndpoints={doc.groupedEndpoints}
-        />
+        <PackageMain package={pkg} document={doc} groupedEndpoints={groupedEndpoints} />
       </div>
     </div>
   )
