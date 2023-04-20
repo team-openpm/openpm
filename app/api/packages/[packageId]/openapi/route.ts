@@ -19,13 +19,13 @@ export async function GET(req: Request, {params}: {params: {packageId: string}})
   const doc = await parseOpenApiSpecJson(pkg.openapi)
 
   if (format === 'yaml') {
-    return new Response(yamlStringify(doc.toJSON()), {
+    return new Response(yamlStringify(doc), {
       headers: {
         'Content-Type': 'text/yaml',
       },
     })
   } else {
-    return new Response(JSON.stringify(doc.toJSON(), null, 2), {
+    return new Response(JSON.stringify(doc, null, 2), {
       headers: {
         'Content-Type': 'application/json',
       },
