@@ -27,7 +27,7 @@ export async function PackageVersions({package: pkg}: {package: Package}) {
             <div className="font-medium ">
               <Link
                 className="text-blue-500"
-                href={`/packages/${pkg.id}/${packageVersion.version}`}
+                href={`/packages/${pkg.id}/versions/${packageVersion.version}`}
               >
                 {packageVersion.version}
               </Link>

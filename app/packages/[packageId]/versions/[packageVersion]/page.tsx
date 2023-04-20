@@ -4,6 +4,7 @@ import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {
   getPackageByIdOrNotFound,
   getPackageVersionOrNotFound,
@@ -17,22 +18,37 @@ export default async function PackageVersion({
   params: {packageId: string; packageVersion: string}
 }) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const version = await getPackageVersionOrNotFound({
+  const pkgVersion = await getPackageVersionOrNotFound({
     packageId: params.packageId,
     version: params.packageVersion,
   })
-  const doc = await parseOpenApiSpecJson(version.openapi)
+  const doc = await parseOpenApiSpecJson(pkgVersion.openapi)
+
+  let groupedEndpoints: Map<string, OpenApiEndpoint[]>
+  let pagedEndpoints = false
+
+  if (doc.pagedEndpoints) {
+    groupedEndpoints = doc.firstGroupedEndpoint
+    pagedEndpoints = true
+  } else {
+    groupedEndpoints = doc.groupedEndpoints
+  }
 
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} />
+        <PackageSidebar
+          package={pkg}
+          document={doc}
+          pagedEndpoints={pagedEndpoints}
+          version={pkgVersion.version}
+        />
       </div>
 
       <div className="flex-grow">
         <AccountHeader />
 
-        <PackageMain package={pkg} document={doc} />
+        <PackageMain package={pkg} document={doc} groupedEndpoints={groupedEndpoints} />
       </div>
     </div>
   )

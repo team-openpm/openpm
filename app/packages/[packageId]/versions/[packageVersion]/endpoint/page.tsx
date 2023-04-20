@@ -1,23 +1,17 @@
 import truncate from 'lodash/truncate'
+import {redirect} from 'next/navigation'
 import React from 'react'
 
 import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
-import {PackageHeader} from '@/components/show-package/package-header'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
-import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
+import {
+  getPackageByIdOrNotFound,
+  getPackageVersionOrNotFound,
+} from '@/server/db/packages/getters'
 
-export const revalidate = 15
-
-export async function generateStaticParams() {
-  const packages = await getAllPackageIds()
-
-  return packages.map((pkg) => ({
-    packageId: pkg.id,
-  }))
-}
+export const revalidate = 60
 
 export async function generateMetadata({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
@@ -41,31 +35,41 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
   }
 }
 
-export default async function PackageEndpoint({params}: {params: {packageId: string}}) {
+export default async function PackageVersionEndpoint({
+  params,
+  searchParams,
+}: {
+  params: {packageId: string; packageVersion: string}
+  searchParams: {path: string}
+}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const version = await getPackageVersionOrNotFound({
+    packageId: params.packageId,
+    version: params.packageVersion,
+  })
+  const doc = await parseOpenApiSpecJson(version.openapi)
 
-  let groupedEndpoints: Map<string, OpenApiEndpoint[]>
-  let pagedEndpoints = false
-
-  if (doc.pagedEndpoints) {
-    groupedEndpoints = doc.firstGroupedEndpoint
-    pagedEndpoints = true
-  } else {
-    groupedEndpoints = doc.groupedEndpoints
+  if (!searchParams.path) {
+    redirect(`/packages/${pkg.id}`)
   }
+
+  const groupedEndpoints = doc.groupedEndpointsForPath(searchParams.path)
 
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} pagedEndpoints={pagedEndpoints} />
+        <PackageSidebar
+          package={pkg}
+          document={doc}
+          pagedEndpoints={true}
+          version={version.version}
+        />
       </div>
 
       <div className="flex-grow">
         <AccountHeader />
 
-        <main className="space-y-16 py-16">
-          <PackageHeader package={pkg} document={doc} />
+        <main className="py-16">
           <DocumentEndpoints groupedEndpoints={groupedEndpoints} />
         </main>
       </div>
