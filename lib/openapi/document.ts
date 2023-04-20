@@ -198,6 +198,21 @@ export class OpenApiDocument {
     return filteredGroupedEndpoints
   }
 
+  // Return a new map with the first group and its endpoints
+  get firstGroupedEndpoint(): Map<string, OpenApiEndpoint[]> {
+    const groupedEndpoints = this.groupedEndpoints
+
+    const result = new Map<string, OpenApiEndpoint[]>()
+
+    const firstGroup = first(Array.from(groupedEndpoints.keys()))
+
+    if (firstGroup) {
+      result.set(firstGroup, groupedEndpoints.get(firstGroup)!)
+    }
+
+    return result
+  }
+
   // If there are more than 7 groups, we should split
   // them up into separate pages to reduce the page size
   get pagedEndpoints(): boolean {

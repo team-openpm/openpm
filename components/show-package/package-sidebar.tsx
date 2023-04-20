@@ -9,6 +9,7 @@ import {Package} from '@/server/db/packages/types'
 export const PackageSidebar: React.FC<{
   package: Package
   document: OpenApiDocument
+  pagedEndpoints: boolean
 }> = ({package: pkg, document}) => {
   return (
     <aside className="sticky bottom-0 top-0 h-screen w-72 flex-1 overflow-auto border-r border-slate-900/10  px-6 py-4 dark:border-white/10">
@@ -67,7 +68,7 @@ export const PackageSidebar: React.FC<{
               >
                 {endpoints.map((endpoint, index) => (
                   <li key={index} className="relative">
-                    <a
+                    <Link
                       className="flex cursor-pointer justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                       href={`#${endpoint.path}`}
                       title={`${endpoint.method} ${endpoint.path}`}
@@ -89,7 +90,7 @@ export const PackageSidebar: React.FC<{
                           {endpoint.method}
                         </span>
                       )}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

@@ -5,6 +5,7 @@ import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
 import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 15
@@ -39,24 +40,40 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
   }
 }
 
-export default async function Package({params}: {params: {packageId: string}}) {
+export default async function PackageEndpoint({
+  params,
+  searchParams,
+}: {
+  params: {packageId: string}
+  searchParams: {path: string | undefined}
+}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
   const doc = await parseOpenApiSpecJson(pkg.openapi)
+
+  let groupedEndpoints: Map<string, OpenApiEndpoint[]>
+
+  let pagedEndpoints = false
+
+  if (searchParams.path) {
+    groupedEndpoints = doc.groupedEndpointsForPath(searchParams.path)
+    pagedEndpoints = true
+  } else if (doc.pagedEndpoints) {
+    groupedEndpoints = doc.firstGroupedEndpoint
+    pagedEndpoints = true
+  } else {
+    groupedEndpoints = doc.groupedEndpoints
+  }
 
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} />
+        <PackageSidebar package={pkg} document={doc} pagedEndpoints={pagedEndpoints} />
       </div>
 
       <div className="flex-grow">
         <AccountHeader />
 
-        <PackageMain
-          package={pkg}
-          document={doc}
-          groupedEndpoints={doc.groupedEndpoints}
-        />
+        <PackageMain package={pkg} document={doc} groupedEndpoints={groupedEndpoints} />
       </div>
     </div>
   )
