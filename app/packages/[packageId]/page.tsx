@@ -5,7 +5,7 @@ import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageHeader} from '@/components/show-package/package-header'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
@@ -43,7 +43,7 @@ export async function generateMetadata({params}: {params: {packageId: string}}) 
 
 export default async function PackageEndpoint({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   let groupedEndpoints: Map<string, OpenApiEndpoint[]>
   let pagedEndpoints = false

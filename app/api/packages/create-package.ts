@@ -2,7 +2,7 @@ import first from 'lodash/first'
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {parseOpenApiSpec} from '@/lib/openapi'
+import {parseSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
@@ -33,7 +33,7 @@ const createPackageEndpoint = withAuth(
       let doc
 
       try {
-        doc = await parseOpenApiSpec(data.openapi, data.openapi_format)
+        doc = await parseSpec(data.openapi, data.openapi_format)
       } catch (err: any) {
         console.error(err)
         return error(`Invalid OpenAPI document: ${err?.message}`)

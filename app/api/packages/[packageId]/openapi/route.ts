@@ -1,6 +1,6 @@
 import {stringify as yamlStringify} from 'yaml'
 
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'
@@ -16,7 +16,7 @@ export async function GET(req: Request, {params}: {params: {packageId: string}})
     return error('Package not found', 'not_found', 404)
   }
 
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   if (format === 'yaml') {
     return new Response(yamlStringify(doc), {

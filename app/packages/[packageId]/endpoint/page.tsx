@@ -5,7 +5,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 60
@@ -40,7 +40,7 @@ export default async function PackageEndpoint({
   searchParams: {path: string}
 }) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   if (!searchParams.path) {
     redirect(`/packages/${pkg.id}`)
