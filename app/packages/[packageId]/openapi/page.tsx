@@ -11,7 +11,7 @@ export default async function PackageOpenApi({params}: {params: {packageId: stri
   const pkg = await getPackageByIdOrNotFound(params.packageId)
   const doc = await parseOpenApiSpecJson(pkg.openapi)
 
-  const json = JSON.stringify(doc.toJSON(), null, 2)
+  const json = JSON.stringify(doc, null, 2)
   const jsonHighlighted = await highlight(json, 'json')
 
   return <Code html={jsonHighlighted} />
