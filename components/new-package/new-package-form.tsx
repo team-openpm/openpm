@@ -7,8 +7,8 @@ import {DefaultButton} from '@/components/buttons/default-button'
 import {Select} from '@/components/select'
 import {TextInput} from '@/components/text-input'
 import {TextareaInput} from '@/components/textarea-input'
-import {Package} from '@/server/db/packages/types'
 import {safeJson} from '@/lib/response-json'
+import {Package} from '@/server/db/packages/types'
 
 type PackageForm = Partial<Package> & {
   openapi_format?: string
