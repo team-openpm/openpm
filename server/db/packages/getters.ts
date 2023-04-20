@@ -64,14 +64,37 @@ export async function getPackageVersionOrNotFound({
   return pkg
 }
 
-export async function searchPackages({query}: {query: string}) {
+export async function searchPackages({
+  query,
+  limit,
+}: {
+  query: string
+  limit: number
+}): Promise<PackageLite[]> {
   return await db
     .selectFrom('packages')
-    .select(['id', 'domain', 'version', 'description', 'published_at'])
+    .select([
+      'id',
+      'name',
+      'machine_name',
+      'domain',
+      'version',
+      'created_at',
+      'updated_at',
+      'deleted_at',
+      'published_at',
+      'logo_url',
+      'contact_email',
+      'legal_info_url',
+      'description',
+      'machine_description',
+      'user_id',
+    ])
     .where(({or, cmpr}) =>
       or([cmpr('name', 'like', `%${query}`), cmpr('domain', 'like', `%${query}%`)]),
     )
     .orderBy('name', 'asc')
+    .limit(limit)
     .execute()
 }
 
