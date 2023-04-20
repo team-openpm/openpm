@@ -3,7 +3,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseSpecJson} from '@/lib/openapi'
+import {parseOpenApiSpecJson} from '@/lib/openapi'
 import {
   getPackageByIdOrNotFound,
   getPackageVersionOrNotFound,
@@ -21,7 +21,7 @@ export default async function PackageVersion({
     packageId: params.packageId,
     version: params.packageVersion,
   })
-  const doc = await parseSpecJson(version.openapi)
+  const doc = await parseOpenApiSpecJson(version.openapi)
 
   return (
     <div className="flex">

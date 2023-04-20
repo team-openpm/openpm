@@ -1,10 +1,11 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "0.0.2",
+    "version": "0.0.4",
     "title": "openpm",
     "license": {
-      "name": "MIT"
+      "name": "MIT",
+      "identifier": "MIT"
     }
   },
   "servers": [
@@ -104,6 +105,7 @@
         "parameters": [
           {
             "name": "limit",
+            "in": "query",
             "description": "How many package to return per page (default 500)",
             "schema": {
               "type": "integer",
@@ -113,6 +115,7 @@
           },
           {
             "name": "page",
+            "in": "query",
             "description": "Page number (default 1)",
             "schema": {
               "type": "integer",
@@ -121,6 +124,7 @@
           },
           {
             "name": "query",
+            "in": "query",
             "required": true,
             "description": "Search query",
             "schema": {
@@ -448,7 +452,7 @@
       }
     },
     "securitySchemes": {
-      "openpm": {
+      "openpm_auth": {
         "description": "Openpm API Key Authentication",
         "type": "http",
         "scheme": "bearer"

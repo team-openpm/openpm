@@ -2,7 +2,7 @@ import {NextResponse} from 'next/server'
 import semver from 'semver'
 import {z} from 'zod'
 
-import {parseSpec} from '@/lib/openapi'
+import {parseOpenApiSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
@@ -53,7 +53,7 @@ const endpoint = withAuth(
       })
 
       if (data.openapi) {
-        const doc = await parseSpec(data.openapi, data.openapi_format)
+        const doc = await parseOpenApiSpec(data.openapi, data.openapi_format)
         const version = semver.valid(doc.version)
 
         if (!version) {

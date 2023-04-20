@@ -1,13 +1,13 @@
 import {OpenApiDocument} from './document'
 import petstore from './fixtures/petstore.json'
 
-import {parseSpecObject} from '.'
+import {parseOpenApiObject} from '.'
 
 describe('OpenApiDocument', () => {
   let document: OpenApiDocument
 
   beforeEach(async () => {
-    document = await parseSpecObject(petstore)
+    document = await parseOpenApiObject(petstore)
   })
 
   test('toJSON', () => {
