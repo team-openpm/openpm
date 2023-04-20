@@ -12,7 +12,7 @@ export const PackageSidebar: React.FC<{
   pagedEndpoints: boolean
   version?: string
 }> = ({package: pkg, document, pagedEndpoints, version}) => {
-  const versionPath = version ? `/${version}` : ''
+  const versionPath = version ? `/version/${version}` : ''
 
   return (
     <aside className="sticky bottom-0 top-0 h-screen w-72 flex-1 overflow-auto border-r border-slate-900/10  px-6 py-4 dark:border-white/10">
