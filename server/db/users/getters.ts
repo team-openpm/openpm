@@ -1,4 +1,4 @@
-import {db} from '../connection'
+import {db} from '../db'
 
 export async function getUserById(userId: string) {
   const user = await db

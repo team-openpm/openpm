@@ -1,7 +1,7 @@
 import {notFound} from 'next/navigation'
 
 import {PackageFull, PackageLite} from './types'
-import {db} from '../connection'
+import {db} from '../db'
 
 export async function getPackageById(packageId: string) {
   const pkg = await db

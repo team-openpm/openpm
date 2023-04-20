@@ -1,4 +1,4 @@
-import {db} from '../connection'
+import {db} from '../db'
 
 export const setUser = async ({
   id,
