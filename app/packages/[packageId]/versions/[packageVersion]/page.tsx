@@ -18,11 +18,11 @@ export default async function PackageVersion({
   params: {packageId: string; packageVersion: string}
 }) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
-  const version = await getPackageVersionOrNotFound({
+  const pkgVersion = await getPackageVersionOrNotFound({
     packageId: params.packageId,
     version: params.packageVersion,
   })
-  const doc = await parseOpenApiSpecJson(version.openapi)
+  const doc = await parseOpenApiSpecJson(pkgVersion.openapi)
 
   let groupedEndpoints: Map<string, OpenApiEndpoint[]>
   let pagedEndpoints = false
@@ -37,7 +37,12 @@ export default async function PackageVersion({
   return (
     <div className="flex">
       <div className="flex-none">
-        <PackageSidebar package={pkg} document={doc} pagedEndpoints={pagedEndpoints} />
+        <PackageSidebar
+          package={pkg}
+          document={doc}
+          pagedEndpoints={pagedEndpoints}
+          version={pkgVersion.version}
+        />
       </div>
 
       <div className="flex-grow">
