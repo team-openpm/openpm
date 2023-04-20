@@ -16,6 +16,41 @@ That's why we're building [openpm.ai](https://openpm.ai), an open source package
 
 Everything we release is under the MIT license. We will never charge a transaction fee for our services. We will never wield editorial control. We will only remove packages that are scams or illegal under US law. At any point you can choose to export all of our packages and run them on your own server.
 
+## Example usage with Langchain
+
+First install our package:
+
+```bash
+npm install @openpm/langchain
+```
+
+Then use it in your code:
+
+```typescript
+import {initializeAgentExecutorWithOptions} from 'langchain/agents'
+import {ChatOpenAI} from 'langchain/chat_models/openai'
+import {RequestsGetTool, RequestsPostTool} from 'langchain/tools'
+
+import {OpenpmTool} from '@openpm/langchain'
+
+const tools = [
+  new RequestsGetTool(),
+  new RequestsPostTool(),
+  await OpenpmTool.fromPackageId('klarna'),
+]
+const agent = await initializeAgentExecutorWithOptions(
+  tools,
+  new ChatOpenAI({temperature: 0, modelName: 'gpt-4'}),
+  {agentType: 'chat-zero-shot-react-description', verbose: true},
+)
+
+const result = await agent.call({
+  input: 'what t shirts are available in klarna?',
+})
+
+console.log({result})
+```
+
 ## Retriving OpenAPI files
 
 You can browse OpenAPI 'packages' on openpm.ai. You can also download the entire database of packages as a [single JSON file](https://openpm.ai/export).
