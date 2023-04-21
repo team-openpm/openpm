@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "0.0.6",
+    "version": "0.0.7",
     "title": "openpm",
     "license": {
       "name": "MIT",
@@ -49,7 +49,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Package"
+                        "$ref": "#/components/schemas/PackageLite"
                       }
                     },
                     "total": {
@@ -145,7 +145,7 @@
                     "items": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/Package"
+                        "$ref": "#/components/schemas/PackageLite"
                       }
                     },
                     "total": {
@@ -451,52 +451,164 @@
         "required": ["id"],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Package id"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Package name",
+            "examples": ["Acme"]
           },
           "machine_name": {
-            "type": "string"
+            "type": "string",
+            "description": "Package name (for machines)",
+            "examples": ["acme"]
           },
           "domain": {
-            "type": "string"
-          },
-          "openapi": {
-            "type": "string"
+            "type": "string",
+            "description": "Package domain",
+            "examples": ["acme.com"]
           },
           "version": {
-            "type": "string"
+            "type": "string",
+            "description": "Package version",
+            "examples": ["1.0.0"]
           },
           "created_at": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Package creation date",
+            "examples": ["2019-01-01T00:00:00Z"]
           },
           "updated_at": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Package last update date",
+            "examples": ["2019-01-01T00:00:00Z"]
           },
           "published_at": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "Package publication date",
+            "examples": ["2019-01-01T00:00:00Z"]
           },
           "logo_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Package logo url",
+            "examples": ["https://logo.clearbit.com/acme.com"]
           },
           "contact_email": {
-            "type": "string"
+            "type": "string",
+            "description": "Package contact email",
+            "examples": ["support@acme.com"]
           },
           "legal_info_url": {
-            "type": "string"
+            "type": "string",
+            "description": "Package legal info url",
+            "examples": ["https://acme.com/legal"]
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Package description",
+            "examples": [
+              "Acme is an API for searching and retrieving information about Acme's products."
+            ]
           },
           "machine_description": {
-            "type": "string"
+            "type": "string",
+            "description": "Package description (for machines)",
+            "examples": [
+              "Acme is an API for searching and retrieving information about Acme's products."
+            ]
           },
           "user_id": {
-            "type": "string"
+            "type": "string",
+            "description": "Package owner user id"
+          },
+          "openapi": {
+            "type": "string",
+            "description": "Package OpenAPI specification",
+            "examples": ["{\"openapi\": \"3.1.0\", \"info\": {\"title\": \"Acme API\"}}"]
+          }
+        }
+      },
+      "PackageLite": {
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Package id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Package name",
+            "examples": ["Acme"]
+          },
+          "machine_name": {
+            "type": "string",
+            "description": "Package name (for machines)",
+            "examples": ["acme"]
+          },
+          "domain": {
+            "type": "string",
+            "description": "Package domain",
+            "examples": ["acme.com"]
+          },
+          "version": {
+            "type": "string",
+            "description": "Package version",
+            "examples": ["1.0.0"]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Package creation date",
+            "examples": ["2019-01-01T00:00:00Z"]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Package last update date",
+            "examples": ["2019-01-01T00:00:00Z"]
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Package publication date",
+            "examples": ["2019-01-01T00:00:00Z"]
+          },
+          "logo_url": {
+            "type": "string",
+            "description": "Package logo url",
+            "examples": ["https://logo.clearbit.com/acme.com"]
+          },
+          "contact_email": {
+            "type": "string",
+            "description": "Package contact email",
+            "examples": ["support@acme.com"]
+          },
+          "legal_info_url": {
+            "type": "string",
+            "description": "Package legal info url",
+            "examples": ["https://acme.com/legal"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Package description",
+            "examples": [
+              "Acme is an API for searching and retrieving information about Acme's products."
+            ]
+          },
+          "machine_description": {
+            "type": "string",
+            "description": "Package description (for machines)",
+            "examples": [
+              "Acme is an API for searching and retrieving information about Acme's products."
+            ]
+          },
+          "user_id": {
+            "type": "string",
+            "description": "Package owner user id"
           }
         }
       },
