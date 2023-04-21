@@ -9,8 +9,7 @@ export async function ApiKeys({userId}: {userId: string}) {
   const apiKeys = await getUnrevokedApiKeys({userId})
 
   return (
-    <section className="space-y-3" id="api-keys">
-      <h2 className="text-base font-medium">API Keys</h2>
+    <div>
       <ul>
         {apiKeys.map((apiKey) => (
           <ApiKeyItem key={apiKey.id} apiKey={apiKey} />
@@ -20,6 +19,6 @@ export async function ApiKeys({userId}: {userId: string}) {
       <footer className="mt-5">
         <NewApiKey />
       </footer>
-    </section>
+    </div>
   )
 }

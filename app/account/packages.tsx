@@ -8,8 +8,7 @@ export async function Packages({userId}: {userId: string}) {
   const packages = await getAllPackagesForUserId(userId)
 
   return (
-    <section className="space-y-3" id="packages">
-      <h2 className="text-base font-medium">Packages</h2>
+    <div>
       <ul>
         {packages.map((pkg) => (
           <li key={pkg.id}>
@@ -46,6 +45,6 @@ export async function Packages({userId}: {userId: string}) {
           New package...
         </Link>
       </footer>
-    </section>
+    </div>
   )
 }
