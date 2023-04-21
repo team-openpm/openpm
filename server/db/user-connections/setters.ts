@@ -10,7 +10,7 @@ export function createUserConnection({
 }: {
   userId: string
   packageId: string
-  apiKey: string | null
+  apiKey?: string | null
   accessToken?: string | null
   refreshToken?: string | null
   expiresAt?: Date | null

@@ -1,18 +1,17 @@
 // OAuth Helpers
 
 import {generateId} from '@/lib/generate-id'
-import {jsonFetch} from '@/lib/json-fetch'
 
-export function buildOAuthAuthorizeUrl({
-  authorizeUrl,
+export function buildAuthorizationUrl({
+  authorizationUrl,
   redirectUrl,
   clientId,
 }: {
-  authorizeUrl: string
+  authorizationUrl: string
   redirectUrl: string
   clientId: string
 }) {
-  const url = new URL(authorizeUrl)
+  const url = new URL(authorizationUrl)
 
   url.searchParams.set('client_id', clientId)
   url.searchParams.set('state', generateId())
@@ -32,18 +31,26 @@ export async function fetchAccessToken({
   clientSecret: string
   tokenUrl: string
 }) {
-  const {error, response} = await jsonFetch<{access_token: string}>(tokenUrl, {
+  const response = await fetch(tokenUrl, {
     method: 'POST',
-    data: {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      code,
       client_id: clientId,
       client_secret: clientSecret,
-      code,
-    },
+      grant_type: 'authorization_code',
+    }),
   })
 
-  if (error) {
-    throw new Error(error.message)
+  if (!response.ok) {
+    throw new Error(`Failed to fetch access token: ${response.statusText}`)
   }
 
-  return response.access_token
+  const {access_token: accessToken} = (await response.json()) as {
+    access_token: string
+  }
+
+  return accessToken
 }
