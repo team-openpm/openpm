@@ -70,7 +70,7 @@ export default async function OpenapiPage() {
 
         <pre>
           <code>
-            {`Generate a JSON OpenAPI 3.0 specification for an API with the following endpoints:
+            {`Generate a JSON OpenAPI 3.1 specification for an API with the following endpoints:
             
 1. GET /users - Retrieves a list of users with optional pagination (query parameters: page, limit)
 2. POST /users - Creates a new user (request body: name, email, password)
@@ -78,7 +78,11 @@ export default async function OpenapiPage() {
 4. PUT /users/{userId} - Updates a user's information (path parameter: userId, request body: name, email)
 5. DELETE /users/{userId} - Deletes a user by ID (path parameter: userId)
 
-The API uses JSON for request and response bodies. The API is authenticated using Bearer tokens.`}
+API information:
+- The API uses JSON for request and response bodies. The API is authenticated using Bearer tokens. 
+- All endpoints are authenticated.
+- The API is hosted at https://example.com/api
+- Use refs and components when appropriate. And provide examples.`}
           </code>
         </pre>
 
