@@ -3,9 +3,9 @@
 import Link from 'next/link'
 
 import {getVersionsForPackageId} from '@/server/db/packages/getters'
-import {Package} from '@/server/db/packages/types'
+import {LitePackage} from '@/server/db/packages/types'
 
-export async function PackageVersions({package: pkg}: {package: Package}) {
+export async function PackageVersions({package: pkg}: {package: LitePackage}) {
   const packageVersions = await getVersionsForPackageId(pkg.id)
 
   return (

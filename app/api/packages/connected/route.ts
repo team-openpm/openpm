@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 
 import {buildPackageResponse} from '@/helpers/api/package-response'
-import {getPackagesByIds} from '@/server/db/packages/getters'
+import {getFullPackagesByIds} from '@/server/db/packages/getters'
 import {getConnectionsForUser} from '@/server/db/user-connections/getters'
 import {withAuth} from '@/server/helpers/auth'
 
@@ -18,7 +18,7 @@ export const GET = withAuth(async (request: Request, {userId}) => {
 
   const packageIds = connections.map((conn) => conn.package_id)
 
-  const packages = await getPackagesByIds(packageIds)
+  const packages = await getFullPackagesByIds(packageIds)
 
   const responses = await Promise.all(
     packages.map((pkg) => buildPackageResponse(pkg, {proxy})),

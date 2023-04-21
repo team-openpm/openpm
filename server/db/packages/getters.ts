@@ -2,14 +2,28 @@ import {notFound} from 'next/navigation'
 
 import {
   Package,
-  PackageFull,
-  PackageLite,
+  FullPackage,
+  LitePackage,
   fullPackageCols,
   litePackageCols,
 } from './types'
 import {db} from '../db'
 
-export async function getPackageById(packageId: string): Promise<PackageFull | null> {
+export async function getUnsafePackageById(packageId: string): Promise<Package | null> {
+  const pkg = await db
+    .selectFrom('packages')
+    .selectAll()
+    .where('id', '=', packageId)
+    .executeTakeFirst()
+
+  if (!pkg) {
+    return null
+  }
+
+  return pkg
+}
+
+export async function getFullPackageById(packageId: string): Promise<FullPackage | null> {
   const pkg = await db
     .selectFrom('packages')
     .select(fullPackageCols)
@@ -23,7 +37,7 @@ export async function getPackageById(packageId: string): Promise<PackageFull | n
   return pkg
 }
 
-export async function getPackagesByIds(packageIds: string[]): Promise<PackageFull[]> {
+export async function getFullPackagesByIds(packageIds: string[]): Promise<FullPackage[]> {
   const pkgs = await db
     .selectFrom('packages')
     .select(fullPackageCols)
@@ -33,8 +47,8 @@ export async function getPackagesByIds(packageIds: string[]): Promise<PackageFul
   return pkgs
 }
 
-export async function getPackageByIdOrNotFound(packageId: string): Promise<PackageFull> {
-  const pkg = await getPackageById(packageId)
+export async function getPackageByIdOrNotFound(packageId: string): Promise<FullPackage> {
+  const pkg = await getFullPackageById(packageId)
 
   if (!pkg) {
     notFound()
@@ -125,7 +139,7 @@ export async function searchPackages({
 }: {
   query: string
   limit: number
-}): Promise<PackageFull[]> {
+}): Promise<FullPackage[]> {
   return await db
     .selectFrom('packages')
     .select(fullPackageCols)
@@ -140,7 +154,7 @@ export async function searchPackages({
     .execute()
 }
 
-export async function getPackagesWithIds(ids: string[]): Promise<PackageFull[]> {
+export async function getPackagesWithIds(ids: string[]): Promise<FullPackage[]> {
   return db
     .selectFrom('packages')
     .where('id', 'in', ids)
@@ -159,7 +173,7 @@ export async function getPackagesWithPagination({
   orderBy?: 'id' | 'name' | 'domain' | 'published_at'
   orderDirection?: 'asc' | 'desc'
 }): Promise<{
-  packages: PackageLite[]
+  packages: LitePackage[]
   page: number
   limit: number
   total: number

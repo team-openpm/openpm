@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import {OpenApiDocument} from '@/helpers/openapi/document'
-import {Package} from '@/server/db/packages/types'
+import {LitePackage} from '@/server/db/packages/types'
 
 import {PackageDescription} from './package-description'
 
@@ -9,7 +9,7 @@ export function PackageInfo({
   package: pkg,
   document,
 }: {
-  package: Package
+  package: LitePackage
   document: OpenApiDocument
 }) {
   return (

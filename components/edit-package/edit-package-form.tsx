@@ -12,10 +12,10 @@ import {TextareaInput} from '../textarea-input'
 
 export default function EditPackageForm({
   package: pkg,
-  usesOauth,
+  hasOauth,
 }: {
   package: Package
-  usesOauth: boolean
+  hasOauth: boolean
 }) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -244,7 +244,7 @@ export default function EditPackageForm({
                 </div>
               </div>
 
-              {usesOauth && (
+              {hasOauth && (
                 <>
                   <div className="sm:col-span-4">
                     <label

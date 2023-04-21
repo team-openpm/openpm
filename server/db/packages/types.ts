@@ -23,17 +23,17 @@ export interface Package {
 }
 
 // Typically we would never respond to the client with the full Package
-export type PackageFull = Omit<
+export type FullPackage = Omit<
   Package,
   'oauth_client_id' | 'oauth_client_secret' | 'oauth_authorize_url' | 'oauth_token_url'
 >
 
 // Everything in PackageFull except openapi and acl_write
-export type PackageLite = Omit<PackageFull, 'openapi' | 'acl_write'>
+export type LitePackage = Omit<FullPackage, 'openapi' | 'acl_write'>
 
-type PackageFullKeys = keyof PackageFull
+type FullPackageKeys = keyof FullPackage
 
-export const fullPackageCols: readonly PackageFullKeys[] = [
+export const fullPackageCols: readonly FullPackageKeys[] = [
   'id',
   'name',
   'machine_name',
@@ -53,9 +53,9 @@ export const fullPackageCols: readonly PackageFullKeys[] = [
   'openapi',
 ] as const
 
-type PackageLiteKeys = keyof PackageLite
+type LitePackageKeys = keyof LitePackage
 
-export const litePackageCols: readonly PackageLiteKeys[] = [
+export const litePackageCols: readonly LitePackageKeys[] = [
   'id',
   'name',
   'machine_name',

@@ -2,13 +2,13 @@ import React from 'react'
 
 import {OpenApiDocument} from '@/helpers/openapi/document'
 import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
-import {Package} from '@/server/db/packages/types'
+import {FullPackage} from '@/server/db/packages/types'
 
 import {DocumentEndpoints} from './document-endpoints'
 import {PackageHeader} from './package-header'
 
 export const PackageMain: React.FC<{
-  package: Package
+  package: FullPackage
   document: OpenApiDocument
   groupedEndpoints: Map<string, OpenApiEndpoint[]>
 }> = ({package: pkg, document, groupedEndpoints}) => {

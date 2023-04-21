@@ -1,6 +1,6 @@
-import {assert, assertString} from '@/lib/assert'
 import {OpenApiDocument} from '@/helpers/openapi/document'
 import {OpenAPI} from '@/helpers/openapi/types'
+import {assert, assertString} from '@/lib/assert'
 import {Package} from '@/server/db/packages/types'
 import {getConnectionForPackageAndUser} from '@/server/db/user-connections/getters'
 

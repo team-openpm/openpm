@@ -3,7 +3,7 @@ import semver from 'semver'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 import {withAuth} from '@/server/helpers/auth'
@@ -31,7 +31,7 @@ const endpoint = withAuth(
   withApiBuilder<ApiRequestParams, {userId: string}>(
     ApiSchema,
     async (req: Request, {userId, data}) => {
-      const packageRow = await getPackageById(data.packageId)
+      const packageRow = await getFullPackageById(data.packageId)
 
       if (!packageRow) {
         return error('Package does not exist')

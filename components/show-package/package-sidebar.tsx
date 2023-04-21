@@ -4,10 +4,10 @@ import Link from 'next/link'
 import React from 'react'
 
 import {OpenApiDocument} from '@/helpers/openapi/document'
-import {Package} from '@/server/db/packages/types'
+import {LitePackage} from '@/server/db/packages/types'
 
 export const PackageSidebar: React.FC<{
-  package: Package
+  package: LitePackage
   document: OpenApiDocument
   pagedEndpoints: boolean
   version?: string

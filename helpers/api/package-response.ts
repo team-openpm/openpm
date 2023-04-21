@@ -1,8 +1,8 @@
-import {PackageFull} from '@/server/db/packages/types'
+import {FullPackage} from '@/server/db/packages/types'
 
 import {rewriteDocumentJsonForProxy} from '../openapi/proxy'
 
-export async function buildPackageResponse(pkg: PackageFull, {proxy = false} = {}) {
+export async function buildPackageResponse(pkg: FullPackage, {proxy = false} = {}) {
   let openapi = pkg.openapi
 
   if (proxy) {

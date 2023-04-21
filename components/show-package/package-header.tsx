@@ -1,5 +1,5 @@
 import {OpenApiDocument} from '@/helpers/openapi/document'
-import {Package} from '@/server/db/packages/types'
+import {FullPackage} from '@/server/db/packages/types'
 
 import {DocumentAuthentication} from './document-authentication'
 import {PackageInfo} from './package-info'
@@ -9,7 +9,7 @@ export function PackageHeader({
   package: pkg,
   document,
 }: {
-  package: Package
+  package: FullPackage
   document: OpenApiDocument
 }) {
   return (

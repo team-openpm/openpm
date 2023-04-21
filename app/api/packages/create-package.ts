@@ -3,7 +3,7 @@ import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
@@ -24,7 +24,7 @@ const createPackageEndpoint = withAuth(
     ApiSchema,
     async (req: Request, {userId, data}) => {
       const userRow = await getUserById(userId)
-      const packageRow = await getPackageById(data.id)
+      const packageRow = await getFullPackageById(data.id)
 
       if (packageRow) {
         return error('Package already exists')
