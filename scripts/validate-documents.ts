@@ -1,4 +1,4 @@
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {getAllPackages} from '@/server/db/packages/getters'
 
 async function main() {
@@ -7,7 +7,7 @@ async function main() {
   for (const pkg of packages) {
     console.log(`Validating ${pkg.id}`)
     try {
-      await parseOpenApiSpecJson(pkg.openapi)
+      await parseJsonSpec(pkg.openapi)
     } catch (err) {
       console.log(`Error validating ${pkg.id}`)
       console.log(err)

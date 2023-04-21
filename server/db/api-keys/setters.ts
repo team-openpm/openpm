@@ -1,6 +1,6 @@
 import {generateApiKey} from '@/lib/generate-id'
 
-import {db} from '../connection'
+import {db} from '../db'
 
 export const createApiKey = async ({userId}: {userId: string}) => {
   const key = generateApiKey()

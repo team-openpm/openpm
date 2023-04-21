@@ -27,6 +27,38 @@ CREATE TABLE users (
   last_sign_in_at TIMESTAMP
 );
 
+-- Table: user_connections
+-- Columns: package_id, user_id, api_key, access_token, refresh_token, expires_at, updated_at, created_at
+
+CREATE TABLE user_connections (
+  -- uuid id
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+
+  -- String package_id
+  package_id TEXT REFERENCES packages(id) ON DELETE CASCADE NOT NULL,
+
+  -- uuid user_id
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+
+  -- String api_key
+  api_key TEXT,
+
+  -- String access_token
+  access_token TEXT,
+
+  -- String refresh_token
+  refresh_token TEXT,
+
+  -- UTC timestamp
+  expires_at TIMESTAMP,
+
+  -- updated at
+  updated_at TIMESTAMP DEFAULT now() NOT NULL,
+
+  -- created at
+  created_at TIMESTAMP DEFAULT now() NOT NULL
+);
+
 -- Table: api_keys
 -- Columns: key, created_at, revoked_at, user_id
 

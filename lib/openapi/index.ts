@@ -4,7 +4,7 @@ import {parse as parseYaml} from 'yaml'
 import {OpenApiDocument} from './document'
 import {OpenAPIV3, OpenAPIV3_1} from './types'
 
-export async function parseOpenApiObject(document: any): Promise<OpenApiDocument> {
+export async function parseObjectSpec(document: any): Promise<OpenApiDocument> {
   const version = document?.openapi ?? ''
 
   if (!version.startsWith('3.')) {
@@ -22,24 +22,24 @@ export async function parseOpenApiObject(document: any): Promise<OpenApiDocument
   })
 }
 
-export async function parseOpenApiSpecJson(spec: string): Promise<OpenApiDocument> {
+export async function parseJsonSpec(spec: string): Promise<OpenApiDocument> {
   const specObject = JSON.parse(spec)
-  return parseOpenApiObject(specObject)
+  return parseObjectSpec(specObject)
 }
 
-export async function parseOpenSpecYaml(spec: string): Promise<OpenApiDocument> {
+export async function parseYamlSpec(spec: string): Promise<OpenApiDocument> {
   const specObject = await parseYaml(spec)
-  return parseOpenApiObject(specObject)
+  return parseObjectSpec(specObject)
 }
 
-export async function parseOpenApiSpec(
+export async function parseSpec(
   spec: string,
   format: 'json' | 'yaml',
 ): Promise<OpenApiDocument> {
   if (format === 'json') {
-    return parseOpenApiSpecJson(spec)
+    return parseJsonSpec(spec)
   } else {
-    return parseOpenSpecYaml(spec)
+    return parseYamlSpec(spec)
   }
 }
 

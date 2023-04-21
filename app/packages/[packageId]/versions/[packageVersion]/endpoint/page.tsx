@@ -5,7 +5,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {
   getPackageByIdOrNotFound,
   getPackageVersionOrNotFound,
@@ -47,7 +47,7 @@ export default async function PackageVersionEndpoint({
     packageId: params.packageId,
     version: params.packageVersion,
   })
-  const doc = await parseOpenApiSpecJson(version.openapi)
+  const doc = await parseJsonSpec(version.openapi)
 
   if (!searchParams.path) {
     redirect(`/packages/${pkg.id}`)

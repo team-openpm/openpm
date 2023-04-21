@@ -3,7 +3,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
 import {
   getPackageByIdOrNotFound,
@@ -22,7 +22,7 @@ export default async function PackageVersion({
     packageId: params.packageId,
     version: params.packageVersion,
   })
-  const doc = await parseOpenApiSpecJson(pkgVersion.openapi)
+  const doc = await parseJsonSpec(pkgVersion.openapi)
 
   let groupedEndpoints: Map<string, OpenApiEndpoint[]>
   let pagedEndpoints = false

@@ -4,10 +4,10 @@ import reflect from './fixtures/reflect.json'
 import {OpenApiRequestExample} from './request-example'
 import {OpenAPI} from './types'
 
-import {parseOpenApiObject} from '.'
+import {parseObjectSpec} from '.'
 
 describe('request-example petstore', async () => {
-  const document = await parseOpenApiObject(petstore)
+  const document = await parseObjectSpec(petstore)
 
   const requestExample = new OpenApiRequestExample({
     securitySchemes: document.securitySchemes,
@@ -82,7 +82,7 @@ describe('request-example petstore', async () => {
 })
 
 describe('request-example reflect', async () => {
-  const document = await parseOpenApiObject(reflect)
+  const document = await parseObjectSpec(reflect)
   const endpoint = document.endpoints.find(
     (ep) => ep.path === '/graphs/{graphId}/books/sync',
   )!
@@ -165,7 +165,7 @@ describe('request-example reflect', async () => {
 })
 
 describe('request-example clearbit', async () => {
-  const document = await parseOpenApiObject(clearbit)
+  const document = await parseObjectSpec(clearbit)
   const endpoint = document.endpoints[0]
   const requestExample = endpoint.requestExample
 

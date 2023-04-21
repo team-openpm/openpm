@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 
 import {highlight} from '@/lib/code-highlighter'
-import {parseOpenApiSpecJson} from '@/lib/openapi'
+import {parseJsonSpec} from '@/lib/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'
@@ -20,7 +20,7 @@ export async function GET(
     return error('Package not found', 'not_found', 404)
   }
 
-  const doc = await parseOpenApiSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   const path = getParams(req).get('path')
 
