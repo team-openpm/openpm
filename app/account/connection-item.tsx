@@ -3,17 +3,21 @@
 import {useRouter} from 'next/navigation'
 
 import {jsonFetch} from '@/lib/json-fetch'
-import {RedactedApiKey} from '@/server/db/api-keys/types'
+import {UserConnection} from '@/server/db/user-connections/types'
 
-export function ApiKeyItem({apiKey}: {apiKey: RedactedApiKey}) {
+export function ConnectionItem({connection}: {connection: UserConnection}) {
   const router = useRouter()
 
   const onRevoke = async () => {
-    if (!confirm('Are you sure you want to revoke this API key?')) {
+    if (
+      !confirm(
+        `Are you sure you want to revoke this connection to ${connection.package_id}?`,
+      )
+    ) {
       return
     }
 
-    const {error} = await jsonFetch(`/api/api-keys/${apiKey.id}`, {
+    const {error} = await jsonFetch(`/api/connections/${connection.id}`, {
       method: 'DELETE',
     })
 
@@ -28,8 +32,9 @@ export function ApiKeyItem({apiKey}: {apiKey: RedactedApiKey}) {
   return (
     <li className="grid max-w-sm grid-cols-3">
       <span>
-        <code className="font-mono text-sm">sk-...{apiKey.keyExcerpt}</code>
+        <code className="font-mono text-sm">{connection.package_id}</code>
       </span>
+
       <span className="col-span-2">
         <button
           type="button"

@@ -6,6 +6,8 @@ import {authOrRedirect} from '@/server/helpers/auth'
 import {AccountSidebar} from './account-sidebar'
 import {ApiKeys} from './api-keys'
 import {Packages} from './packages'
+import {Suspense} from 'react'
+import {Connections} from './connections'
 
 const AccountProfile = dynamic(() => import('@/components/account-profile'), {
   ssr: false,
@@ -31,10 +33,20 @@ export default async function AccountPage() {
               <AccountProfile />
             </div>
 
-            {/* @ts-expect-error Async Server Component */}
-            <Packages userId={userId} />
-            {/* @ts-expect-error Async Server Component */}
-            <ApiKeys userId={userId} />
+            <Suspense>
+              {/* @ts-expect-error Async Server Component */}
+              <Packages userId={userId} />
+            </Suspense>
+
+            <Suspense>
+              {/* @ts-expect-error Async Server Component */}
+              <ApiKeys userId={userId} />
+            </Suspense>
+
+            <Suspense>
+              {/* @ts-expect-error Async Server Component */}
+              <Connections userId={userId} />
+            </Suspense>
           </div>
         </div>
       </div>

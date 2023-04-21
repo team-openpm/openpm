@@ -5,7 +5,7 @@ import {getApiKey} from '@/server/db/api-keys/getters'
 import {revokeApiKey} from '@/server/db/api-keys/setters'
 import {withAuth} from '@/server/helpers/auth'
 
-export const POST = withAuth(
+export const DELETE = withAuth(
   async (
     req: Request,
     {userId, params}: {userId: string; params: {apiKeyId: string}},
