@@ -10,7 +10,13 @@ import {DefaultButton} from '../buttons/default-button'
 import {TextInput} from '../text-input'
 import {TextareaInput} from '../textarea-input'
 
-export default function EditPackageForm({package: pkg}: {package: Package}) {
+export default function EditPackageForm({
+  package: pkg,
+  usesOauth,
+}: {
+  package: Package
+  usesOauth: boolean
+}) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const [newPackage, setNewPackage] = useState<Partial<Package>>({
@@ -237,6 +243,85 @@ export default function EditPackageForm({package: pkg}: {package: Package}) {
                   />
                 </div>
               </div>
+
+              {usesOauth && (
+                <>
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="OAuth Client Id"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      OAuth 2.0 Client ID
+                    </label>
+
+                    <div className="mt-2">
+                      <TextInput
+                        name="OAuth Client Id"
+                        value={newPackage.oauth_client_id ?? ''}
+                        onChange={(value) => setNewPackageKey('oauth_client_id', value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="OAuth Client Id"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      OAuth 2.0 Client Secret
+                    </label>
+
+                    <div className="mt-2">
+                      <TextInput
+                        type="password"
+                        name="OAuth Client Secret"
+                        value={newPackage.oauth_client_secret ?? ''}
+                        onChange={(value) =>
+                          setNewPackageKey('oauth_client_secret', value)
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="OAuth Redirect Id"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      OAuth 2.0 Authorize URL (i.e. redirect url)
+                    </label>
+
+                    <div className="mt-2">
+                      <TextInput
+                        type="url"
+                        name="OAuth Redirect URL"
+                        value={newPackage.oauth_authorize_url ?? ''}
+                        onChange={(value) =>
+                          setNewPackageKey('oauth_authorize_url', value)
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="sm:col-span-4">
+                    <label
+                      htmlFor="OAuth Token URL"
+                      className="block text-sm font-medium leading-6 text-slate-900"
+                    >
+                      OAuth 2.0 Token URL
+                    </label>
+
+                    <div className="mt-2">
+                      <TextInput
+                        type="url"
+                        name="OAuth Token URL"
+                        value={newPackage.oauth_token_url ?? ''}
+                        onChange={(value) => setNewPackageKey('oauth_token_url', value)}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div className="col-span-full">
                 <label

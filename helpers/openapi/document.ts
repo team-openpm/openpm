@@ -230,6 +230,10 @@ export class OpenApiDocument {
     return !isEmpty(this.securitySchemes)
   }
 
+  get hasOauthAuthentication(): boolean {
+    return Object.values(this.securitySchemes).some((scheme) => scheme.type === 'oauth2')
+  }
+
   get securitySchemes(): Record<string, OpenAPI.SecuritySchemeObject> {
     return this.document.components?.securitySchemes ?? {}
   }

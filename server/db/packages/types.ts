@@ -16,13 +16,20 @@ export interface Package {
   machine_description: string | null
   user_id: string
   acl_write: string[]
+  oauth_client_id: string | null
+  oauth_client_secret: string | null
+  oauth_authorize_url: string | null
+  oauth_token_url: string | null
 }
 
 // Typically we would never respond to the client with the full Package
-export type PackageFull = Omit<Package, 'acl_write'>
+export type PackageFull = Omit<
+  Package,
+  'oauth_client_id' | 'oauth_client_secret' | 'oauth_authorize_url' | 'oauth_token_url'
+>
 
-// Everything in Package except openapi and acl_write
-export type PackageLite = Omit<Package, 'openapi' | 'acl_write'>
+// Everything in PackageFull except openapi and acl_write
+export type PackageLite = Omit<PackageFull, 'openapi' | 'acl_write'>
 
 type PackageFullKeys = keyof PackageFull
 
@@ -42,6 +49,7 @@ export const fullPackageCols: readonly PackageFullKeys[] = [
   'description',
   'machine_description',
   'user_id',
+  'acl_write',
   'openapi',
 ] as const
 

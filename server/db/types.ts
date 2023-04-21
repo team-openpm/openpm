@@ -46,6 +46,8 @@ export interface Packages {
   acl_write: Generated<string[]>
   oauth_client_id: string | null
   oauth_client_secret: string | null
+  oauth_authorize_url: string | null
+  oauth_token_url: string | null
 }
 
 export interface PackageVersions {

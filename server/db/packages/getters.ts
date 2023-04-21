@@ -1,6 +1,12 @@
 import {notFound} from 'next/navigation'
 
-import {PackageFull, PackageLite, fullPackageCols, litePackageCols} from './types'
+import {
+  Package,
+  PackageFull,
+  PackageLite,
+  fullPackageCols,
+  litePackageCols,
+} from './types'
 import {db} from '../db'
 
 export async function getPackageById(packageId: string): Promise<PackageFull | null> {
@@ -29,6 +35,45 @@ export async function getPackagesByIds(packageIds: string[]): Promise<PackageFul
 
 export async function getPackageByIdOrNotFound(packageId: string): Promise<PackageFull> {
   const pkg = await getPackageById(packageId)
+
+  if (!pkg) {
+    notFound()
+  }
+
+  return pkg
+}
+
+// This returns the full package - including the
+// oauth credentials. It's important that this is only
+// requested by the package owner.
+export async function getPackageForEditByUser({
+  packageId,
+  userId,
+}: {
+  packageId: string
+  userId: string
+}): Promise<Package | null> {
+  return (
+    (await db
+      .selectFrom('packages')
+      .selectAll()
+      .where('id', '=', packageId)
+      .where('user_id', '=', userId)
+      .executeTakeFirst()) ?? null
+  )
+}
+
+// This returns the full package - including the
+// oauth credentials. It's important that this is only
+// requested by the package owner.
+export async function getPackageForEditByUserOrNotFound({
+  packageId,
+  userId,
+}: {
+  packageId: string
+  userId: string
+}): Promise<Package> {
+  const pkg = await getPackageForEditByUser({packageId, userId})
 
   if (!pkg) {
     notFound()
