@@ -1,6 +1,6 @@
 import startCase from 'lodash/startCase'
 
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
+import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
 
 import {DocumentEndpoint} from './document-endpoint'
 

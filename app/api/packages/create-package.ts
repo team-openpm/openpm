@@ -2,7 +2,7 @@ import first from 'lodash/first'
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {parseSpec} from '@/lib/openapi'
+import {parseSpec} from '@/helpers/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'

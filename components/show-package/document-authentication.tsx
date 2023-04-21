@@ -1,4 +1,4 @@
-import {OpenApiDocument} from '@/lib/openapi/document'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 
 import {DocumentSecurityScheme} from './document-security-schema'
 

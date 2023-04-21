@@ -3,7 +3,7 @@ import {Suspense} from 'react'
 
 import {ErrorBoundary} from '@/components/error-boundary'
 import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
+import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
 
 import {DocumentEndpointRequestExample} from './document-endpoint-request-example'
 import {DocumentEndpointResponseExample} from './document-endpoint-response-example'

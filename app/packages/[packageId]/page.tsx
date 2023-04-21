@@ -5,8 +5,8 @@ import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageHeader} from '@/components/show-package/package-header'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseJsonSpec} from '@/lib/openapi'
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
+import {parseJsonSpec} from '@/helpers/openapi'
+import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
 import {getAllPackageIds, getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 15

@@ -5,7 +5,7 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {DocumentEndpoints} from '@/components/show-package/document-endpoints'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseJsonSpec} from '@/lib/openapi'
+import {parseJsonSpec} from '@/helpers/openapi'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export const revalidate = 60

@@ -3,8 +3,8 @@ import React from 'react'
 import {AccountHeader} from '@/components/account-header'
 import {PackageMain} from '@/components/show-package/package-main'
 import {PackageSidebar} from '@/components/show-package/package-sidebar'
-import {parseJsonSpec} from '@/lib/openapi'
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
+import {parseJsonSpec} from '@/helpers/openapi'
+import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
 import {
   getPackageByIdOrNotFound,
   getPackageVersionOrNotFound,

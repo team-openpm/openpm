@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 
 import {highlight} from '@/lib/code-highlighter'
-import {parseJsonSpec} from '@/lib/openapi'
+import {parseJsonSpec} from '@/helpers/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'

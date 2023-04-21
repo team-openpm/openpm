@@ -3,7 +3,7 @@ import startCase from 'lodash/startCase'
 import Link from 'next/link'
 import React from 'react'
 
-import {OpenApiDocument} from '@/lib/openapi/document'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 import {Package} from '@/server/db/packages/types'
 
 export const PackageSidebar: React.FC<{

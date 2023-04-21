@@ -1,4 +1,4 @@
-import {OpenApiDocument} from '@/lib/openapi/document'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 import {Package} from '@/server/db/packages/types'
 
 import {DocumentAuthentication} from './document-authentication'

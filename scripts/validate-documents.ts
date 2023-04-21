@@ -1,4 +1,4 @@
-import {parseJsonSpec} from '@/lib/openapi'
+import {parseJsonSpec} from '@/helpers/openapi'
 import {getAllPackages} from '@/server/db/packages/getters'
 
 async function main() {

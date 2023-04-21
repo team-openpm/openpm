@@ -4,7 +4,7 @@ import React from 'react'
 
 import {Code} from '@/components/code'
 import {highlight} from '@/lib/code-highlighter'
-import {parseJsonSpec} from '@/lib/openapi'
+import {parseJsonSpec} from '@/helpers/openapi'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
 export default async function PackageOpenApi({params}: {params: {packageId: string}}) {

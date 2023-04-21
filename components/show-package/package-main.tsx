@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {OpenApiDocument} from '@/lib/openapi/document'
-import {OpenApiEndpoint} from '@/lib/openapi/endpoint'
+import {OpenApiDocument} from '@/helpers/openapi/document'
+import {OpenApiEndpoint} from '@/helpers/openapi/endpoint'
 import {Package} from '@/server/db/packages/types'
 
 import {DocumentEndpoints} from './document-endpoints'

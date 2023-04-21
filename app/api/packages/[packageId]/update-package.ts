@@ -2,7 +2,7 @@ import {NextResponse} from 'next/server'
 import semver from 'semver'
 import {z} from 'zod'
 
-import {parseSpec} from '@/lib/openapi'
+import {parseSpec} from '@/helpers/openapi'
 import {getPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'

@@ -2,7 +2,7 @@
 
 import {Code} from '@/components/code'
 import {safeHighlight} from '@/lib/code-highlighter'
-import {OpenApiResponseExample} from '@/lib/openapi/response-example'
+import {OpenApiResponseExample} from '@/helpers/openapi/response-example'
 
 export async function DocumentEndpointResponseExample({
   responseExample,
