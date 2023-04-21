@@ -19,9 +19,8 @@ export default async function AboutPage() {
         </p>
 
         <p>
-          AI, our new platform, needs it&apos;s own app-store. One not controlled by a
-          single rent-seeking company, but an open and free app-store built upon the open
-          web and the OpenAPI specification.
+          AI, our new platform, needs it&apos;s own app-store. An unrestricted app-store
+          built upon the open web and the OpenAPI specification.
         </p>
 
         <p>

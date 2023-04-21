@@ -20,17 +20,22 @@ export function auth() {
   return getUserId(authType, token)
 }
 
-export async function authOrRedirect(): Promise<string> {
+/**
+ * Authenticates a user and redirects them to a specified URL if not authenticated.
+ * @param {string} redirectBack - The relative path to redirect back to after authentication (optional).
+ * @returns {Promise<string>} A promise that resolves to the authenticated user's ID.
+ */
+export async function authOrRedirect(redirectBack: string = ''): Promise<string> {
   const userId = await auth()
 
   if (!userId) {
-    redirect('/auth')
+    redirect(`/auth${redirectBack ? `?redirect=${redirectBack}` : ''}`)
   }
 
   return userId
 }
 
-export function getSessionEmails() {
+export async function getSessionEmails(): Promise<string[] | null> {
   const headersList = headers()
   const [authType, token] = getToken(headersList)
 
