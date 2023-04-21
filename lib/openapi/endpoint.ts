@@ -1,3 +1,5 @@
+import first from 'lodash/first'
+
 import {OpenApiRequestExample} from './request-example'
 import {OpenApiResponse} from './response'
 import {OpenApiResponseExample} from './response-example'
@@ -45,6 +47,17 @@ export class OpenApiEndpoint {
 
   get combinedServers() {
     return (this.operation.servers ?? []).concat(this.servers)
+  }
+
+  get origin() {
+    const url = first(this.combinedServers)?.url
+
+    if (!url) {
+      return null
+    }
+
+    // Strip trailing slash
+    return url.replace(/\/$/, '')
   }
 
   get requestExample() {

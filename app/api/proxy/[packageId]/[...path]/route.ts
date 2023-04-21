@@ -1,12 +1,12 @@
+import {ProxyRequest} from '@/helpers/proxy/proxy-request'
 import {parseJsonSpec} from '@/lib/openapi'
 import {OpenAPI} from '@/lib/openapi/types'
 import {getPackageById} from '@/server/db/packages/getters'
-import {getConnectionForPackageAndUser} from '@/server/db/user-connections/getters'
 import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
 
 interface ProxyOptions {
-  params: {packageId: string; path: string}
+  params: {packageId: string; path: string[]}
   userId: string
 }
 
@@ -18,38 +18,24 @@ function buildProxy(method: OpenAPI.HttpMethods) {
       return error('Package not found', 'package_not_found', 404)
     }
 
-    const doc = await parseJsonSpec(pkg.openapi)
+    const document = await parseJsonSpec(pkg.openapi)
 
-    const endpoint = doc.endpoints.find((endpoint) => endpoint.path === params.path)
+    const path = `/${params.path.join('/')}`
 
-    if (!endpoint) {
+    const proxyRequest = new ProxyRequest({
+      method,
+      path,
+      request,
+      package: pkg,
+      document,
+      userId,
+    })
+
+    if (!proxyRequest.endpoint) {
       return error('Endpoint not found', 'endpoint_not_found', 404)
     }
 
-    if (endpoint.method !== method) {
-      return error('Method not allowed', 'method_not_allowed', 405)
-    }
-
-    const requestUrl = new URL(request.url)
-    const requestSearchParams = requestUrl.searchParams
-
-    const proxyUrl = new URL(doc.origin + endpoint.path)
-    proxyUrl.search = requestSearchParams.toString()
-
-    const connection = await getConnectionForPackageAndUser({
-      userId,
-      packageId: pkg.id,
-    })
-
-    console.log(connection)
-
-    const response = await fetch(proxyUrl, {
-      method: method,
-      headers: request.headers,
-      body: request.body,
-    })
-
-    return response
+    return proxyRequest.fetch()
   })
 }
 
