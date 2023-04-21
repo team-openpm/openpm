@@ -295,9 +295,9 @@ export default function EditPackageForm({
                       <TextInput
                         type="url"
                         name="OAuth Redirect URL"
-                        value={newPackage.oauth_authorize_url ?? ''}
+                        value={newPackage.oauth_authorization_url ?? ''}
                         onChange={(value) =>
-                          setNewPackageKey('oauth_authorize_url', value)
+                          setNewPackageKey('oauth_authorization_url', value)
                         }
                       />
                     </div>

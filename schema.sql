@@ -141,16 +141,16 @@ CREATE TABLE packages (
   oauth_client_secret TEXT
 
   -- oauth authorization uri
-  oauth_authorize_url TEXT
+  oauth_authorization_url TEXT
 
   -- oauth redirect uri
   oauth_token_url TEXT
 );
 
--- Sql to alter packages and add the columns oauth_client_id and oauth_client_secret, oauth_authorize_url, oauth_token_url
+-- Sql to alter packages and add the columns oauth_client_id and oauth_client_secret, oauth_authorization_url, oauth_token_url
 -- ALTER TABLE packages ADD COLUMN oauth_client_id TEXT;
 -- ALTER TABLE packages ADD COLUMN oauth_client_secret TEXT;
--- ALTER TABLE packages ADD COLUMN oauth_authorize_url TEXT;
+-- ALTER TABLE packages ADD COLUMN oauth_authorization_url TEXT;
 -- ALTER TABLE packages ADD COLUMN oauth_token_url TEXT;
 
 -- Table: package_versions

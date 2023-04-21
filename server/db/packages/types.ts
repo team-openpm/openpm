@@ -18,14 +18,17 @@ export interface Package {
   acl_write: string[]
   oauth_client_id: string | null
   oauth_client_secret: string | null
-  oauth_authorize_url: string | null
+  oauth_authorization_url: string | null
   oauth_token_url: string | null
 }
 
 // Typically we would never respond to the client with the full Package
 export type FullPackage = Omit<
   Package,
-  'oauth_client_id' | 'oauth_client_secret' | 'oauth_authorize_url' | 'oauth_token_url'
+  | 'oauth_client_id'
+  | 'oauth_client_secret'
+  | 'oauth_authorization_url'
+  | 'oauth_token_url'
 >
 
 // Everything in PackageFull except openapi and acl_write
