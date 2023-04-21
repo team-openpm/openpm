@@ -59,6 +59,9 @@ CREATE TABLE user_connections (
   created_at TIMESTAMP DEFAULT now() NOT NULL
 );
 
+-- Add a unique index where you can only have one connection per user/package
+CREATE UNIQUE INDEX user_connections_user_id_package_id ON user_connections (user_id, package_id);
+
 -- Table: api_keys
 -- Columns: key, created_at, revoked_at, user_id
 
