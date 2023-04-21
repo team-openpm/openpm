@@ -17,6 +17,20 @@ export async function getPackageById(packageId: string) {
   return pkg
 }
 
+export async function getPackagesByIds(packageIds: string[]) {
+  const pkg = await db
+    .selectFrom('packages')
+    .selectAll()
+    .where('id', 'in', packageIds)
+    .executeTakeFirst()
+
+  if (!pkg) {
+    return null
+  }
+
+  return pkg
+}
+
 export async function getPackageByIdOrNotFound(packageId: string) {
   const pkg = await getPackageById(packageId)
 
