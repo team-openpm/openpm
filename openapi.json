@@ -198,6 +198,31 @@
         }
       }
     },
+    "/packages/connected": {
+      "get": {
+        "description": "Looks up packages that are connected to the current user",
+        "responses": {
+          "200": {
+            "description": "A list of packages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Package"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "openpm": []
+          }
+        ]
+      }
+    },
     "/packages/{packageId}": {
       "get": {
         "description": "Returns a package",
