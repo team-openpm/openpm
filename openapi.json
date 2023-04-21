@@ -435,15 +435,18 @@
           },
           "total": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Total number of items"
           },
           "page": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Current page"
           },
           "limit": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Items per page"
           }
         }
       },
