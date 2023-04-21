@@ -45,7 +45,7 @@ export class OpenApiRequestExample {
 
     const curlMethod = this.method !== 'get' ? ` -X ${this.uppercaseMethod}` : ''
 
-    lines.push(`curl${curlMethod} '${this.origin}${this.path}'`)
+    lines.push(`curl${curlMethod} '${this.origin}${this.path}${this.searchParamsQuery}'`)
 
     if (this.authenticationHeaders) {
       for (const [key, value] of this.authenticationHeaders) {
@@ -206,6 +206,26 @@ export class OpenApiRequestExample {
     return headers
   }
 
+  private get authenticationSearchParams(): Map<string, string> {
+    const params: Map<string, string> = new Map<string, string>()
+
+    if (this.authenticationHeaders.size > 0) {
+      return params
+    }
+
+    const scheme = this.favoredSecurityScheme
+
+    if (!scheme) {
+      return params
+    }
+
+    if (scheme.type === 'apiKey' && scheme.in === 'query') {
+      params.set(scheme.name, 'YOUR_API_KEY')
+    }
+
+    return params
+  }
+
   private get requestBodySchema() {
     return this.operation.requestBody?.content?.['application/json']?.schema ?? null
   }
@@ -219,6 +239,41 @@ export class OpenApiRequestExample {
     }
 
     return null
+  }
+
+  private get searchParams(): URLSearchParams {
+    const params = new URLSearchParams()
+
+    const authParams = this.authenticationSearchParams
+
+    if (authParams.size > 0) {
+      for (const [key, value] of authParams) {
+        params.set(key, value)
+      }
+    }
+
+    if (this.operation.parameters) {
+      for (const param of this.operation.parameters) {
+        if (param.in === 'query' && param.required) {
+          params.set(param.name, param.example || 'value')
+        }
+      }
+    }
+
+    console.log(params.toString(), {authParams, d: this.operation.parameters})
+
+    return params
+  }
+
+  private get searchParamsQuery(): string {
+    const params = this.searchParams
+    const queryString = params.toString()
+
+    if (queryString) {
+      return `?${queryString}`
+    }
+
+    return ''
   }
 }
 
