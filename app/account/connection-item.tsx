@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import {useRouter} from 'next/navigation'
 
 import {jsonFetch} from '@/lib/json-fetch'
@@ -31,9 +32,13 @@ export function ConnectionItem({connection}: {connection: UserConnection}) {
 
   return (
     <li className="grid max-w-sm grid-cols-3">
-      <span>
-        <code className="font-mono text-sm">{connection.package_id}</code>
-      </span>
+      <Link
+        prefetch={false}
+        href={`/apis/${connection.package_id}`}
+        className="text-sm font-medium text-blue-500"
+      >
+        {connection.package_id}
+      </Link>
 
       <span className="col-span-2">
         <button
