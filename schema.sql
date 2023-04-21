@@ -59,9 +59,6 @@ CREATE TABLE user_connections (
   created_at TIMESTAMP DEFAULT now() NOT NULL
 );
 
--- Add a unique index where you can only have one connection per user/package
-CREATE UNIQUE INDEX user_connections_user_id_package_id ON user_connections (user_id, package_id);
-
 -- Table: api_keys
 -- Columns: key, created_at, revoked_at, user_id
 
@@ -162,8 +159,14 @@ CREATE TABLE package_versions (
 -- Index: packages_name
 CREATE INDEX packages_name ON packages USING GIN (name gin_trgm_ops);
 
+-- Index: packages_machine_name
+CREATE INDEX packages_machine_name ON packages USING GIN (name gin_trgm_ops);
+
 -- Index: packages_domain
 CREATE INDEX packages_domain ON packages USING GIN (domain gin_trgm_ops);
+
+-- Index: packages machine description for full text search on machine_description
+CREATE INDEX packages_machine_description ON packages USING GIN (machine_description gin_trgm_ops);
 
 -- Index: users_emails
 CREATE INDEX users_emails ON users USING GIN (emails);
@@ -182,3 +185,6 @@ CREATE INDEX api_keys_user_id ON api_keys (user_id);
 
 -- Index: api_keys_key
 CREATE INDEX api_keys_key ON api_keys (key);
+
+-- Add a unique index where you can only have one connection per user/package
+CREATE UNIQUE INDEX user_connections_user_id_package_id ON user_connections (user_id, package_id);

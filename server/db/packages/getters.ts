@@ -102,7 +102,10 @@ export async function searchPackages({
       'openapi',
     ])
     .where(({or, cmpr}) =>
-      or([cmpr('name', 'like', `%${query}`), cmpr('domain', 'like', `%${query}%`)]),
+      or([
+        cmpr('machine_name', 'like', `%${query}`),
+        cmpr('machine_description', 'like', `%${query}%`),
+      ]),
     )
     .orderBy('name', 'asc')
     .limit(limit)
