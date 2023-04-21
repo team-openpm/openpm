@@ -80,7 +80,7 @@ export async function searchPackages({
 }: {
   query: string
   limit: number
-}): Promise<PackageLite[]> {
+}): Promise<PackageFull[]> {
   return await db
     .selectFrom('packages')
     .select([
@@ -99,6 +99,7 @@ export async function searchPackages({
       'description',
       'machine_description',
       'user_id',
+      'openapi',
     ])
     .where(({or, cmpr}) =>
       or([cmpr('name', 'like', `%${query}`), cmpr('domain', 'like', `%${query}%`)]),

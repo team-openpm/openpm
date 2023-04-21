@@ -9,7 +9,7 @@ import {withAuth} from '@/server/helpers/auth'
 
 export const GET = withAuth(async (request: Request, {userId}) => {
   const {searchParams} = new URL(request.url)
-  const proxyEnabled = searchParams.get('proxy') === 'true'
+  const proxy = searchParams.get('proxy') === 'true'
   const connections = await getConnectionsForUser(userId)
 
   if (!connections.length) {
@@ -21,7 +21,7 @@ export const GET = withAuth(async (request: Request, {userId}) => {
   const packages = await getPackagesByIds(packageIds)
 
   const responses = await Promise.all(
-    packages.map((pkg) => buildPackageResponse(pkg, {proxyEnabled})),
+    packages.map((pkg) => buildPackageResponse(pkg, {proxy})),
   )
 
   return NextResponse.json(responses)

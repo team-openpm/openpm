@@ -15,14 +15,14 @@ async function endpoint(
   },
 ) {
   const {searchParams} = new URL(request.url)
-  const proxyEnabled = searchParams.get('proxy') === 'true'
+  const proxy = searchParams.get('proxy') === 'true'
   const pkg = await getPackageById(params.packageId)
 
   if (!pkg) {
     return error('Package not found', 'not_found', 404)
   }
 
-  const response = await buildPackageResponse(pkg, {proxyEnabled})
+  const response = await buildPackageResponse(pkg, {proxy})
 
   return NextResponse.json(response)
 }
