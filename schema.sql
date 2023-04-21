@@ -132,8 +132,18 @@ CREATE TABLE packages (
   user_id UUID REFERENCES users(id) NOT NULL,
 
   -- Array of uuids, default [], references users(id)
-  acl_write UUID[] DEFAULT '{}'::UUID[] NOT NULL
+  acl_write UUID[] DEFAULT '{}'::UUID[] NOT NULL,
+
+  -- oauth client id
+  oauth_client_id TEXT,
+
+  -- oauth client secret
+  oauth_client_secret TEXT
 );
+
+-- Sql to alter packages and add the columns oauth_client_id and oauth_client_secret
+-- ALTER TABLE packages ADD COLUMN oauth_client_id TEXT;
+-- ALTER TABLE packages ADD COLUMN oauth_client_secret TEXT;
 
 -- Table: package_versions
 -- Columns: openapi, version, created_at, package_id

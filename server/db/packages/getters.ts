@@ -1,44 +1,7 @@
 import {notFound} from 'next/navigation'
 
-import {PackageFull, PackageLite} from './types'
+import {PackageFull, PackageLite, fullPackageCols, litePackageCols} from './types'
 import {db} from '../db'
-
-const fullPackageCols = [
-  'id',
-  'name',
-  'machine_name',
-  'domain',
-  'version',
-  'created_at',
-  'updated_at',
-  'deleted_at',
-  'published_at',
-  'logo_url',
-  'contact_email',
-  'legal_info_url',
-  'description',
-  'machine_description',
-  'user_id',
-  'openapi',
-] as const
-
-const litePackageCols = [
-  'id',
-  'name',
-  'machine_name',
-  'domain',
-  'version',
-  'created_at',
-  'updated_at',
-  'deleted_at',
-  'published_at',
-  'logo_url',
-  'contact_email',
-  'legal_info_url',
-  'description',
-  'machine_description',
-  'user_id',
-] as const
 
 export async function getPackageById(packageId: string): Promise<PackageFull | null> {
   const pkg = await db
