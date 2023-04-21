@@ -9,7 +9,11 @@ const AccountAuth = dynamic(() => import('@/components/account-auth'), {
 export default function AccountPage({searchParams}: {searchParams: {redirect?: string}}) {
   return (
     <MainTemplate>
-      <AccountAuth redirect={searchParams.redirect} />
+      <div className="flex h-full flex-col items-center justify-center">
+        <div className="w-full max-w-md">
+          <AccountAuth redirect={searchParams.redirect} />
+        </div>
+      </div>
     </MainTemplate>
   )
 }
