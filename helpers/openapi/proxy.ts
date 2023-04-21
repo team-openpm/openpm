@@ -2,7 +2,7 @@ import {OpenAPI} from './types'
 
 import {parseJsonSpec} from '.'
 
-const defaultServerUrl = 'https://openpm.ai/proxy'
+const defaultServerUrl = 'https://openpm.ai/api/proxy'
 
 interface ProxyOptions {
   document: OpenAPI.Document
