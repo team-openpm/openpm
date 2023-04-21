@@ -1,7 +1,7 @@
 'use server'
 
-import {safeHighlight} from '@/lib/code-highlighter'
 import {OpenApiRequestExample} from '@/helpers/openapi/request-example'
+import {safeHighlight} from '@/lib/code-highlighter'
 
 import {DocumentEndpointRequestExampleTabs} from './document-endpoint-request-example-tabs'
 

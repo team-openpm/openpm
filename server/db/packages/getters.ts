@@ -1,9 +1,9 @@
 import {notFound} from 'next/navigation'
 
-import {PackageFull, PackageLite} from './types'
+import {Package, PackageFull, PackageLite} from './types'
 import {db} from '../db'
 
-export async function getPackageById(packageId: string) {
+export async function getPackageById(packageId: string): Promise<Package | null> {
   const pkg = await db
     .selectFrom('packages')
     .selectAll()
@@ -17,7 +17,17 @@ export async function getPackageById(packageId: string) {
   return pkg
 }
 
-export async function getPackageByIdOrNotFound(packageId: string) {
+export async function getPackagesByIds(packageIds: string[]): Promise<Package[]> {
+  const pkgs = await db
+    .selectFrom('packages')
+    .selectAll()
+    .where('id', 'in', packageIds)
+    .execute()
+
+  return pkgs
+}
+
+export async function getPackageByIdOrNotFound(packageId: string): Promise<Package> {
   const pkg = await getPackageById(packageId)
 
   if (!pkg) {

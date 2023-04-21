@@ -8,13 +8,13 @@ import {assertString} from '@/lib/assert'
 
 const hankoApiUrl = process.env.NEXT_PUBLIC_HANKO_API_URL
 
-export default function AccountAuth() {
+export default function AccountAuth({redirect = ''}: {redirect?: string}) {
   assertString(hankoApiUrl, 'Hanko API URL is not defined.')
   const router = useRouter()
 
   const redirectAfterLogin = useCallback(() => {
-    router.replace('/auth/complete')
-  }, [router])
+    router.replace('/auth/complete?redirect=' + redirect)
+  }, [router, redirect])
 
   useEffect(() => {
     window.document.addEventListener('hankoAuthSuccess', redirectAfterLogin)

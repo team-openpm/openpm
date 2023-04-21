@@ -5,7 +5,9 @@ import {authOrRedirect} from '@/server/helpers/auth'
 
 import {AccountSidebar} from './account-sidebar'
 import {ApiKeys} from './api-keys'
+import {Connections} from './connections'
 import {Packages} from './packages'
+import {Section} from './section'
 
 const AccountProfile = dynamic(() => import('@/components/account-profile'), {
   ssr: false,
@@ -31,10 +33,20 @@ export default async function AccountPage() {
               <AccountProfile />
             </div>
 
-            {/* @ts-expect-error Async Server Component */}
-            <Packages userId={userId} />
-            {/* @ts-expect-error Async Server Component */}
-            <ApiKeys userId={userId} />
+            <Section title="Packages">
+              {/* @ts-expect-error Async Server Component */}
+              <Packages userId={userId} />
+            </Section>
+
+            <Section title="API Keys">
+              {/* @ts-expect-error Async Server Component */}
+              <ApiKeys userId={userId} />
+            </Section>
+
+            <Section title="Connections">
+              {/* @ts-expect-error Async Server Component */}
+              <Connections userId={userId} />
+            </Section>
           </div>
         </div>
       </div>

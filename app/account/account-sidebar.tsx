@@ -17,12 +17,14 @@ export function AccountSidebar() {
           <h3 className="text-xs font-semibold text-slate-900 dark:text-white">
             Account
           </h3>
+
           <ul role="list" className="border-l border-slate-900/10 dark:border-white/5">
             <li className="relative">
               <MenuItem href="#auth">Emails</MenuItem>
               <MenuItem href="#auth">Passkeys</MenuItem>
               <MenuItem href="#packages">Packages</MenuItem>
               <MenuItem href="#api-keys">API Keys</MenuItem>
+              <MenuItem href="#connections">Connections</MenuItem>
             </li>
           </ul>
         </div>

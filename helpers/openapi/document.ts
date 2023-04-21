@@ -9,8 +9,8 @@ import {OpenAPI} from './types'
 import {commonPrefix, safeParseUrl} from './utils'
 
 export class OpenApiDocument {
-  private document: OpenAPI.Document
-  private original: OpenAPI.Document
+  document: OpenAPI.Document
+  original: OpenAPI.Document
 
   constructor({
     document,

@@ -1,6 +1,6 @@
 import {db} from '../db'
 
-export function createConnection({
+export function createUserConnection({
   userId,
   packageId,
   apiKey,
@@ -11,9 +11,9 @@ export function createConnection({
   userId: string
   packageId: string
   apiKey: string | null
-  accessToken: string | null
-  refreshToken: string | null
-  expiresAt: Date | null
+  accessToken?: string | null
+  refreshToken?: string | null
+  expiresAt?: Date | null
 }) {
   return db
     .insertInto('user_connections')
@@ -25,10 +25,11 @@ export function createConnection({
       refresh_token: refreshToken,
       expires_at: expiresAt,
     })
-    .execute()
+    .returning('id')
+    .executeTakeFirstOrThrow()
 }
 
-export function updateConnection({
+export function updateUserConnection({
   userId,
   packageId,
   apiKey,
@@ -53,5 +54,19 @@ export function updateConnection({
     })
     .where('user_id', '=', userId)
     .where('package_id', '=', packageId)
+    .execute()
+}
+
+export function deleteUserConnection({
+  userId,
+  connectionId,
+}: {
+  userId: string
+  connectionId: string
+}) {
+  return db
+    .deleteFrom('user_connections')
+    .where('id', '=', connectionId)
+    .where('user_id', '=', userId)
     .execute()
 }
