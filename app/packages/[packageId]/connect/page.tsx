@@ -31,8 +31,9 @@ export default async function ConnectPackage(
     assertString(pkg.oauth_client_id, 'oauth_client_id')
 
     const redirectUrl = buildAuthorizationUrl({
+      packageId: pkg.id,
       authorizationUrl: pkg.oauth_authorization_url,
-      redirectUrl: `${requestUrl.origin}/packages/${pkg.id}/connect/oauth-callback`,
+      redirectUrl: `${requestUrl.origin}/connect/oauth-callback`,
       clientId: pkg.oauth_client_id,
     })
 

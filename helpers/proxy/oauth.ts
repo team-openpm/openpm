@@ -3,21 +3,26 @@
 import {generateId} from '@/lib/generate-id'
 
 export function buildAuthorizationUrl({
+  packageId,
   authorizationUrl,
   redirectUrl,
   clientId,
 }: {
+  packageId: string
   authorizationUrl: string
   redirectUrl: string
   clientId: string
 }) {
-  const url = new URL(authorizationUrl)
+  const uri = new URL(authorizationUrl)
 
-  url.searchParams.set('client_id', clientId)
-  url.searchParams.set('state', generateId())
-  url.searchParams.set('redirect_uri', redirectUrl)
+  const redirectUri = new URL(redirectUrl)
+  redirectUri.searchParams.set('package_id', packageId)
 
-  return url.toString()
+  uri.searchParams.set('client_id', clientId)
+  uri.searchParams.set('state', generateId())
+  uri.searchParams.set('redirect_uri', redirectUri.toString())
+
+  return uri.toString()
 }
 
 export async function fetchAccessToken({

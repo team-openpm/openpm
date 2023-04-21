@@ -8,16 +8,17 @@ import {getUnsafePackageById} from '@/server/db/packages/getters'
 import {createUserConnection} from '@/server/db/user-connections/setters'
 import {authOrRedirect} from '@/server/helpers/auth'
 
-export default async function ConnectPackageOAuthCallback(
-  request: Request,
-  {params}: {params: {packageId: string}},
-) {
+export default async function ConnectOAuthCallback(request: Request) {
   const userId = await authOrRedirect()
 
   const {searchParams} = new URL(request.url)
-  const packageId = params.packageId
+  const packageId = searchParams.get('package_id')
   const code = searchParams.get('code')
-  const pkg = await getUnsafePackageById(params.packageId)
+
+  assertString(packageId, 'package_id')
+  assertString(code, 'code')
+
+  const pkg = await getUnsafePackageById(packageId)
 
   if (!pkg) {
     redirect('/packages')
@@ -27,7 +28,6 @@ export default async function ConnectPackageOAuthCallback(
   assertString(pkg.oauth_client_id, 'oauth_client_id')
   assertString(pkg.oauth_client_secret, 'oauth_client_secret')
   assertString(pkg.oauth_token_url, 'oauth_token_url')
-  assertString(code, 'code')
 
   const accessToken = await fetchAccessToken({
     code,

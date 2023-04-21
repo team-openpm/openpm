@@ -1,3 +1,5 @@
+import {assertString} from '@/lib/assert'
+
 import {db} from '../db'
 
 export function createUserConnection({
@@ -15,6 +17,8 @@ export function createUserConnection({
   refreshToken?: string | null
   expiresAt?: Date | null
 }) {
+  assertString(apiKey || accessToken, 'apiKey or accessToken is required')
+
   return db
     .insertInto('user_connections')
     .values({
