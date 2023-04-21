@@ -18,7 +18,7 @@ export default async function EditPackage({params}: {params: {packageId: string}
 
   const doc = await parseJsonSpec(pkg.openapi)
 
-  const hasOauth = doc.hasOauthAuthentication
+  const hasOauth = doc.hasOauth
 
   return (
     <MainTemplate>
