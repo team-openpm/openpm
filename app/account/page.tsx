@@ -33,11 +33,6 @@ export default async function AccountPage() {
               <AccountProfile />
             </div>
 
-            <Section title="Packages">
-              {/* @ts-expect-error Async Server Component */}
-              <Packages userId={userId} />
-            </Section>
-
             <Section title="API Keys">
               {/* @ts-expect-error Async Server Component */}
               <ApiKeys userId={userId} />
@@ -46,6 +41,11 @@ export default async function AccountPage() {
             <Section title="Connections">
               {/* @ts-expect-error Async Server Component */}
               <Connections userId={userId} />
+            </Section>
+
+            <Section title="Packages">
+              {/* @ts-expect-error Async Server Component */}
+              <Packages userId={userId} />
             </Section>
           </div>
         </div>

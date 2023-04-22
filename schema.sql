@@ -59,9 +59,6 @@ CREATE TABLE user_connections (
   created_at TIMESTAMP DEFAULT now() NOT NULL
 );
 
--- Add a unique index where you can only have one connection per user/package
-CREATE UNIQUE INDEX user_connections_user_id_package_id ON user_connections (user_id, package_id);
-
 -- Table: api_keys
 -- Columns: key, created_at, revoked_at, user_id
 
@@ -135,8 +132,26 @@ CREATE TABLE packages (
   user_id UUID REFERENCES users(id) NOT NULL,
 
   -- Array of uuids, default [], references users(id)
-  acl_write UUID[] DEFAULT '{}'::UUID[] NOT NULL
+  acl_write UUID[] DEFAULT '{}'::UUID[] NOT NULL,
+
+  -- oauth client id
+  oauth_client_id TEXT,
+
+  -- oauth client secret
+  oauth_client_secret TEXT
+
+  -- oauth authorization uri
+  oauth_authorization_url TEXT
+
+  -- oauth redirect uri
+  oauth_token_url TEXT
 );
+
+-- Sql to alter packages and add the columns oauth_client_id and oauth_client_secret, oauth_authorization_url, oauth_token_url
+-- ALTER TABLE packages ADD COLUMN oauth_client_id TEXT;
+-- ALTER TABLE packages ADD COLUMN oauth_client_secret TEXT;
+-- ALTER TABLE packages ADD COLUMN oauth_authorization_url TEXT;
+-- ALTER TABLE packages ADD COLUMN oauth_token_url TEXT;
 
 -- Table: package_versions
 -- Columns: openapi, version, created_at, package_id
@@ -162,8 +177,14 @@ CREATE TABLE package_versions (
 -- Index: packages_name
 CREATE INDEX packages_name ON packages USING GIN (name gin_trgm_ops);
 
+-- Index: packages_machine_name
+CREATE INDEX packages_machine_name ON packages USING GIN (name gin_trgm_ops);
+
 -- Index: packages_domain
 CREATE INDEX packages_domain ON packages USING GIN (domain gin_trgm_ops);
+
+-- Index: packages machine description for full text search on machine_description
+CREATE INDEX packages_machine_description ON packages USING GIN (machine_description gin_trgm_ops);
 
 -- Index: users_emails
 CREATE INDEX users_emails ON users USING GIN (emails);
@@ -182,3 +203,6 @@ CREATE INDEX api_keys_user_id ON api_keys (user_id);
 
 -- Index: api_keys_key
 CREATE INDEX api_keys_key ON api_keys (key);
+
+-- Add a unique index where you can only have one connection per user/package
+CREATE UNIQUE INDEX user_connections_user_id_package_id ON user_connections (user_id, package_id);

@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "0.0.7",
+    "version": "0.0.8",
     "title": "openpm",
     "license": {
       "name": "MIT",
@@ -108,19 +108,10 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "How many package to return per page (default 500)",
+            "description": "How many package to return per page (default 10)",
             "schema": {
               "type": "integer",
               "maximum": 500,
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number (default 1)",
-            "schema": {
-              "type": "integer",
               "format": "int32"
             }
           },
@@ -132,34 +123,26 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
           }
         ],
         "responses": {
           "200": {
-            "description": "A paginated list of packages",
+            "description": "A list of packages",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/PackageLite"
-                      }
-                    },
-                    "total": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "page": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Package"
                   }
                 }
               }
@@ -201,6 +184,17 @@
     "/packages/connected": {
       "get": {
         "description": "Looks up packages that are connected to the current user",
+        "parameters": [
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A list of packages",
@@ -235,6 +229,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
           }
         ],
         "responses": {
@@ -485,69 +488,65 @@
           "name": {
             "type": "string",
             "description": "Package name",
-            "examples": ["Acme"]
+            "example": "Acme"
           },
           "machine_name": {
             "type": "string",
             "description": "Package name (for machines)",
-            "examples": ["acme"]
+            "example": "acme"
           },
           "domain": {
             "type": "string",
             "description": "Package domain",
-            "examples": ["acme.com"]
+            "example": "acme.com"
           },
           "version": {
             "type": "string",
             "description": "Package version",
-            "examples": ["1.0.0"]
+            "example": "1.0.0"
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package creation date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package last update date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "published_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package publication date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "logo_url": {
             "type": "string",
             "description": "Package logo url",
-            "examples": ["https://logo.clearbit.com/acme.com"]
+            "example": "https://logo.clearbit.com/acme.com"
           },
           "contact_email": {
             "type": "string",
             "description": "Package contact email",
-            "examples": ["support@acme.com"]
+            "example": "support@acme.com"
           },
           "legal_info_url": {
             "type": "string",
             "description": "Package legal info url",
-            "examples": ["https://acme.com/legal"]
+            "example": "https://acme.com/legal"
           },
           "description": {
             "type": "string",
             "description": "Package description",
-            "examples": [
-              "Acme is an API for searching and retrieving information about Acme's products."
-            ]
+            "example": "Acme is an API for searching and retrieving information about Acme's products."
           },
           "machine_description": {
             "type": "string",
             "description": "Package description (for machines)",
-            "examples": [
-              "Acme is an API for searching and retrieving information about Acme's products."
-            ]
+            "example": "Acme is an API for searching and retrieving information about Acme's products."
           },
           "user_id": {
             "type": "string",
@@ -556,7 +555,7 @@
           "openapi": {
             "type": "string",
             "description": "Package OpenAPI specification",
-            "examples": ["{\"openapi\": \"3.1.0\", \"info\": {\"title\": \"Acme API\"}}"]
+            "example": "{\"openapi\": \"3.1.0\", \"info\": {\"title\": \"Acme API\"}}"
           }
         }
       },
@@ -570,69 +569,65 @@
           "name": {
             "type": "string",
             "description": "Package name",
-            "examples": ["Acme"]
+            "example": "Acme"
           },
           "machine_name": {
             "type": "string",
             "description": "Package name (for machines)",
-            "examples": ["acme"]
+            "example": "acme"
           },
           "domain": {
             "type": "string",
             "description": "Package domain",
-            "examples": ["acme.com"]
+            "example": "acme.com"
           },
           "version": {
             "type": "string",
             "description": "Package version",
-            "examples": ["1.0.0"]
+            "example": "1.0.0"
           },
           "created_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package creation date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "updated_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package last update date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "published_at": {
             "type": "string",
             "format": "date-time",
             "description": "Package publication date",
-            "examples": ["2019-01-01T00:00:00Z"]
+            "example": "2019-01-01T00:00:00Z"
           },
           "logo_url": {
             "type": "string",
             "description": "Package logo url",
-            "examples": ["https://logo.clearbit.com/acme.com"]
+            "example": "https://logo.clearbit.com/acme.com"
           },
           "contact_email": {
             "type": "string",
             "description": "Package contact email",
-            "examples": ["support@acme.com"]
+            "example": "support@acme.com"
           },
           "legal_info_url": {
             "type": "string",
             "description": "Package legal info url",
-            "examples": ["https://acme.com/legal"]
+            "example": "https://acme.com/legal"
           },
           "description": {
             "type": "string",
             "description": "Package description",
-            "examples": [
-              "Acme is an API for searching and retrieving information about Acme's products."
-            ]
+            "example": "Acme is an API for searching and retrieving information about Acme's products."
           },
           "machine_description": {
             "type": "string",
             "description": "Package description (for machines)",
-            "examples": [
-              "Acme is an API for searching and retrieving information about Acme's products."
-            ]
+            "example": "Acme is an API for searching and retrieving information about Acme's products."
           },
           "user_id": {
             "type": "string",

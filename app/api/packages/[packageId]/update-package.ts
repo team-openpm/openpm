@@ -3,7 +3,7 @@ import semver from 'semver'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 import {withAuth} from '@/server/helpers/auth'
@@ -21,6 +21,10 @@ const ApiSchema = z.object({
   logo_url: z.string().nullable(),
   description: z.string().nullable(),
   machine_description: z.string().nullable(),
+  oauth_client_id: z.string().nullable(),
+  oauth_client_secret: z.string().nullable(),
+  oauth_authorization_url: z.string().nullable(),
+  oauth_token_url: z.string().nullable(),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
@@ -31,7 +35,7 @@ const endpoint = withAuth(
   withApiBuilder<ApiRequestParams, {userId: string}>(
     ApiSchema,
     async (req: Request, {userId, data}) => {
-      const packageRow = await getPackageById(data.packageId)
+      const packageRow = await getFullPackageById(data.packageId)
 
       if (!packageRow) {
         return error('Package does not exist')
@@ -41,16 +45,7 @@ const endpoint = withAuth(
         return error('Unauthorized', 'unauthorized', 403)
       }
 
-      await updatePackage(data.packageId, {
-        name: data.name,
-        machineName: data.machine_name,
-        domain: data.domain,
-        contactEmail: data.contact_email,
-        legalInfoUrl: data.legal_info_url,
-        logoUrl: data.logo_url,
-        description: data.description,
-        machineDescription: data.machine_description,
-      })
+      await updatePackage(data.packageId, data)
 
       if (data.openapi) {
         const doc = await parseSpec(data.openapi, data.openapi_format)

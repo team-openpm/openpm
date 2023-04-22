@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server'
 
-import {getPackageById} from '@/server/db/packages/getters'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {deletePackage} from '@/server/db/packages/setters'
 import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
@@ -12,7 +12,7 @@ const endpoint = withAuth(
     req: Request,
     {params, userId}: {params: {packageId: string}; userId: string},
   ) => {
-    const packageRow = await getPackageById(params.packageId)
+    const packageRow = await getFullPackageById(params.packageId)
 
     if (!packageRow) {
       return error('Package does not exist')

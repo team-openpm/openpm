@@ -13,7 +13,13 @@ export default function AccountAuth({redirect = ''}: {redirect?: string}) {
   const router = useRouter()
 
   const redirectAfterLogin = useCallback(() => {
-    router.replace('/auth/complete?redirect=' + redirect)
+    const url = new URL('/auth/complete', window.location.href)
+
+    if (redirect) {
+      url.searchParams.set('redirect', redirect)
+    }
+
+    router.replace(url.toString())
   }, [router, redirect])
 
   useEffect(() => {

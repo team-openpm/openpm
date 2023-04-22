@@ -4,12 +4,12 @@ import {useRouter} from 'next/navigation'
 import React, {useState} from 'react'
 
 import {jsonFetch} from '@/lib/json-fetch'
-import {Package} from '@/server/db/packages/types'
+import {FullPackage} from '@/server/db/packages/types'
 
 import {DefaultButton} from '../buttons/default-button'
 import {TextInput} from '../text-input'
 
-export default function ConnectPackageForm({package: pkg}: {package: Package}) {
+export default function ConnectPackageForm({package: pkg}: {package: FullPackage}) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const [apiKey, setApiKey] = useState('')

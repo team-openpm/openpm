@@ -1,9 +1,15 @@
 import {notFound} from 'next/navigation'
 
-import {Package, PackageFull, PackageLite} from './types'
+import {
+  Package,
+  FullPackage,
+  LitePackage,
+  fullPackageCols,
+  litePackageCols,
+} from './types'
 import {db} from '../db'
 
-export async function getPackageById(packageId: string): Promise<Package | null> {
+export async function getUnsafePackageById(packageId: string): Promise<Package | null> {
   const pkg = await db
     .selectFrom('packages')
     .selectAll()
@@ -17,18 +23,71 @@ export async function getPackageById(packageId: string): Promise<Package | null>
   return pkg
 }
 
-export async function getPackagesByIds(packageIds: string[]): Promise<Package[]> {
+export async function getFullPackageById(packageId: string): Promise<FullPackage | null> {
+  const pkg = await db
+    .selectFrom('packages')
+    .select(fullPackageCols)
+    .where('id', '=', packageId)
+    .executeTakeFirst()
+
+  if (!pkg) {
+    return null
+  }
+
+  return pkg
+}
+
+export async function getFullPackagesByIds(packageIds: string[]): Promise<FullPackage[]> {
   const pkgs = await db
     .selectFrom('packages')
-    .selectAll()
+    .select(fullPackageCols)
     .where('id', 'in', packageIds)
     .execute()
 
   return pkgs
 }
 
-export async function getPackageByIdOrNotFound(packageId: string): Promise<Package> {
-  const pkg = await getPackageById(packageId)
+export async function getPackageByIdOrNotFound(packageId: string): Promise<FullPackage> {
+  const pkg = await getFullPackageById(packageId)
+
+  if (!pkg) {
+    notFound()
+  }
+
+  return pkg
+}
+
+// This returns the full package - including the
+// oauth credentials. It's important that this is only
+// requested by the package owner.
+export async function getPackageForEditByUser({
+  packageId,
+  userId,
+}: {
+  packageId: string
+  userId: string
+}): Promise<Package | null> {
+  return (
+    (await db
+      .selectFrom('packages')
+      .selectAll()
+      .where('id', '=', packageId)
+      .where('user_id', '=', userId)
+      .executeTakeFirst()) ?? null
+  )
+}
+
+// This returns the full package - including the
+// oauth credentials. It's important that this is only
+// requested by the package owner.
+export async function getPackageForEditByUserOrNotFound({
+  packageId,
+  userId,
+}: {
+  packageId: string
+  userId: string
+}): Promise<Package> {
+  const pkg = await getPackageForEditByUser({packageId, userId})
 
   if (!pkg) {
     notFound()
@@ -80,109 +139,27 @@ export async function searchPackages({
 }: {
   query: string
   limit: number
-}): Promise<PackageLite[]> {
+}): Promise<FullPackage[]> {
   return await db
     .selectFrom('packages')
-    .select([
-      'id',
-      'name',
-      'machine_name',
-      'domain',
-      'version',
-      'created_at',
-      'updated_at',
-      'deleted_at',
-      'published_at',
-      'logo_url',
-      'contact_email',
-      'legal_info_url',
-      'description',
-      'machine_description',
-      'user_id',
-    ])
+    .select(fullPackageCols)
     .where(({or, cmpr}) =>
-      or([cmpr('name', 'like', `%${query}`), cmpr('domain', 'like', `%${query}%`)]),
+      or([
+        cmpr('machine_name', 'like', `%${query}`),
+        cmpr('machine_description', 'like', `%${query}%`),
+      ]),
     )
     .orderBy('name', 'asc')
     .limit(limit)
     .execute()
 }
 
-export async function getPackagesWithIds(ids: string[]): Promise<PackageFull[]> {
+export async function getPackagesWithIds(ids: string[]): Promise<FullPackage[]> {
   return db
     .selectFrom('packages')
     .where('id', 'in', ids)
-    .select([
-      'id',
-      'name',
-      'machine_name',
-      'domain',
-      'version',
-      'created_at',
-      'updated_at',
-      'deleted_at',
-      'published_at',
-      'logo_url',
-      'contact_email',
-      'legal_info_url',
-      'description',
-      'machine_description',
-      'user_id',
-      'openapi',
-    ])
+    .select(fullPackageCols)
     .execute()
-}
-
-export async function searchPackagesWithPagination({
-  query,
-  page = 1,
-  limit = 10,
-}: {
-  query: string
-  page?: number
-  limit?: number
-}): Promise<{
-  packages: PackageLite[]
-  page: number
-  limit: number
-  total: number
-}> {
-  const packages = await db
-    .selectFrom('packages')
-    .select((eb) => [
-      'id',
-      'name',
-      'machine_name',
-      'domain',
-      'version',
-      'created_at',
-      'updated_at',
-      'deleted_at',
-      'published_at',
-      'logo_url',
-      'contact_email',
-      'legal_info_url',
-      'description',
-      'machine_description',
-      'user_id',
-      eb.fn.countAll().over().as('total_count'),
-    ])
-    .where(({or, cmpr}) =>
-      or([cmpr('name', 'like', `%${query}`), cmpr('domain', 'like', `%${query}%`)]),
-    )
-    .orderBy('name', 'asc')
-    .limit(limit)
-    .offset((page - 1) * limit)
-    .execute()
-
-  const total = Number(packages[0]?.total_count ?? 0)
-
-  return {
-    packages,
-    page,
-    limit,
-    total,
-  }
 }
 
 export async function getPackagesWithPagination({
@@ -196,31 +173,14 @@ export async function getPackagesWithPagination({
   orderBy?: 'id' | 'name' | 'domain' | 'published_at'
   orderDirection?: 'asc' | 'desc'
 }): Promise<{
-  packages: PackageLite[]
+  packages: LitePackage[]
   page: number
   limit: number
   total: number
 }> {
   const packages = await db
     .selectFrom('packages')
-    .select((eb) => [
-      'id',
-      'name',
-      'machine_name',
-      'domain',
-      'version',
-      'created_at',
-      'updated_at',
-      'deleted_at',
-      'published_at',
-      'logo_url',
-      'contact_email',
-      'legal_info_url',
-      'description',
-      'machine_description',
-      'user_id',
-      eb.fn.countAll().over().as('total_count'),
-    ])
+    .select((eb) => [...litePackageCols, eb.fn.countAll().over().as('total_count')])
     .orderBy(orderBy, orderDirection)
     .limit(limit)
     .offset((page - 1) * limit)
