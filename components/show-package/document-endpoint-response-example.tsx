@@ -1,8 +1,8 @@
 'use server'
 
 import {Code} from '@/components/code'
-import {safeHighlight} from '@/lib/code-highlighter'
 import {OpenApiResponseExample} from '@/helpers/openapi/response-example'
+import {safeHighlight} from '@/lib/code-highlighter'
 
 export async function DocumentEndpointResponseExample({
   responseExample,
