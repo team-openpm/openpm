@@ -35,7 +35,7 @@ export async function jsonFetch<R>(
       const json = await response.json()
       error = json.error
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

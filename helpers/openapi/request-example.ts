@@ -260,8 +260,6 @@ export class OpenApiRequestExample {
       }
     }
 
-    console.log(params.toString(), {authParams, d: this.operation.parameters})
-
     return params
   }
 

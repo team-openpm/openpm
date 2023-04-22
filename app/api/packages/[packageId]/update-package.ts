@@ -21,6 +21,10 @@ const ApiSchema = z.object({
   logo_url: z.string().nullable(),
   description: z.string().nullable(),
   machine_description: z.string().nullable(),
+  oauth_client_id: z.string().nullable(),
+  oauth_client_secret: z.string().nullable(),
+  oauth_authorization_url: z.string().nullable(),
+  oauth_token_url: z.string().nullable(),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
@@ -41,16 +45,7 @@ const endpoint = withAuth(
         return error('Unauthorized', 'unauthorized', 403)
       }
 
-      await updatePackage(data.packageId, {
-        name: data.name,
-        machineName: data.machine_name,
-        domain: data.domain,
-        contactEmail: data.contact_email,
-        legalInfoUrl: data.legal_info_url,
-        logoUrl: data.logo_url,
-        description: data.description,
-        machineDescription: data.machine_description,
-      })
+      await updatePackage(data.packageId, data)
 
       if (data.openapi) {
         const doc = await parseSpec(data.openapi, data.openapi_format)

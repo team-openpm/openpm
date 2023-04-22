@@ -21,6 +21,7 @@ export function buildAuthorizationUrl({
   uri.searchParams.set('client_id', clientId)
   uri.searchParams.set('state', generateId())
   uri.searchParams.set('redirect_uri', redirectUri.toString())
+  uri.searchParams.set('response_type', 'code')
 
   return uri.toString()
 }

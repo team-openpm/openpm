@@ -1,5 +1,7 @@
 'use server'
 
+import {ReadonlyHeaders} from 'next/dist/server/web/spec-extension/adapters/headers'
+import {headers} from 'next/headers'
 import {redirect} from 'next/navigation'
 import React from 'react'
 
@@ -11,13 +13,10 @@ import {assertString} from '@/lib/assert'
 import {getUnsafePackageById} from '@/server/db/packages/getters'
 import {authOrRedirect} from '@/server/helpers/auth'
 
-export default async function ConnectPackage(
-  request: Request,
-  {params}: {params: {packageId: string}},
-) {
+export default async function ConnectPackage({params}: {params: {packageId: string}}) {
+  const requestOrigin = getOrigin(headers())
   await authOrRedirect()
 
-  const requestUrl = new URL(request.url)
   const pkg = await getUnsafePackageById(params.packageId)
 
   if (!pkg) {
@@ -33,7 +32,7 @@ export default async function ConnectPackage(
     const redirectUrl = buildAuthorizationUrl({
       packageId: pkg.id,
       authorizationUrl: pkg.oauth_authorization_url,
-      redirectUrl: `${requestUrl.origin}/connect/oauth-callback`,
+      redirectUrl: `${requestOrigin}/connect/oauth-callback`,
       clientId: pkg.oauth_client_id,
     })
 
@@ -49,4 +48,12 @@ export default async function ConnectPackage(
   }
 
   redirect(`/packages/${pkg.id}`)
+}
+
+// returns https://localhost:3001
+function getOrigin(headers: ReadonlyHeaders): string {
+  const host = headers.get('host')
+  const protocol = headers.get('x-forwarded-proto')
+
+  return `${protocol}://${host}`
 }
