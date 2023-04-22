@@ -47,8 +47,7 @@ export default function EditPackageForm({
       return
     }
 
-    const {id} = await response.json()
-    router.push(`/packages/${id}`)
+    router.push(`/account`)
   }
 
   const deletePackage = async () => {
