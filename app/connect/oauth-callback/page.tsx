@@ -8,12 +8,15 @@ import {getUnsafePackageById} from '@/server/db/packages/getters'
 import {createUserConnection} from '@/server/db/user-connections/setters'
 import {authOrRedirect} from '@/server/helpers/auth'
 
-export default async function ConnectOAuthCallback(request: Request) {
+export default async function ConnectOAuthCallback({
+  searchParams,
+}: {
+  searchParams: {package_id: string; code: string}
+}) {
   const userId = await authOrRedirect()
 
-  const {searchParams} = new URL(request.url)
-  const packageId = searchParams.get('package_id')
-  const code = searchParams.get('code')
+  const packageId = searchParams.package_id
+  const code = searchParams.code
 
   assertString(packageId, 'package_id')
   assertString(code, 'code')

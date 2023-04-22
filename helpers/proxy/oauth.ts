@@ -2,6 +2,13 @@
 
 import {generateId} from '@/lib/generate-id'
 
+export function getOrigin(headers: {get: (key: string) => string | null}) {
+  const host = headers.get('host')
+  const protocol = headers.get('x-forwarded-proto') ?? 'http'
+
+  return `${protocol}://${host}`
+}
+
 export function buildAuthorizationUrl({
   packageId,
   authorizationUrl,
