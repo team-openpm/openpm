@@ -1,11 +1,12 @@
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {getPackagesWithPagination} from '@/server/db/packages/getters'
+import {searchPackagesWithPagination} from '@/server/db/packages/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 
 const ApiSchema = z.object({
-  limit: z.coerce.number().min(1).max(500).default(100),
+  query: z.string(),
+  limit: z.coerce.number().min(1).max(500).default(10),
   page: z.coerce.number().min(1).default(1),
 })
 
@@ -13,12 +14,12 @@ type ApiRequestParams = z.infer<typeof ApiSchema>
 
 // Paginated lists of packages
 
-const endpoint = withApiBuilder<ApiRequestParams>(
+export const GET = withApiBuilder<ApiRequestParams>(
   ApiSchema,
   async (request: Request, {data}) => {
-    const {limit, page} = data
+    const {query, limit, page} = data
 
-    const result = await getPackagesWithPagination({page, limit})
+    const result = await searchPackagesWithPagination({query, limit, page})
 
     return NextResponse.json(result, {
       headers: {
@@ -27,5 +28,3 @@ const endpoint = withApiBuilder<ApiRequestParams>(
     })
   },
 )
-
-export default endpoint

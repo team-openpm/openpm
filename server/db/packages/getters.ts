@@ -154,6 +154,48 @@ export async function searchPackages({
     .execute()
 }
 
+export async function searchPackagesWithPagination({
+  query,
+  page = 1,
+  limit = 10,
+  orderBy = 'id',
+  orderDirection,
+}: {
+  query: string
+  page?: number
+  limit?: number
+  orderBy?: 'id' | 'name' | 'domain' | 'published_at'
+  orderDirection?: 'asc' | 'desc'
+}): Promise<{
+  items: LitePackage[]
+  page: number
+  limit: number
+  total: number
+}> {
+  const items = await db
+    .selectFrom('packages')
+    .where(({or, cmpr}) =>
+      or([
+        cmpr('machine_name', 'like', `%${query}`),
+        cmpr('machine_description', 'like', `%${query}%`),
+      ]),
+    )
+    .select((eb) => [...litePackageCols, eb.fn.countAll().over().as('total_count')])
+    .orderBy(orderBy, orderDirection)
+    .limit(limit)
+    .offset((page - 1) * limit)
+    .execute()
+
+  const total = Number(items[0]?.total_count ?? 0)
+
+  return {
+    items,
+    page,
+    limit,
+    total,
+  }
+}
+
 export async function getPackagesWithIds(ids: string[]): Promise<FullPackage[]> {
   return db
     .selectFrom('packages')
@@ -173,12 +215,12 @@ export async function getPackagesWithPagination({
   orderBy?: 'id' | 'name' | 'domain' | 'published_at'
   orderDirection?: 'asc' | 'desc'
 }): Promise<{
-  packages: LitePackage[]
+  items: LitePackage[]
   page: number
   limit: number
   total: number
 }> {
-  const packages = await db
+  const items = await db
     .selectFrom('packages')
     .select((eb) => [...litePackageCols, eb.fn.countAll().over().as('total_count')])
     .orderBy(orderBy, orderDirection)
@@ -186,10 +228,10 @@ export async function getPackagesWithPagination({
     .offset((page - 1) * limit)
     .execute()
 
-  const total = Number(packages[0]?.total_count ?? 0)
+  const total = Number(items[0]?.total_count ?? 0)
 
   return {
-    packages,
+    items,
     page,
     limit,
     total,

@@ -116,7 +116,7 @@ async function searchPackages({
   page: number
   limit: number
 }) {
-  const uri = new URL('/api/packages/search', window.location.origin)
+  const uri = new URL('/api/packages/paginated-search', window.location.origin)
   uri.searchParams.set('query', query)
   uri.searchParams.set('page', page.toString())
   uri.searchParams.set('limit', limit.toString())
