@@ -13,7 +13,7 @@ export async function jsonFetch<R>(
   {method, data}: FetchOptions = {},
 ): Promise<{
   error: FetchError | undefined
-  response: Promise<R>
+  response: R
 }> {
   const response = await fetch(url, {
     method,
@@ -35,11 +35,11 @@ export async function jsonFetch<R>(
       const json = await response.json()
       error = json.error
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
-  const jsonResponse = response.json() as Promise<R>
+  const jsonResponse = (await response.json()) as R
 
   return {
     error,

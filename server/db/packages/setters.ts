@@ -1,38 +1,38 @@
+import {Package} from './types'
 import {db} from '../db'
 
-export async function updatePackage(
-  packageId: string,
-  {
-    name,
-    machineName,
-    domain,
-    contactEmail,
-    legalInfoUrl,
-    logoUrl,
-    description,
-    machineDescription,
-  }: {
-    name: string | null
-    machineName: string | null
-    domain: string
-    contactEmail: string | null
-    legalInfoUrl: string | null
-    logoUrl: string | null
-    description: string | null
-    machineDescription: string | null
-  },
-) {
+type UpdatePackage = Pick<
+  Package,
+  | 'name'
+  | 'machine_name'
+  | 'domain'
+  | 'logo_url'
+  | 'contact_email'
+  | 'legal_info_url'
+  | 'description'
+  | 'machine_description'
+  | 'oauth_client_id'
+  | 'oauth_client_secret'
+  | 'oauth_authorization_url'
+  | 'oauth_token_url'
+>
+
+export async function updatePackage(packageId: string, pkg: UpdatePackage) {
   await db
     .updateTable('packages')
     .set({
-      name,
-      machine_name: machineName,
-      domain,
-      contact_email: contactEmail,
-      legal_info_url: legalInfoUrl,
-      logo_url: logoUrl,
-      description,
-      machine_description: machineDescription,
+      name: pkg.name,
+      machine_name: pkg.machine_name,
+      domain: pkg.domain,
+      logo_url: pkg.logo_url,
+      contact_email: pkg.contact_email,
+      legal_info_url: pkg.legal_info_url,
+      description: pkg.description,
+      machine_description: pkg.machine_description,
+      oauth_client_id: pkg.oauth_client_id,
+      oauth_client_secret: pkg.oauth_client_secret,
+      oauth_authorization_url: pkg.oauth_authorization_url,
+      oauth_token_url: pkg.oauth_token_url,
     })
     .where('id', '=', packageId)
     .executeTakeFirstOrThrow()

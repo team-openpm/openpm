@@ -108,19 +108,10 @@
           {
             "name": "limit",
             "in": "query",
-            "description": "How many package to return per page (default 500)",
+            "description": "How many package to return per page (default 10)",
             "schema": {
               "type": "integer",
               "maximum": 500,
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number (default 1)",
-            "schema": {
-              "type": "integer",
               "format": "int32"
             }
           },
@@ -132,34 +123,26 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
           }
         ],
         "responses": {
           "200": {
-            "description": "A paginated list of packages",
+            "description": "A list of packages",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/PackageLite"
-                      }
-                    },
-                    "total": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "page": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int32"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Package"
                   }
                 }
               }
@@ -201,6 +184,17 @@
     "/packages/connected": {
       "get": {
         "description": "Looks up packages that are connected to the current user",
+        "parameters": [
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
+          }
+        ],
         "responses": {
           "200": {
             "description": "A list of packages",
@@ -235,6 +229,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "proxy",
+            "in": "query",
+            "description": "Enable to use openpm's proxy",
+            "schema": {
+              "type": "boolean"
+            },
+            "example": "true"
           }
         ],
         "responses": {

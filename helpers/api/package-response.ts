@@ -1,20 +1,11 @@
-import {PackageFull} from '@/server/db/packages/types'
+import {FullPackage} from '@/server/db/packages/types'
 
 import {rewriteDocumentJsonForProxy} from '../openapi/proxy'
 
-interface PackageResponseOptions {
-  proxyEnabled?: boolean
-}
-
-export async function buildPackageResponse(
-  pkg: PackageFull,
-  {proxyEnabled}: PackageResponseOptions = {
-    proxyEnabled: false,
-  },
-) {
+export async function buildPackageResponse(pkg: FullPackage, {proxy = false} = {}) {
   let openapi = pkg.openapi
 
-  if (proxyEnabled) {
+  if (proxy) {
     // If the proxy is enabled ensure the document's servers
     // and auth points to the proxy
     openapi = await rewriteDocumentJsonForProxy({

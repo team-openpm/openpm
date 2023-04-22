@@ -1,7 +1,7 @@
 import {stringify as yamlStringify} from 'yaml'
 
 import {parseJsonSpec} from '@/helpers/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'
 
@@ -10,7 +10,7 @@ export async function GET(req: Request, {params}: {params: {packageId: string}})
   const extension = req.url.split('.').pop()
   const format = getParams(req).get('format') ?? extension ?? 'json'
 
-  const pkg = await getPackageById(params.packageId)
+  const pkg = await getFullPackageById(params.packageId)
 
   if (!pkg) {
     return error('Package not found', 'not_found', 404)

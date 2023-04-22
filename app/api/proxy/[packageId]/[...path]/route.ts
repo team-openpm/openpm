@@ -1,7 +1,7 @@
 import {parseJsonSpec} from '@/helpers/openapi'
 import {OpenAPI} from '@/helpers/openapi/types'
 import {ProxyRequest} from '@/helpers/proxy/proxy-request'
-import {getPackageById} from '@/server/db/packages/getters'
+import {getUnsafePackageById} from '@/server/db/packages/getters'
 import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
 
@@ -12,7 +12,7 @@ interface ProxyOptions {
 
 function buildProxy(method: OpenAPI.HttpMethods) {
   return withAuth(async (request: Request, {params, userId}: ProxyOptions) => {
-    const pkg = await getPackageById(params.packageId)
+    const pkg = await getUnsafePackageById(params.packageId)
 
     if (!pkg) {
       return error('Package not found', 'package_not_found', 404)
