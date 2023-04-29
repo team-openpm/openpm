@@ -48,9 +48,9 @@ export function commonPrefix(paths: string[]): string {
   return prefix
 }
 
-export const isArraySchemaObject = (
+export function isArraySchemaObject(
   schema: OpenAPI.SchemaObject,
-): schema is OpenAPI.ArraySchemaObject => {
+): schema is OpenAPI.ArraySchemaObject {
   return schema.type === 'array' && typeof schema.items === 'object'
 }
 
