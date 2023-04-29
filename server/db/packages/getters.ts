@@ -145,8 +145,9 @@ export async function searchPackages({
     .select(fullPackageCols)
     .where(({or, cmpr}) =>
       or([
-        cmpr('machine_name', 'like', `%${query}`),
-        cmpr('machine_description', 'like', `%${query}%`),
+        cmpr('id', 'ilike', `${query}%`),
+        cmpr('name', 'ilike', `%${query}%`),
+        cmpr('description', 'ilike', `%${query}%`),
       ]),
     )
     .orderBy('name', 'asc')
@@ -176,8 +177,11 @@ export async function searchPackagesWithPagination({
     .selectFrom('packages')
     .where(({or, cmpr}) =>
       or([
-        cmpr('machine_name', 'like', `%${query}`),
-        cmpr('machine_description', 'like', `%${query}%`),
+        or([
+          cmpr('id', 'ilike', `${query}%`),
+          cmpr('name', 'ilike', `%${query}%`),
+          cmpr('description', 'ilike', `%${query}%`),
+        ]),
       ]),
     )
     .select((eb) => [...litePackageCols, eb.fn.countAll().over().as('total_count')])
