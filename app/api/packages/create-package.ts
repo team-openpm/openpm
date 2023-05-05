@@ -3,13 +3,13 @@ import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 import {getFullPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
-import {OpenApiDocument} from '@/helpers/openapi/document'
 
 const ApiSchema = z.object({
   // Validate no spaces
