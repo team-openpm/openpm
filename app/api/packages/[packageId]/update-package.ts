@@ -3,6 +3,7 @@ import semver from 'semver'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 import {getFullPackageById} from '@/server/db/packages/getters'
 import {updatePackage, updatePackageSpec} from '@/server/db/packages/setters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
@@ -48,7 +49,14 @@ const endpoint = withAuth(
       await updatePackage(data.packageId, data)
 
       if (data.openapi) {
-        const doc = await parseSpec(data.openapi, data.openapi_format)
+        let doc: OpenApiDocument
+
+        try {
+          doc = await parseSpec(data.openapi, data.openapi_format)
+        } catch (err: any) {
+          return error(`Invalid OpenAPI document: ${err?.message}`)
+        }
+
         const version = semver.valid(doc.version)
 
         if (!version) {

@@ -9,6 +9,7 @@ import {getUserById} from '@/server/db/users/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
 import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 
 const ApiSchema = z.object({
   // Validate no spaces
@@ -30,12 +31,11 @@ const createPackageEndpoint = withAuth(
         return error('Package already exists')
       }
 
-      let doc
+      let doc: OpenApiDocument
 
       try {
         doc = await parseSpec(data.openapi, data.openapi_format)
       } catch (err: any) {
-        console.error(err)
         return error(`Invalid OpenAPI document: ${err?.message}`)
       }
 
