@@ -3,6 +3,7 @@ import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
 import {parseSpec} from '@/helpers/openapi'
+import {OpenApiDocument} from '@/helpers/openapi/document'
 import {getFullPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
@@ -30,12 +31,11 @@ const createPackageEndpoint = withAuth(
         return error('Package already exists')
       }
 
-      let doc
+      let doc: OpenApiDocument
 
       try {
         doc = await parseSpec(data.openapi, data.openapi_format)
       } catch (err: any) {
-        console.error(err)
         return error(`Invalid OpenAPI document: ${err?.message}`)
       }
 
