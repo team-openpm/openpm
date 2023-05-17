@@ -19,7 +19,11 @@ const nextConfig = {
         source: '/packages/:package/openapi.yaml',
         destination: '/api/packages/:package/openapi',
       },
-      
+      {
+        source: '/packages/:package/ai-plugin.json',
+        destination: '/api/packages/:package/ai-plugin',
+      },
+
       // Rewrite /packages to /apis
       {
         source: '/apis',
@@ -29,7 +33,7 @@ const nextConfig = {
       {
         source: '/apis/:path*',
         destination: '/packages/:path*',
-      }
+      },
     ]
   },
 }
