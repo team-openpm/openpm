@@ -35,7 +35,7 @@ export const TextareaInput: React.FC<Props> = ({
     placeholder={placeholder}
     rows={rows}
     className={clsx(
-      `block w-full rounded-md border border-pink-900/20 px-3
+      `block w-full rounded-md border border-pink-900/20 bg-white px-3
       py-2 text-sm text-black shadow-sm outline-none
       transition-all duration-300 focus:border-pink-300
       focus:ring focus:ring-pink-200/50 dark:border-gray-800 dark:bg-gray-900
