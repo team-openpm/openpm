@@ -1,23 +1,27 @@
 'use client'
 
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 
 import {MainTemplate} from '@/components/main-template'
+import {useDebouncedState} from '@/lib/use-debounced-state'
 
+import {Header} from './header'
 import {PackageItem} from './package-item'
 import {Pagination} from './pagination'
 import {SearchInput} from './search-input'
 import {PackageResponse, PaginatedResponse} from './types'
 
 export default function Packages() {
+  const [loading, setLoading] = useState(false)
   const [query, setQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useDebouncedState(query, 100)
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [results, setResults] = useState<PackageResponse[]>([])
   const [hasRequested, setHasRequested] = useState(false)
   const limit = 50
-
   const shouldPaginate = total > limit
+  const requestCounter = useRef(0)
 
   const onResults = (results: PaginatedResponse) => {
     setHasRequested(true)
@@ -25,62 +29,60 @@ export default function Packages() {
     setTotal(results.total)
   }
 
-  const setUrl = (query: string) => {
-    // push state to the url
-    const uri = new URL(window.location.href)
-    uri.searchParams.set('q', query)
-    uri.searchParams.set('page', page.toString())
-    window.history.replaceState({}, '', uri.toString())
-  }
+  const withDuplicatedRequests = useCallback(async function (
+    fn: () => Promise<PaginatedResponse>,
+  ) {
+    const currentRequest = ++requestCounter.current
+
+    setLoading(true)
+    const result = await fn()
+
+    if (currentRequest !== requestCounter.current) {
+      // There is a newer request, ignore this one
+      return
+    }
+
+    onResults(result)
+    setLoading(false)
+  },
+  [])
 
   useEffect(() => {
     const uri = new URL(window.location.href)
     const search = uri.searchParams.get('q')
 
-    if (search) {
+    if (typeof search === 'string') {
       setQuery(search)
     }
   }, [])
 
   useEffect(() => {
-    if (query) {
-      searchPackages({query, page, limit}).then(onResults)
-      setUrl(query)
+    setDebouncedQuery(query)
+  }, [query, setDebouncedQuery])
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      withDuplicatedRequests(() => {
+        return searchPackages({query: debouncedQuery, page, limit})
+      })
+
+      setUrlSearchParams({
+        q: debouncedQuery,
+        page: page.toString(),
+      })
     } else {
-      fetchPackages({page, limit}).then(onResults)
+      withDuplicatedRequests(() => fetchPackages({page, limit}))
     }
-  }, [query, page, limit])
+  }, [debouncedQuery, page, limit, withDuplicatedRequests])
 
   return (
     <MainTemplate>
-      <div className="relative mt-10 flex place-items-center">
-        <SearchInput value={query} onChange={setQuery} />
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
-          <svg
-            viewBox="0 0 20 20"
-            fill="none"
-            aria-hidden="true"
-            className="h-7 w-7 stroke-current text-pink-400/50"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12.01 12a4.25 4.25 0 1 0-6.02-6 4.25 4.25 0 0 0 6.02 6Zm0 0 3.24 3.25"
-            ></path>
-          </svg>
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-center px-5">
-          <kbd className="ml-auto text-sm text-pink-400 dark:text-slate-500">
-            <kbd className="font-sans">⌘</kbd>
-            <kbd className="font-sans">K</kbd>
-          </kbd>
-        </div>
-      </div>
+      <Header>
+        <SearchInput value={query} onChange={setQuery} loading={loading} />
+      </Header>
 
       {results.length > 0 && (
-        <ul className="mt-10 space-y-2">
+        <ul className="mt-5 space-y-2 sm:mt-10">
           {results.map((pkg) => (
             <PackageItem key={pkg.id} pkg={pkg} />
           ))}
@@ -114,7 +116,7 @@ async function searchPackages({
   page: number
   limit: number
 }) {
-  const uri = new URL('/api/packages/search', window.location.origin)
+  const uri = new URL('/api/packages/paginated-search', window.location.origin)
   uri.searchParams.set('query', query)
   uri.searchParams.set('page', page.toString())
   uri.searchParams.set('limit', limit.toString())
@@ -148,4 +150,15 @@ async function fetchPackages({page, limit}: {page: number; limit: number}) {
       total: 0,
     }
   }
+}
+
+const setUrlSearchParams = (searchParams: Record<string, string>) => {
+  // push state to the url
+  const uri = new URL(window.location.href)
+
+  for (const [key, value] of Object.entries(searchParams)) {
+    uri.searchParams.set(key, value)
+  }
+
+  window.history.replaceState({}, '', uri.toString())
 }

@@ -2,8 +2,9 @@ import first from 'lodash/first'
 import {NextResponse} from 'next/server'
 import {z} from 'zod'
 
-import {parseSpecJson} from '@/lib/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {parseSpec} from '@/helpers/openapi'
+import {OpenApiDocument} from '@/helpers/openapi/document'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {createPackage} from '@/server/db/packages/setters'
 import {getUserById} from '@/server/db/users/getters'
 import {withApiBuilder} from '@/server/helpers/api-builder'
@@ -11,9 +12,10 @@ import {withAuth} from '@/server/helpers/auth'
 import {error} from '@/server/helpers/error'
 
 const ApiSchema = z.object({
-  openapi: z.string(),
   // Validate no spaces
   id: z.string().regex(/^[a-z0-9-]+$/),
+  openapi: z.string(),
+  openapi_format: z.enum(['json', 'yaml']).default('json'),
 })
 
 type ApiRequestParams = z.infer<typeof ApiSchema>
@@ -23,33 +25,35 @@ const createPackageEndpoint = withAuth(
     ApiSchema,
     async (req: Request, {userId, data}) => {
       const userRow = await getUserById(userId)
-      const packageRow = await getPackageById(data.id)
+      const packageRow = await getFullPackageById(data.id)
 
       if (packageRow) {
         return error('Package already exists')
       }
 
-      const doc = await parseSpecJson(data.openapi)
+      let doc: OpenApiDocument
 
-      if (!doc) {
-        return error('Invalid openapi')
+      try {
+        doc = await parseSpec(data.openapi, data.openapi_format)
+      } catch (err: any) {
+        return error(`Invalid OpenAPI document: ${err?.message}`)
       }
 
       const version = doc.version
 
       if (typeof version !== 'string') {
-        return error('Invalid version')
+        return error('Invalid OpenAPI version')
       }
 
       const domain = doc.domain
 
       if (!domain) {
-        return error('Missing openapi domain')
+        return error('Missing OpenAPI domain')
       }
 
       await createPackage({
         id: data.id,
-        openapi: data.openapi,
+        openapi: JSON.stringify(doc),
         name: doc.name || data.id,
         version,
         userId,

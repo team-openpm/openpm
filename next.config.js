@@ -4,8 +4,16 @@ const nextConfig = {
 
   experimental: {
     appDir: true,
-    serverComponentsExternalPackages: ['shiki', 'vscode-oniguruma', 'pg', 'pg-native'],
+    serverComponentsExternalPackages: [
+      'shiki',
+      'vscode-oniguruma',
+      'vscode-textmate',
+      'pg',
+      'pg-native',
+    ],
   },
+
+  staticPageGenerationTimeout: 1000,
 
   async rewrites() {
     return [

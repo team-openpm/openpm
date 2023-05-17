@@ -1,7 +1,7 @@
 'use server'
 
-import {highlight} from '@/lib/code-highlighter'
-import {OpenApiRequestExample} from '@/lib/openapi/request-example'
+import {OpenApiRequestExample} from '@/helpers/openapi/request-example'
+import {safeHighlight} from '@/lib/code-highlighter'
 
 import {DocumentEndpointRequestExampleTabs} from './document-endpoint-request-example-tabs'
 
@@ -11,9 +11,9 @@ export async function DocumentEndpointRequestExample({
   requestExample: OpenApiRequestExample
 }) {
   const [exampleCurlHtml, exampleJavaScriptHtml, examplePythonHtml] = await Promise.all([
-    highlight(requestExample.exampleCurl, 'shellscript'),
-    highlight(requestExample.exampleJavaScript, 'javascript'),
-    highlight(requestExample.examplePython, 'python'),
+    safeHighlight(requestExample.exampleCurl, 'shellscript'),
+    safeHighlight(requestExample.exampleJavaScript, 'javascript'),
+    safeHighlight(requestExample.examplePython, 'python'),
   ])
 
   return (

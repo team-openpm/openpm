@@ -1,6 +1,5 @@
-import {OpenAPI} from '@/lib/openapi/types'
-
-import {MarkdownDynamic} from '../markdown/markdown-dynamic'
+import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
+import {OpenAPI} from '@/helpers/openapi/types'
 
 export function DocumentSecurityScheme({scheme}: {scheme: OpenAPI.SecuritySchemeObject}) {
   if (isHttpSecurityScheme(scheme)) {

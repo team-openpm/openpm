@@ -2,6 +2,7 @@
 
 import {useRouter} from 'next/navigation'
 
+import {jsonFetch} from '@/lib/json-fetch'
 import {RedactedApiKey} from '@/server/db/api-keys/types'
 
 export function ApiKeyItem({apiKey}: {apiKey: RedactedApiKey}) {
@@ -12,13 +13,12 @@ export function ApiKeyItem({apiKey}: {apiKey: RedactedApiKey}) {
       return
     }
 
-    const response = await fetch(`/api/api-keys/${apiKey.id}/revoke`, {
-      method: 'POST',
+    const {error} = await jsonFetch(`/api/api-keys/${apiKey.id}`, {
+      method: 'DELETE',
     })
 
-    if (!response.ok) {
-      const error = await response.json()
-      alert(error.message ?? 'Unknown error')
+    if (error) {
+      alert(error.message)
       throw new Error(error.message ?? 'Unknown error')
     }
 
@@ -26,11 +26,11 @@ export function ApiKeyItem({apiKey}: {apiKey: RedactedApiKey}) {
   }
 
   return (
-    <li className="grid max-w-sm grid-cols-2">
+    <li className="grid max-w-sm grid-cols-3">
       <span>
         <code className="font-mono text-sm">sk-...{apiKey.keyExcerpt}</code>
       </span>
-      <span>
+      <span className="col-span-2">
         <button
           type="button"
           onClick={onRevoke}

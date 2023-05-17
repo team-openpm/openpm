@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {OpenApiSchema} from '@/lib/openapi/schema'
+import {OpenApiSchema} from '@/helpers/openapi/schema'
 
 export const DocumentSchema: React.FC<{
   schema: OpenApiSchema

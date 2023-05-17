@@ -3,13 +3,17 @@ import startCase from 'lodash/startCase'
 import Link from 'next/link'
 import React from 'react'
 
-import {OpenApiDocument} from '@/lib/openapi/document'
-import {Package} from '@/server/db/packages/types'
+import {OpenApiDocument} from '@/helpers/openapi/document'
+import {LitePackage} from '@/server/db/packages/types'
 
 export const PackageSidebar: React.FC<{
-  package: Package
+  package: LitePackage
   document: OpenApiDocument
-}> = ({package: pkg, document}) => {
+  pagedEndpoints: boolean
+  version?: string
+}> = ({package: pkg, document, pagedEndpoints, version}) => {
+  const versionPath = version ? `/versions/${version}` : ''
+
   return (
     <aside className="sticky bottom-0 top-0 h-screen w-72 flex-1 overflow-auto border-r border-slate-900/10  px-6 py-4 dark:border-white/10">
       <div className="space-y-3">
@@ -37,15 +41,15 @@ export const PackageSidebar: React.FC<{
             <li className="relative">
               <a
                 className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                href="#intro"
+                href={`/apis/${pkg.id}${versionPath}#intro`}
               >
                 <span className="truncate">Introduction</span>
               </a>
 
-              {document.securitySchemes.size > 0 && (
+              {document.hasAuthentication && (
                 <a
                   className="flex justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                  href="#auth"
+                  href={`/apis/${pkg.id}${versionPath}#auth`}
                 >
                   <span className="truncate">Authentication</span>
                 </a>
@@ -69,7 +73,11 @@ export const PackageSidebar: React.FC<{
                   <li key={index} className="relative">
                     <a
                       className="flex cursor-pointer justify-between gap-2 py-1 pl-4 pr-3 text-sm text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
-                      href={`#${endpoint.path}`}
+                      href={
+                        pagedEndpoints
+                          ? `/apis/${pkg.id}${versionPath}/endpoint?path=${endpoint.path}`
+                          : `#${endpoint.path}`
+                      }
                       title={`${endpoint.method} ${endpoint.path}`}
                     >
                       <span className="truncate">
@@ -79,10 +87,11 @@ export const PackageSidebar: React.FC<{
                       {endpoint.method && (
                         <span
                           className={clsx('text-[10px] font-semibold uppercase', {
-                            'text-blue-500': endpoint.method === 'GET',
-                            'text-green-500': endpoint.method === 'POST',
-                            'text-orange-500': endpoint.method === 'PATCH',
-                            'text-red-500': endpoint.method === 'DELETE',
+                            'text-blue-500': endpoint.method === 'get',
+                            'text-green-500': endpoint.method === 'post',
+                            'text-orange-500':
+                              endpoint.method === 'patch' || endpoint.method === 'put',
+                            'text-red-500': endpoint.method === 'delete',
                           })}
                         >
                           {endpoint.method}

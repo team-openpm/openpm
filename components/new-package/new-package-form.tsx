@@ -3,16 +3,21 @@
 import {useRouter} from 'next/navigation'
 import React, {useState} from 'react'
 
+import {DefaultButton} from '@/components/buttons/default-button'
+import {Select} from '@/components/select'
+import {TextInput} from '@/components/text-input'
+import {TextareaInput} from '@/components/textarea-input'
+import {safeJson} from '@/lib/response-json'
 import {Package} from '@/server/db/packages/types'
 
-import {DefaultButton} from '../buttons/default-button'
-import {TextInput} from '../text-input'
-import {TextareaInput} from '../textarea-input'
+type PackageForm = Partial<Package> & {
+  openapi_format?: string
+}
 
 export default function NewPackageForm() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const [newPackage, setNewPackage] = useState<Partial<Package>>({})
+  const [newPackage, setNewPackage] = useState<PackageForm>({})
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,7 +37,7 @@ export default function NewPackageForm() {
     })
 
     if (!response.ok) {
-      const {error} = await response.json()
+      const {error} = (await safeJson(response)) ?? {}
       alert(error?.message ?? 'Something went wrong')
       setLoading(false)
       return
@@ -42,7 +47,7 @@ export default function NewPackageForm() {
     router.push(`/packages/${id}/edit`)
   }
 
-  const setNewPackageKey = (key: keyof Package, value: string) => {
+  const setNewPackageKey = (key: keyof PackageForm, value: string) => {
     setNewPackage((prev) => ({
       ...prev,
       [key]: value,
@@ -86,11 +91,22 @@ export default function NewPackageForm() {
                   OpenAPI JSON Spec
                 </label>
 
-                <div className="mt-2">
+                <div className="mt-2 space-y-2">
+                  <Select
+                    selectedValue={newPackage.openapi_format ?? 'json'}
+                    onChange={(value) => setNewPackageKey('openapi_format', value)}
+                    options={[
+                      ['json', 'JSON'],
+                      ['yaml', 'YAML'],
+                    ]}
+                  />
+
                   <TextareaInput
                     name="spec"
                     rows={5}
-                    placeholder="OpenApi JSON Spec"
+                    placeholder={`OpenAPI ${
+                      newPackage.openapi_format === 'yaml' ? 'YAML' : 'JSON'
+                    } Spec`}
                     value={newPackage.openapi ?? ''}
                     onChange={(value) => {
                       setNewPackageKey('openapi', value)
@@ -99,7 +115,9 @@ export default function NewPackageForm() {
                 </div>
 
                 <p className="mt-3 text-sm leading-6 text-slate-600">
-                  Paste in the OpenAPI JSON spec for your package.
+                  Paste in the OpenAPI{' '}
+                  {newPackage.openapi_format === 'yaml' ? 'YAML' : 'JSON'} spec for your
+                  package.
                 </p>
               </div>
             </div>

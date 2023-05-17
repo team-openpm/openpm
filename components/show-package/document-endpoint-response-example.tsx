@@ -1,8 +1,8 @@
 'use server'
 
 import {Code} from '@/components/code'
-import {highlight} from '@/lib/code-highlighter'
-import {OpenApiResponseExample} from '@/lib/openapi/response-example'
+import {OpenApiResponseExample} from '@/helpers/openapi/response-example'
+import {safeHighlight} from '@/lib/code-highlighter'
 
 export async function DocumentEndpointResponseExample({
   responseExample,
@@ -15,7 +15,7 @@ export async function DocumentEndpointResponseExample({
     return null
   }
 
-  const exampleJsonHtml = await highlight(exampleJson, 'json')
+  const exampleJsonHtml = await safeHighlight(exampleJson, 'json')
 
   return (
     <div className="overflow-hidden rounded-2xl bg-slate-900 shadow-md dark:ring-1 dark:ring-white/10">

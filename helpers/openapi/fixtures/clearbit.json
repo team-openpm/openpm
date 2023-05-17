@@ -1,0 +1,765 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Clearbit Enrichment API",
+    "version": "1.0.2",
+    "description": "The Clearbit Enrichment API provides a single API to lookup person and company data."
+  },
+  "paths": {
+    "/combined/find": {
+      "servers": [
+        {
+          "url": "https://person.clearbit.com/v2"
+        }
+      ],
+      "get": {
+        "summary": "Combined lookup for person and company based on an email address",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The email address to look up."
+          },
+          {
+            "in": "query",
+            "name": "webhook_url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A webhook URL that results will be sent to."
+          },
+          {
+            "in": "query",
+            "name": "given_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's first name."
+          },
+          {
+            "in": "query",
+            "name": "family_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's last name. If you have this, passing this is strongly recommended to improve match rates."
+          },
+          {
+            "in": "query",
+            "name": "ip_address",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's IP address. If you have this, passing this is strongly recommended to improve match rates."
+          },
+          {
+            "in": "query",
+            "name": "location",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The city or country where the person lives."
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the company the person works for."
+          },
+          {
+            "in": "query",
+            "name": "company_domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The domain of the company the person works for."
+          },
+          {
+            "in": "query",
+            "name": "linkedin",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's LinkedIn profile URL."
+          },
+          {
+            "in": "query",
+            "name": "twitter",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's Twitter profile username."
+          },
+          {
+            "in": "query",
+            "name": "facebook",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The person's Facebook profile URL."
+          },
+          {
+            "in": "query",
+            "name": "webhook_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Custom identifier for the webhook request."
+          },
+          {
+            "in": "query",
+            "name": "subscribe",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Set to true to subscribe to the changes to the person."
+          },
+          {
+            "in": "query",
+            "name": "suppression",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Set to eu to exclude person records with country data in the EU. Set to eu_strict to exclude person records with country data in the EU or with null country data."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful lookup, person & company encoded in the response body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "person": {
+                      "$ref": "#/components/schemas/Person"
+                    },
+                    "company": {
+                      "$ref": "#/components/schemas/Company"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Asynchronously looking up the person & company."
+          },
+          "404": {
+            "description": "Neither the Person or the Company were found."
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/people/find": {
+      "servers": [
+        {
+          "url": "https://person.clearbit.com/v2"
+        }
+      ],
+      "get": {
+        "summary": "Find person by email and company",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The email address of the person to find.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The company name of the person to find.",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A person object is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "404": {
+            "description": "Person not found."
+          }
+        }
+      }
+    },
+    "/companies/find": {
+      "servers": [
+        {
+          "url": "https://company.clearbit.com/v2"
+        }
+      ],
+      "get": {
+        "summary": "Find company by domain",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "domain",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The domain to look up.",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "webhook_url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "A webhook URL that results will be sent to."
+          },
+          {
+            "in": "query",
+            "name": "company_name",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The company's name."
+          },
+          {
+            "in": "query",
+            "name": "linkedin",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The company's LinkedIn page URL."
+          },
+          {
+            "in": "query",
+            "name": "twitter",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The company's Twitter profile username."
+          },
+          {
+            "in": "query",
+            "name": "facebook",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The company's Facebook page URL."
+          },
+          {
+            "in": "query",
+            "name": "webhook_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Custom identifier for the webhook request."
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful lookup, company encoded in the response body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Asynchronously looking up the company."
+          },
+          "404": {
+            "description": "Company not found."
+          },
+          "422": {
+            "description": "Domain name is invalid."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Clearbit’s internal identifier for the person."
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "givenName": {
+                "type": "string",
+                "description": "The person’s first name."
+              },
+              "familyName": {
+                "type": "string",
+                "description": "The person’s last name."
+              },
+              "fullName": {
+                "type": "string",
+                "description": "The person’s full name. This may exist even if the givenName or familyName aren’t available."
+              }
+            }
+          },
+          "email": {
+            "type": "string",
+            "description": "The person’s email."
+          },
+          "location": {
+            "type": "string",
+            "description": "The city, state, and country where the person lives."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The person’s time zone based on their location. See all possible values."
+          },
+          "utcOffset": {
+            "type": "integer",
+            "description": "The difference in hours from the person’s time zone to UTC (-12 to 14)."
+          },
+          "geo": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string",
+                "description": "The city the person lives in based on their location."
+              },
+              "state": {
+                "type": "string",
+                "description": "The state the person lives in based on their location."
+              },
+              "stateCode": {
+                "type": "string",
+                "description": "The state code of the state the person lives in based on their location."
+              },
+              "country": {
+                "type": "string",
+                "description": "The country the person lives in based on their location."
+              },
+              "countryCode": {
+                "type": "string",
+                "description": "The country code of the country the person lives in based on their location."
+              },
+              "lat": {
+                "type": "number",
+                "format": "float",
+                "description": "The latitude based on the person’s location."
+              },
+              "lng": {
+                "type": "number",
+                "format": "float",
+                "description": "The longitude based on the person’s location."
+              }
+            }
+          },
+          "bio": {
+            "type": "string",
+            "description": "The person’s bio surfaced through their own social media accounts."
+          },
+          "site": {
+            "type": "string",
+            "description": "The person’s website surfaced through their own social media accounts."
+          },
+          "avatar": {
+            "type": "string",
+            "description": "The person’s profile picture surfaced through their own social media accounts."
+          },
+          "employment": {
+            "type": "object",
+            "properties": {
+              "domain": {
+                "type": "string",
+                "description": "The domain of the company the person works for."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the company the person works for."
+              },
+              "title": {
+                "type": "string",
+                "description": "The person’s title at the company they work for."
+              },
+              "role": {
+                "type": "string",
+                "description": "The person’s standardized role at the company they work for based on their title. See all possible values."
+              },
+              "subRole": {
+                "type": "string",
+                "description": "The person’s standardized sub role at the company they work for based on their title. See all possible values."
+              },
+              "seniority": {
+                "type": "string",
+                "description": "The person’s standardized seniority at the company they work for based on their title. See all possible values."
+              }
+            }
+          },
+          "facebook": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The person’s Facebook profile username (e.g. amaccaw)."
+              }
+            }
+          },
+          "github": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The person’s GitHub profile username (e.g. maccman)."
+              },
+              "id": {
+                "type": "integer",
+                "description": "The ID of the person’s GitHub profile."
+              },
+              "avatar": {
+                "type": "string",
+                "description": "The profile picture of the person’s GitHub profile."
+              },
+              "company": {
+                "type": "string",
+                "description": "The company the person works for as listed on their GitHub profile."
+              },
+              "blog": {
+                "type": "string",
+                "description": "The person’s website as listed on their GitHub profile."
+              },
+              "followers": {
+                "type": "integer",
+                "description": "The number of followers the person has on GitHub."
+              },
+              "following": {
+                "type": "integer",
+                "description": "The number of people the person follows on GitHub."
+              }
+            }
+          },
+          "twitter": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The person’s Twitter profile username (e.g. maccaw)."
+              },
+              "id": {
+                "type": "integer",
+                "description": "The ID of the person’s Twitter profile."
+              },
+              "bio": {
+                "type": "string",
+                "description": "The person’s bio as listed on their Twitter profile."
+              },
+              "followers": {
+                "type": "integer",
+                "description": "The number of followers the person has on Twitter."
+              },
+              "following": {
+                "type": "integer",
+                "description": "The number of people the person follows on Twitter."
+              },
+              "statuses": {
+                "type": "integer",
+                "description": "The number of tweets the person has shared on Twitter."
+              },
+              "favorites": {
+                "type": "integer",
+                "description": "The number of tweets the person has liked on Twitter."
+              },
+              "location": {
+                "type": "string",
+                "description": "The person’s location as listed on their Twitter profile."
+              },
+              "site": {
+                "type": "string",
+                "description": "The person’s website as listed on their Twitter profile."
+              },
+              "avatar": {
+                "type": "string",
+                "description": "The profile picture of the person’s Twitter profile."
+              }
+            }
+          },
+          "linkedin": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The last section of the person’s LinkedIn profile URL (e.g. in/alex-maccaw-ab592978)."
+              }
+            }
+          },
+          "googleplus": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The person’s Google Plus username. This field has been deprecated."
+              }
+            }
+          },
+          "gravatar": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "The person’s Gravatar profile username (e.g. maccman)."
+              },
+              "urls": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "A list of websites listed by the person"
+              },
+              "avatar": {
+                "type": "string",
+                "description": "The profile picture of the person’s Gravatar profile."
+              },
+              "avatars": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "A list of pictures listed by the person on their Gravatar profile."
+              }
+            }
+          },
+          "fuzzy": {
+            "type": "boolean",
+            "description": "Indicates whether the person’s search was fuzzy or an exact match."
+          },
+          "emailProvider": {
+            "type": "boolean",
+            "description": "Indicates whether the person’s email domain is associated with a free email provider (e.g. Gmail). Useful for distinguishing between personal emails and work emails."
+          },
+          "indexedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when the person’s record was last updated in Clearbit’s database. A record update may or may not include new information about the person."
+          },
+          "phone": {
+            "type": "string",
+            "description": "The person’s phone number."
+          },
+          "activeAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when Clearbit detected the person’s email became active."
+          },
+          "inactiveAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp indicating when Clearbit detected the person’s email became inactive."
+          }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Clearbit’s internal identifier for the company."
+          },
+          "name": {
+            "type": "string",
+            "description": "The company’s name."
+          },
+          "legalName": {
+            "type": "string",
+            "description": "The company’s legal name."
+          },
+          "domain": {
+            "type": "string",
+            "description": "The company’s website."
+          },
+          "domainAliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of domains that redirect to the company’s main website."
+          },
+          "site": {
+            "type": "object",
+            "properties": {
+              "phoneNumbers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of phone numbers listed on the company’s website."
+              },
+              "emailAddresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "A list of email addresses listed on the company’s website."
+              }
+            }
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "sector": {
+                "type": "string",
+                "description": "The broadest tier of company industry classification. See all possible values."
+              },
+              "industryGroup": {
+                "type": "string",
+                "description": "The second tier of company industry classification. See all possible values."
+              },
+              "industry": {
+                "type": "string",
+                "description": "The third tier of company industry classification. See all possible values."
+              },
+              "subIndustry": {
+                "type": "string",
+                "description": "The most specific tier of company industry classification. See all possible values."
+              },
+              "sicCode": {
+                "type": "string",
+                "description": "The two digit company Standard Industry Classification (SIC) code. See all possible values."
+              },
+              "naicsCode": {
+                "type": "string",
+                "description": "The two digit company North American Industry Classification System (NAICS) code. See all possible values."
+              }
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "A list of company vertical descriptors. Typically more granular than industry classification. See all possible values."
+          },
+          "description": {
+            "type": "string",
+            "description": "The company’s description."
+          },
+          "foundedYear": {
+            "type": "integer",
+            "description": "The year the company was founded."
+          },
+          "location": {
+            "type": "string",
+            "description": "The company headquarters address."
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "The company’s time zone based on their location. See all possible values."
+          },
+          "utcOffset": {
+            "type": "integer",
+            "description": "The difference in hours from the company’s time zone to UTC (-12 to 14)."
+          },
+          "geo": {
+            "type": "object",
+            "properties": {
+              "streetNumber": {
+                "type": "string",
+                "description": "The street number of the company headquarters based on their location."
+              },
+              "streetName": {
+                "type": "string",
+                "description": "The street name of the company headquarters based on their location."
+              },
+              "subPremise": {
+                "type": "string",
+                "description": "The suite number of the company headquarters based on their location."
+              },
+              "streetAddress": {
+                "type": "string",
+                "description": "The street address of the company headquarters based on their location."
+              },
+              "city": {
+                "type": "string",
+                "description": "The city of the company headquarters based on their location."
+              },
+              "postalCode": {
+                "type": "string",
+                "description": "The postal code of the company headquarters based on their location."
+              },
+              "state": {
+                "type": "string",
+                "description": "The state of the company headquarters based on their location."
+              },
+              "stateCode": {
+                "type": "string",
+                "description": "The state code of the company headquarters based on their location."
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the company headquarters based on their location."
+              },
+              "countryCode": {
+                "type": "string",
+                "description": "The country code"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ export default defineConfig(() => {
       alias: {
         app: '/app',
         lib: '/lib',
+        '@/lib': '/lib',
         server: '/server',
         components: '/components',
       },

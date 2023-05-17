@@ -1,8 +1,8 @@
 import {NextResponse} from 'next/server'
 
 import {highlight} from '@/lib/code-highlighter'
-import {parseSpecJson} from '@/lib/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {parseJsonSpec} from '@/helpers/openapi'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'
 
@@ -14,13 +14,13 @@ export async function GET(
     params: {packageId: string}
   },
 ) {
-  const pkg = await getPackageById(params.packageId)
+  const pkg = await getFullPackageById(params.packageId)
 
   if (!pkg) {
     return error('Package not found', 'not_found', 404)
   }
 
-  const doc = await parseSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   const path = getParams(req).get('path')
 

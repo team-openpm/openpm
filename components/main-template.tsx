@@ -12,10 +12,10 @@ type Props = {
 
 export const MainTemplate: React.FC<Props> = ({children}) => {
   return (
-    <main className="fixed inset-0 flex flex-col overflow-hidden scroll-smooth bg-slate-50 dark:bg-slate-900">
+    <main className="flex flex-col scroll-smooth bg-slate-50 dark:bg-slate-900">
       <img
         src="/background-gradient.jpg"
-        className="pointer-events-none absolute left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
+        className="pointer-events-none fixed left-1/2 top-0 max-w-none -translate-y-1/4 translate-x-[-30%] dark:hidden"
         width={1558}
         height={946}
         alt=""
@@ -45,7 +45,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
             </a>
           </div>
 
-          <div className="flex items-center justify-end gap-10">
+          <div className="hidden items-center justify-end gap-10 sm:flex">
             <Link href="/new" className="text-sm font-medium">
               submit api...
             </Link>
@@ -53,20 +53,20 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
             <AccountHeaderMenu />
           </div>
 
-          <div className="absolute bottom-0 right-0 top-0 hidden items-center gap-5 px-10 sm:flex">
+          <div className="absolute bottom-0 right-3 top-0 hidden items-center sm:flex">
             <ThemeToggle />
           </div>
         </div>
       </div>
 
-      <div className="flex min-h-screen flex-col items-center overflow-auto p-24 lg:p-36">
-        <div className="relative flex w-full max-w-prose flex-1 flex-col">{children}</div>
+      <div className="z-10 flex min-h-screen flex-col items-center px-5 pt-16 sm:p-24 lg:p-36">
+        <div className="flex w-full max-w-prose flex-1 flex-col">{children}</div>
 
-        <footer className="mt-10 flex items-center justify-center gap-5 lg:mt-24">
+        <footer className="z-10 mt-5 flex items-center justify-center gap-5 py-5 sm:mt-10 lg:mt-28">
           <Link
             prefetch={false}
             href="/about"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             about
           </Link>
@@ -74,7 +74,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/terms"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             terms
           </Link>
@@ -82,7 +82,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="/privacy"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             privacy
           </Link>
@@ -90,7 +90,7 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
           <Link
             prefetch={false}
             href="https://github.com/team-openpm/openpm"
-            className="text-sm text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
+            className="text-sm text-pink-900/20 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
           >
             github
           </Link>

@@ -1,7 +1,7 @@
 import {assertString} from '@/lib/assert'
 
 import {RedactedApiKey} from './types'
-import {db} from '../connection'
+import {db} from '../db'
 
 export async function getUserIdFromApiKey({
   apiKey,

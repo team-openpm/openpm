@@ -1,31 +1,30 @@
-import { NextResponse } from 'next/server';
+import {NextResponse} from 'next/server'
 
-import { getPackageById } from '@/server/db/packages/getters';
-import { error } from '@/server/helpers/error';
+import {buildPackageResponse} from '@/helpers/api/package-response'
+import {getFullPackageById} from '@/server/db/packages/getters'
+import {error} from '@/server/helpers/error'
 
 // Retrive a package
 
-async function endpoint(req: Request, { params }: { params: { packageId: string; }; }) {
-  const pkg = await getPackageById(params.packageId);
+async function endpoint(
+  request: Request,
+  {
+    params,
+  }: {
+    params: {packageId: string}
+  },
+) {
+  const {searchParams} = new URL(request.url)
+  const proxy = searchParams.get('proxy') === 'true'
+  const pkg = await getFullPackageById(params.packageId)
 
   if (!pkg) {
-    return error('Package not found', 'not_found', 404);
+    return error('Package not found', 'not_found', 404)
   }
 
-  return NextResponse.json({
-    id: pkg.id,
-    domain: pkg.domain,
-    openapi: pkg.openapi,
-    name: pkg.name,
-    machine_name: pkg.machine_name,
-    version: pkg.version,
-    user_id: pkg.user_id,
-    logo_url: pkg.logo_url,
-    contact_email: pkg.contact_email,
-    description: pkg.description,
-    machine_description: pkg.machine_description,
-    legal_info_url: pkg.legal_info_url,
-  });
+  const response = await buildPackageResponse(pkg, {proxy})
+
+  return NextResponse.json(response)
 }
 
-export default endpoint;
+export default endpoint

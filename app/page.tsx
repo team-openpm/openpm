@@ -13,7 +13,7 @@ export default function Home() {
         </h2>
 
         <div className="relative mt-10 flex place-items-center">
-          <SearchInput className="h-12 w-full min-w-[400px] appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 " />
+          <SearchInput className="h-12 w-full appearance-none rounded-full border border-pink-500/20 bg-white px-12 text-center text-base text-slate-900 shadow-sm outline-none transition-all duration-300 placeholder:text-pink-400 hover:ring-slate-900/20 focus:border-pink-300 focus:ring focus:ring-pink-200/50 dark:bg-white/5 dark:text-slate-400 dark:ring-white/10 dark:hover:ring-white/20 sm:min-w-[320px] " />
 
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center px-2">
             <svg
@@ -39,22 +39,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative mt-10 grid divide-x divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 backdrop-blur-md sm:mb-32 sm:text-center lg:mb-0 lg:grid-cols-3 lg:text-left">
-        <Link
-          href="/about"
-          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:border-neutral-700 hover:dark:bg-white/5"
-        >
-          <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
-            About
-            <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
-              <ArrowRightIcon className="h-4 w-4" />
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-80`}>
-            What is openpm.ai and how does it work?
-          </p>
-        </Link>
-
+      <div className="relative mt-10 grid divide-y divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-left backdrop-blur-md sm:mb-32 lg:mb-0 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
         <Link
           href="/openapi"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
@@ -66,23 +51,41 @@ export default function Home() {
             </span>
           </h2>
 
-          <p className={`m-0 max-w-[30ch] text-sm opacity-80`}>
+          <p className={`m-0 text-sm opacity-80`}>
             Learn how to create an OpenAPI specification.
           </p>
         </Link>
 
         <Link
+          prefetch={false}
           href="/new"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
-            Create{' '}
+            Publish{' '}
             <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
               <ArrowRightIcon className="h-4 w-4" />
             </span>
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-80`}>
+          <p className={`m-0 text-sm opacity-80`}>
             Submit OpenAPI specs to the registry.
+          </p>
+        </Link>
+
+        <Link
+          prefetch={false}
+          href="/apis/openpm"
+          className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
+        >
+          <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
+            Build{' '}
+            <span className="inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none">
+              <ArrowRightIcon className="h-4 w-4" />
+            </span>
+          </h2>
+
+          <p className={`m-0 text-sm opacity-80`}>
+            Use our API to search for OpenAPI specs.
           </p>
         </Link>
       </div>

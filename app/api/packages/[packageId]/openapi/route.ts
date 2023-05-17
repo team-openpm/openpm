@@ -1,7 +1,7 @@
-import {dump as toYAML} from 'js-yaml'
+import {stringify as yamlStringify} from 'yaml'
 
-import {parseSpecJson} from '@/lib/openapi'
-import {getPackageById} from '@/server/db/packages/getters'
+import {parseJsonSpec} from '@/helpers/openapi'
+import {getFullPackageById} from '@/server/db/packages/getters'
 import {error} from '@/server/helpers/error'
 import {getParams} from '@/server/helpers/params'
 
@@ -10,22 +10,22 @@ export async function GET(req: Request, {params}: {params: {packageId: string}})
   const extension = req.url.split('.').pop()
   const format = getParams(req).get('format') ?? extension ?? 'json'
 
-  const pkg = await getPackageById(params.packageId)
+  const pkg = await getFullPackageById(params.packageId)
 
   if (!pkg) {
     return error('Package not found', 'not_found', 404)
   }
 
-  const doc = await parseSpecJson(pkg.openapi)
+  const doc = await parseJsonSpec(pkg.openapi)
 
   if (format === 'yaml') {
-    return new Response(toYAML(doc.toJSON()), {
+    return new Response(yamlStringify(doc), {
       headers: {
         'Content-Type': 'text/yaml',
       },
     })
   } else {
-    return new Response(JSON.stringify(doc.toJSON(), null, 2), {
+    return new Response(JSON.stringify(doc, null, 2), {
       headers: {
         'Content-Type': 'application/json',
       },

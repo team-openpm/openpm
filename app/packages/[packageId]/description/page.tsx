@@ -6,7 +6,7 @@ import {AccountHeader} from '@/components/account-header'
 import {MarkdownDynamic} from '@/components/markdown/markdown-dynamic'
 import {getPackageByIdOrNotFound} from '@/server/db/packages/getters'
 
-export const revalidate = 30
+export const revalidate = 15
 
 export default async function Package({params}: {params: {packageId: string}}) {
   const pkg = await getPackageByIdOrNotFound(params.packageId)
@@ -52,9 +52,11 @@ export default async function Package({params}: {params: {packageId: string}}) {
         <div className="px-16 py-16">
           <h1 className="text-medium text-2xl">{pkg.id}</h1>
 
-          <div className="prose prose-sm max-w-none">
-            <MarkdownDynamic text={pkg.description ?? ''} />
-          </div>
+          {pkg.description && (
+            <div className="prose prose-sm prose-slate max-w-none dark:prose-invert">
+              <MarkdownDynamic text={pkg.description ?? ''} />
+            </div>
+          )}
         </div>
       </div>
     </div>

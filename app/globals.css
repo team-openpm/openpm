@@ -96,6 +96,19 @@ hanko-profile::part(headline1) {
   margin-top: 30px;
 }
 
+hanko-auth::part(divider-line) {
+  display: none;
+}
+
+hanko-auth::part(divider-text) {
+  color: #18181b;
+  padding: 0;
+}
+
+.dark hanko-auth::part(divider-text) {
+  color: rgb(255 255 255 / 90%);
+}
+
 .dark hanko-auth,
 .dark hanko-profile {
   /* Color Scheme */

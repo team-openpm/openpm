@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
-import {OpenApiDocument} from '@/lib/openapi/document'
-import {Package} from '@/server/db/packages/types'
+import {OpenApiDocument} from '@/helpers/openapi/document'
+import {LitePackage} from '@/server/db/packages/types'
 
 import {PackageDescription} from './package-description'
 
@@ -9,13 +9,15 @@ export function PackageInfo({
   package: pkg,
   document,
 }: {
-  package: Package
+  package: LitePackage
   document: OpenApiDocument
 }) {
   return (
     <div className="space-y-5">
       <div className="space-y-2">
-        <h1 className="text-xl font-medium">{pkg.id}</h1>
+        <h1 className="text-xl font-medium" id="intro">
+          {pkg.id}
+        </h1>
 
         {pkg.version !== document.version && (
           <>

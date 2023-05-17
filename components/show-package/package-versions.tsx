@@ -3,9 +3,9 @@
 import Link from 'next/link'
 
 import {getVersionsForPackageId} from '@/server/db/packages/getters'
-import {Package} from '@/server/db/packages/types'
+import {LitePackage} from '@/server/db/packages/types'
 
-export async function PackageVersions({package: pkg}: {package: Package}) {
+export async function PackageVersions({package: pkg}: {package: LitePackage}) {
   const packageVersions = await getVersionsForPackageId(pkg.id)
 
   return (
@@ -27,7 +27,7 @@ export async function PackageVersions({package: pkg}: {package: Package}) {
             <div className="font-medium ">
               <Link
                 className="text-blue-500"
-                href={`/packages/${pkg.id}/${packageVersion.version}`}
+                href={`/packages/${pkg.id}/versions/${packageVersion.version}`}
               >
                 {packageVersion.version}
               </Link>

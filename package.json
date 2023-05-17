@@ -2,6 +2,9 @@
   "name": "openpm",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "= 18"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +13,8 @@
     "prettier-write": "prettier --write app/ components/ lib/ server/ --ignore-path shiki",
     "test": "TZ=UTC vitest",
     "check:types": "tsc --noEmit",
-    "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/types.ts --exclude-pattern spatial_ref_sys"
+    "update-kysely-types": "env-cmd -f .env.local kysely-codegen --out-file ./server/db/types.ts --exclude-pattern spatial_ref_sys",
+    "script:validate-documents": "tsx -r dotenv/config scripts/validate-documents.ts dotenv_config_path=./.env.local"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",
@@ -22,12 +26,12 @@
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
     "canvas": "^2.11.2",
+    "@vercel/analytics": "^1.0.0",
     "clsx": "^1.2.1",
     "cookie": "^0.5.0",
     "date-fns": "^2.29.3",
     "dompurify": "^3.0.2",
     "isomorphic-dompurify": "^1.3.0",
-    "js-yaml": "^4.1.0",
     "jsonpointer": "^5.0.1",
     "jsonwebtoken": "^9.0.0",
     "jwks-rsa": "^3.0.1",
@@ -49,12 +53,12 @@
     "uuid": "^9.0.0",
     "vscode-oniguruma": "^1.7.0",
     "ws": "^8.13.0",
+    "yaml": "^2.2.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/dompurify": "^3.0.1",
-    "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.192",
     "@types/marked": "^4.0.8",
     "@types/pg": "^8.6.6",
@@ -76,6 +80,7 @@
     "postcss": "^8.4.21",
     "prettier-plugin-tailwindcss": "0.2.4",
     "tailwindcss": "^3.3.1",
+    "tsx": "^3.12.6",
     "vitest": "^0.30.1"
   }
 }
