@@ -56,7 +56,7 @@ export default function Home() {
           </h2>
 
           <p className={`m-0 text-sm opacity-80`}>
-            Learn how to integrate your APIs and AI.
+            Explore how to integrate your APIs and AI.
           </p>
         </Link>
 
