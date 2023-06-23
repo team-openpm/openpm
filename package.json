@@ -37,6 +37,7 @@
     "kysely-neon": "^1.1.1",
     "lodash": "^4.17.21",
     "marked": "^5.0.2",
+    "marked-gfm-heading-id": "^3.0.3",
     "next": "13.4.2",
     "prettier": "2.8.8",
     "react": "18.2.0",

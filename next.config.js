@@ -4,6 +4,7 @@ const nextConfig = {
 
   experimental: {
     appDir: true,
+    serverActions: true,
     serverComponentsExternalPackages: ['shiki', 'vscode-oniguruma', 'vscode-textmate'],
   },
 

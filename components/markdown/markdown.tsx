@@ -11,6 +11,6 @@ export function Markdown({text}: {text: string}) {
 }
 
 const generateMarkdown = (text: string) => {
-  const html = marked.parse(text)
+  const html = marked.parse(text, {mangle: false})
   return DOMPurify.sanitize(html)
 }
