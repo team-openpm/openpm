@@ -31,8 +31,8 @@ export default function AccountAuth({redirect = ''}: {redirect?: string}) {
   useEffect(() => {
     // register the component
     // see: https://github.com/teamhanko/hanko/blob/main/frontend/elements/README.md#script
-    register({shadow: true})
+    register(hankoApiUrl)
   }, [])
 
-  return <hanko-auth api={hankoApiUrl} />
+  return <hanko-auth />
 }
