@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 export const metadata = {
   title: 'openpm',
-  description: 'OpenAPI package manager',
+  description: 'AI plugin package manager',
 }
 
 const inter = Inter({subsets: ['latin']})

@@ -109,11 +109,9 @@ export function DocumentEndpoint({endpoint}: {endpoint: OpenApiEndpoint}) {
       <div className="space-y-14 py-5">
         <Suspense>
           <ErrorBoundary fallback={<div>Failed to load example</div>}>
-            {/* @ts-expect-error Async Server Component */}
             <DocumentEndpointRequestExample requestExample={endpoint.requestExample} />
 
             {endpoint.responseExample && (
-              /* @ts-expect-error Async Server Component */
               <DocumentEndpointResponseExample
                 responseExample={endpoint.responseExample}
               />

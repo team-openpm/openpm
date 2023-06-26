@@ -17,11 +17,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true,
-    // "plugins": [
-    //   {
-    //     "name": "next"
-    //   }
-    // ],
     "paths": {
       "@/*": ["./*"]
     },

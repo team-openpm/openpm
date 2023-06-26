@@ -28,6 +28,10 @@ export const MainTemplate: React.FC<Props> = ({children}) => {
               openpm.ai
             </Link>
 
+            <Link prefetch={false} href="/docs">
+              docs
+            </Link>
+
             <Link prefetch={false} href="/apis">
               apis
             </Link>

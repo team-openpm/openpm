@@ -16,7 +16,6 @@ export function PackageHeader({
     <header className="space-y-16 px-20">
       <PackageInfo package={pkg} document={document} />
 
-      {/* @ts-expect-error Async Server Component */}
       <PackageVersions package={pkg} />
 
       <DocumentAuthentication document={document} />

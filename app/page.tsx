@@ -8,8 +8,12 @@ export default function Home() {
   return (
     <MainTemplate>
       <div className="flex flex-1 flex-col items-center justify-center">
-        <h2 className="text-lg font-medium text-slate-900/90 dark:text-white/90">
-          The OpenAPI package manager
+        <h1 className="text-lg font-medium text-slate-900/90 dark:text-white/90">
+          OpenAPI package manager
+        </h1>
+
+        <h2 className="mt-2 text-lg text-slate-900/90 dark:text-white/90">
+          For AI plugins
         </h2>
 
         <div className="relative mt-10 flex place-items-center">
@@ -41,7 +45,7 @@ export default function Home() {
 
       <div className="relative mt-10 grid divide-y divide-slate-900/5 overflow-hidden rounded-2xl border border-slate-900/5 bg-white/10 text-left backdrop-blur-md sm:mb-32 lg:mb-0 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
         <Link
-          href="/openapi"
+          href="/docs"
           className="group px-6 py-4 transition-colors  hover:bg-slate-900/1 hover:dark:bg-white/5"
         >
           <h2 className={`mb-2 flex items-center gap-2 text-base font-medium`}>
@@ -52,7 +56,7 @@ export default function Home() {
           </h2>
 
           <p className={`m-0 text-sm opacity-80`}>
-            Learn how to create an OpenAPI specification.
+            Explore how to integrate your APIs and AI.
           </p>
         </Link>
 
@@ -68,7 +72,7 @@ export default function Home() {
             </span>
           </h2>
           <p className={`m-0 text-sm opacity-80`}>
-            Submit OpenAPI specs to the registry.
+            Submit your AI plugin to the registry.
           </p>
         </Link>
 
@@ -85,7 +89,7 @@ export default function Home() {
           </h2>
 
           <p className={`m-0 text-sm opacity-80`}>
-            Use our API to search for OpenAPI specs.
+            Use our API to search for AI plugins.
           </p>
         </Link>
       </div>
