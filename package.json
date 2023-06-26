@@ -22,6 +22,7 @@
     "@neondatabase/serverless": "^0.4.22",
     "@readme/openapi-parser": "^2.5.0",
     "@teamhanko/hanko-elements": "0.5.5-beta",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "20.3.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
