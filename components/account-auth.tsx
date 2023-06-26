@@ -24,9 +24,7 @@ export default function AccountAuth({redirect = ''}: {redirect?: string}) {
   }, [router, redirect])
 
   useEffect(() => {
-    import('@teamhanko/hanko-elements').then(({Hanko}) =>
-      setHanko(new Hanko(hankoApiUrl)),
-    )
+    setHanko(new Hanko(hankoApiUrl))
   }, [])
 
   useEffect(
