@@ -49,7 +49,10 @@ export function PackageInfo({
 
         <div>Latest version</div>
         <div className="font-medium">
-          <Link className="text-blue-500" href={`/packages/${pkg.id}/${pkg.version}`}>
+          <Link
+            className="text-blue-500"
+            href={`/packages/${pkg.id}/versions/${pkg.version}`}
+          >
             {pkg.version}
           </Link>
         </div>
